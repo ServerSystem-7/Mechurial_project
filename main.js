@@ -5,7 +5,7 @@ const express = require("express"),
   layouts = require("express-ejs-layouts");
   
 app.set("view engine", "ejs");
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 80);
 app.use(
     express.urlencoded({
       extended: false
