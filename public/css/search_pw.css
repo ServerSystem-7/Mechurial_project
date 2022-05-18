@@ -1,0 +1,175 @@
+/* <<상단바 부분>> */
+/* 공통 */
+.body__container {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  /* 노말 */
+  font-weight: 400;
+  /* 어두운 회색 */
+  color: #333;
+}
+a {
+  text-decoration: none;
+}
+.section {
+  position: relative;
+}
+.section .inner {
+  max-width: 980px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.float--left {
+  float: left;
+}
+.float--right {
+  float: right;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.075);
+  background: #fff;
+}
+header .inner {
+  height: 78px;
+}
+header .menu-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 10px;
+}
+header .logo a {
+  background: url("../img/logo.svg");
+  width: 32px;
+  height: 32px;
+  display: block;
+  text-indent: -9999px;
+}
+header .logo a:hover {
+  background: url("../img/logo_on.svg");
+}
+header .main-menu {
+  display: flex;
+}
+header .main-menu li a {
+  display: block;
+  padding: 30px;
+  color: #3c4146;
+}
+/* <<상단바 부분 끝>> */
+
+.wrapper{
+  margin: 0 auto;
+  width: 80%;
+}
+.h2 {
+  padding: 20px 0 20px;
+  font-size: 32px;
+  color:#111;
+  line-height: 1;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+h3 {
+  margin: 19px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+.box {
+  display: block;
+  width: 100%;
+  height: 51px;
+  border: solid 1px #dadada;
+  padding: 10px 14px 10px 14px;
+  box-sizing: border-box;
+  background: #fff;
+  position: relative;
+}
+
+.int {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 29px;
+  border: none;
+  background: #fff;
+  font-size: 15px;
+}
+
+input {
+  font-family: Dotum,'돋움',Helvetica,sans-serif;    
+}
+
+.box.int_id {
+  width: 60%;
+}
+
+.box.int_pass {
+  width: 60%;
+  padding-right: 40px;
+}
+
+.box.int_pass_check {
+  width: 60%;
+  padding-right: 40px;
+}
+
+.box.int_email {
+  width: 60%;
+  padding-right: 40px;
+}
+
+.btn_area_email1 {
+margin: 20px 0 ;
+}
+#btnMAilCheck {
+width: 250px;
+padding: 10px 0 10px;
+border: 0;
+cursor: pointer;
+color: #fff;
+border-radius: 10px;
+background-color: #2E43FF;
+font-size: 20px;
+font-weight: 400;
+font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+.btn_area_join {
+margin: 20px 0 20px;
+}
+
+#btnJoin {
+float: right;
+width: 30%;
+padding: 10px 0 10px;
+margin: 20px 0;
+border: 0;
+cursor: pointer;
+color: #fff;
+border-radius: 10px;
+background-color: #2E43FF;
+font-size: 20px;
+font-weight: 400;
+font-family: Dotum,'돋움',Helvetica,sans-serif;
+}

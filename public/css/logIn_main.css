@@ -1,0 +1,130 @@
+/* // 상단바 부분 // */
+/* 공통 */
+.body__container {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    /* 노말 */
+    font-weight: 400;
+    /* 어두운 회색 */
+    color: #333;
+  }
+  a {
+    text-decoration: none;
+  }
+  .section {
+    position: relative;
+  }
+  .section .inner {
+    max-width: 980px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+  .float--left {
+    float: left;
+  }
+  .float--right {
+    float: right;
+  }
+  
+  /* HEADER */
+  header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.075);
+    background: #fff;
+  }
+  header .inner {
+    height: 78px;
+  }
+  header .menu-group {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  header .logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 10px;
+  }
+  header .logo a {
+    background: url("../img/logo.svg");
+    width: 32px;
+    height: 32px;
+    display: block;
+    text-indent: -9999px;
+  }
+  header .logo a:hover {
+    background: url("../img/logo_on.svg");
+  }
+  header .main-menu {
+    display: flex;
+  }
+  header .main-menu li a {
+    display: block;
+    padding: 30px;
+    color: #3c4146;
+  }
+  /* //상단바 부분 끝// */
+
+ .login { 
+     width: 410px; /*전체 로그인바 길이*/
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     border: 1px soild red;
+     transform: translate(-50%, -50%); /*정중앙*/   
+} 
+
+.login h2 { 
+    padding: 0 0 20px;
+    font-size: 32px;
+    color:#111;
+    border-bottom: 2px solid #111;
+    text-align: center;
+    line-height: 1;
+    font-size: 32px;
+    color: #111; 
+} 
+
+.login > ul{ 
+    padding: 40px 0 33px; /*아래 공백*/
+} 
+
+.login > ul li{
+    padding: 0 0 13px;
+}
+
+.login > ul li input{
+    width: 100%;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.login > ul li input::-webkit-input-placeholder{
+    font-size: 16px;
+    color: #000000; 
+    text-indent: 16px;
+}
+
+
+.login button{
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+    background: #2E43FF;
+    font-size: 18px;
+    color: #fff;
+}
+
+.login div ul{ display: flex; justify-content: center;}
+.login div ul li{ position: relative; padding: 0 18px;} /*클릭하는 요소 구분 중요 따라서 li에*/
+.login div ul li ~ li::after{ content: ""; position: absolute; left:0; top:4px;
+     height: 14px; width:1px; background: #111; transform: rotate(25deg);}
+.login div ul li a{ font-size: 14px; color: #111;}

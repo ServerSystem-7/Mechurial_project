@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mechurial</title>
+
+    <meta name="author" content="team7" />
+    <meta name="description" content="Mechurial-website" />
+    <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
+    user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
+    <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- og: Open graph의 약자, 일종의 정보를 의미하고 이것을 통해 외부에 제공하는 정보를 정의할 수 있다, og는 페이스북에서 주로 활용-->
+    <!-- http://ogp.me/  참고 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mechurial" />
+    <meta property="og:title" content="make your alarm first" />
+    <meta property="og:description" content="mechurial" />
+    <meta property="og:image" content="img/logo__github.png" />
+    <meta property="og:url" content="https://mechurial.com" />
+    <!-- Twitter Card: og와 동일한 개념, 이것은 트위터에서 주로 활용, 카카오톡이나 기타 등등 서비스에서 og를 사용하기도 하고 트위터 카드를 사용하기도 하니 2개를 다 정의 해놓는 것이 좋다. -->
+    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html  참고 -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="Mechurial" />
+    <meta property="twitter:title" content="make your alarm first" />
+    <meta property="twitter:description" content="mechurial" />
+    <meta property="twitter:image" content="img/logo__github.png" />
+    <meta property="twitter:url" content="https://mechurial.com" />
+
+    <!-- 아래는 인터넷 익스플로러에서 아이콘을 사용할 때 쓰는 코드인데 루트에 ico파일이 있다면 생략해도 된다.
+    왜냐하면 코드가 명시 되지 않으면 익스플로러에서는 루트에 ico 파일이 있으면 아이콘 파일이 있다는 것을 감지하기 때문이다.-->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+    <link rel="icon" href="favicon.png" />
+    <!-- 스마트폰에 보이려면 아래와 같이 쓰면 되고 안드로이드에서도 보인다.-->
+    <link rel="apple-touch-icon" href="favicon.png" />
+
+    <!-- 구글 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+      integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="mypage_email.css" />
+
+    <script defer src="main.js"></script>
+    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
+  </head>
+
+  <body>
+    <div class="body__container">
+      <!-- HEADER -->
+      <header class="section">
+        <div class="inner clearfix">
+          <div class="logo float--left">
+            <a href="#">mechurial</a>
+          </div>
+          <div class="menu-group float--right">
+            <ul class="main-menu toggle">
+              <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
+              <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
+              <li><a href="#" onclick="location.href='signUp_terms.html'">회원가입</a></li>
+              <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <body>
+        <!-- header -->
+        <div id="header">
+            <a href="https://nid.naver.com/user2/V2Join.nhn?m=agree#agreeBottom" target="_blank" title="네이버 회원가입 페이지 보러가기"></a>
+        </div>
+
+
+        <!-- wrapper -->
+        <div class ="wrapper">
+            <h2 class="h2">이메일 변경</h2>
+            <!-- content-->
+            <div id="content">
+                <!-- 이메일 -->
+                <div>
+                    <h3 class="join_title">
+                        <label for="id">새 이메일</label>
+                    </h3>
+                    <span class="box int_id">
+                        <input type="text" id="id" class="int" maxlength="20">
+                    </span>
+                    <span class="error_next_box"></span>
+                </div>
+
+                <!-- 이메일 인증 BTN-->
+                <div class="btn_area_email1">
+                    <button type="button" id="btnMAilCheck">
+                        <span>이메일 인증</span>
+                    </button>
+                </div>
+                
+                <!-- 이메일 인증번호  -->
+                <div>
+                    <h3 class="join_title"><label for="email">이메일 인증번호<span class="optional"></span></label></h3>
+                    <span class="box int_email">
+                        <input type="text" id="email" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
+                    </span>
+                    <span class="error_next_box">인증번호를 다시 확인해주세요.</span>    
+                </div>
+
+                <!-- 이메일 인증 확인 BTN-->
+                <div class="btn_area_email2">
+                    <button type="button" id="btnMAilNext">
+                        <span>인증 확인</span>
+                    </button>
+                </div>
+
+                <!-- JOIN BTN-->
+                <div class="btn_area_join">
+                    <button type="button" id="btnJoin" onclick="location.href='mypage_main.html'">
+                        <span>변경하기</span>
+                    </button>
+                </div>
+
+                
+            </div> 
+            <!-- content-->
+
+        </div> 
+        <!-- wrapper -->
+    <script src="main.js"></script>
+    </body>
+  </section>
+  </body>
+</html>
