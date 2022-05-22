@@ -1,0 +1,123 @@
+/* 공통 */
+.body__container {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  /* 노말 */
+  font-weight: 400;
+  /* 어두운 회색 */
+  color: #333;
+}
+a {
+  text-decoration: none;
+}
+
+/* 버튼 */
+.btn {
+  height: 60px;
+  background: #eee linear-gradient(to bottom, #fcfcfc, #eee); /* 색을 위 아래 섞어줌 */
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  display: flex;
+  /* 가운데 수직 정렬 */
+  align-items: center;
+  padding: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  color: #333;
+}
+.btn:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* FLOAT CLERFIX */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.float--left {
+  float: left;
+}
+.float--right {
+  float: right;
+}
+
+/* SECTION & INNER */
+.section {
+  position: relative;
+}
+.section .inner {
+  max-width: 980px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.075);
+  background: #fff;
+}
+header .inner {
+  height: 78px;
+}
+header .menu-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 10px;
+}
+header .logo a {
+  background: url("../img/logo.svg");
+  width: 32px;
+  height: 32px;
+  display: block;
+  text-indent: -9999px;
+}
+header .logo a:hover {
+  background: url("../img/logo_on.svg");
+}
+header .main-menu {
+  display: flex;
+}
+header .main-menu li a {
+  display: block;
+  padding: 30px;
+  color: #3c4146;
+}
+
+#toggle-btn {
+  display: none;
+  background: url("../img/toggle-btn.svg");
+  width: 18px;
+  height: 24px;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+  border-radius: 30px;
+}
+
+/* VISUAL */
+.service_info {
+  text-align: center;
+  height: 80%;
+}
