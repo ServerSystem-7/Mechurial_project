@@ -1,3 +1,4 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +40,7 @@
         <div class="menu-group float--right">
           <ul class="main-menu toggle">
             <li>
-              <a href="#" onclick="location.href='enroll.html'">등록</a>
+              <a href="#" onclick="location.href='enroll.ejs'">등록</a>
             </li>
             <li>
               <a href="#" onclick="location.href='enrollmanagement.html'">등록 관리</a>
@@ -68,11 +69,11 @@
                 Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)
               </h2>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
             </li>
 
 
@@ -106,7 +107,9 @@
       </ul>
       <br />
       <br />
-      <button class="enroll_btn">등록하기</button>
+      <button class="enroll_btn" type="submit">
+        수정하기
+      </button> <!--type submit 추가-->
       </form>
 
 </body>
