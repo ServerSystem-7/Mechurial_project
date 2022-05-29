@@ -1,28 +1,61 @@
+const { Router } = require("express");
+const { signUpTerms } = require("./controllers/signUpController");
+
+
 const express = require("express"),
   app = express(),
-  //homeController = require("./controllers/homeController"),
+  router = express.Router(),
   errorController = require("./controllers/errorController"),
-  layouts = require("express-ejs-layouts");
+  homeController=require("./controllers/homeController"),
+  signUpController=require("./controllers/signUpController"),
+  layouts = require("express-ejs-layouts"),
+  methodOverride = require("method-override");
   
-app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 80);
-app.use(
-    express.urlencoded({
-      extended: false
-    })
-  );
-  app.use(express.json());
-  app.use(layouts);
-  app.use(express.static("public"));
-  
-  app.get("/", (req, res) => {      //기본 메인페이지 이동
-    res.render("index");
-  });
-  // 생성해야 할 controllers : 회원가입 / 등록 / 회원정보설정 / 
+app.set("view engine", "ejs");
+app.use("/public", express.static(__dirname + "/public"));
 
-  app.use(errorController.pageNotFoundError);
-  app.use(errorController.internalServerError);
 
-  app.listen(app.get("port"), () => {
-    console.log(`Server running at http://localhost:${app.get("port")}`);
-  });
+
+router.use(
+  methodOverride("_method", {
+    methods: ["POST", "GET"]
+  })
+);
+
+router.use(layouts);
+router.use(express.static("public"));
+
+router.use (
+  express.urlencoded({
+    extended : false
+  })
+);
+router.use(express.json());
+
+
+
+//router.get("/", homeController.index); //terms
+
+
+router.get("/", homeController.homePage);
+router.get("/enroll", homeController.showEnrollment);
+router.get("/serviceInfo", homeController.showserviceInfo);
+
+
+router.get("/signUp_terms", signUpController.signUp_terms);
+router.get("/signUp", signUpController.signUp_main);
+ // router.post("/signUp/create", signUpController.signUp_create);
+router.post("/signUp_emailAuth", signUpController.emailAuth);
+router.post("/signUp_emailCert", signUpController.emailCert);
+router.get("/signUp_complete", signUpController.signUp_complete);
+
+
+ 
+router.use(errorController.pageNotFoundError);
+router.use(errorController.internalServerError);
+
+app.use("/", router);
+app.listen(app.get("port"), () => {
+  console.log(`Server running at http://localhost:${app.get("port")}`);
+});
