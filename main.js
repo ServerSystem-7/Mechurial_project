@@ -8,6 +8,7 @@ const express = require("express"),
   errorController = require("./controllers/errorController"),
   homeController=require("./controllers/homeController"),
   signUpController=require("./controllers/signUpController"),
+  enrollController = require("./controllers/enrollController"), //등록 컨트롤러
   layouts = require("express-ejs-layouts"),
   methodOverride = require("method-override");
   
@@ -39,9 +40,11 @@ router.use(express.json());
 
 
 router.get("/", homeController.homePage);
-router.get("/enroll", homeController.showEnrollment);
-router.get("/serviceInfo", homeController.showserviceInfo);
+router.get("/enroll", enrollController.showEnroll);
+router.get("/enrollManagement", enrollController.manageEnroll);
+router.get("/enrollEdit", enrollController.showEnroll);
 
+router.get("/serviceInfo", homeController.showserviceInfo);
 
 router.get("/signUp_terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
