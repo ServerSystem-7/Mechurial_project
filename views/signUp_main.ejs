@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,7 +55,7 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="signUp_main.css" />
+    <link rel="stylesheet" href="../public/css/signUp_main.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
@@ -69,9 +71,9 @@
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
-              <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
-              <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
-              <li><a href="#" onclick="location.href='signUp_terms.html'">회원가입</a></li>
+              <li><a href="#" onclick="location.href='/enroll'">등록</a></li>
+              <li><a href="#" onclick="location.href='/enrollmanage'">등록 관리</a></li>
+              <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
               <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
             </ul>
           </div>
@@ -138,14 +140,14 @@
                         <label for="id">이메일</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="id" class="int" maxlength="20">
+                        <input type="text" id="EA" name="EA" class="int" maxlength="20">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
 
                 <!-- 이메일 인증 BTN-->
                 <div class="btn_area_email1">
-                    <button type="button" id="btnMAilCheck">
+                    <button type="button" id="emailSendBtn"onclick="emailSend('EA')">
                         <span>이메일 인증</span>
                     </button>
                 </div>
@@ -154,14 +156,14 @@
                 <div>
                     <h3 class="join_title"><label for="email">이메일 인증번호<span class="optional"></span></label></h3>
                     <span class="box int_email">
-                        <input type="text" id="email" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
+                        <input type="text" id="CEA" name="CEA" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
                     </span>
                     <span class="error_next_box">인증번호를 다시 확인해주세요.</span>    
                 </div>
 
                 <!-- 이메일 인증 확인 BTN-->
                 <div class="btn_area_email2">
-                    <button type="button" id="btnMAilNext">
+                    <button type="button" id="emailCertBtn" onclick="emailCer('CEA')">
                         <span>인증 확인</span>
                     </button>
                 </div>
@@ -179,7 +181,47 @@
 
         </div> 
         <!-- wrapper -->
-    <script src="main.js"></script>
+    <script>
+
+    function emailSend(email) {
+		var EA = document.getElementsByName(email)[0].value;
+		emailSendAjax(EA);
+	}
+	
+	// 이메일 인증 기능
+	function emailCer(cerNum) {
+		var CEA = document.getElementsByName(cerNum)[0].value;
+		emailCerAjax(CEA);
+	}
+
+    // 이메일 전송 기능
+    function emailSendAjax(email) {
+         console.log("입력된 이메일은 "+email+" 입니다.");
+        $.ajax({
+            type: 'POST',
+            url: '/signUp_emailAuth',
+            dataType: 'json',
+            data: {
+                EA: email
+            }
+        });
+        }
+
+
+        // 이메일 인증 기능
+        function emailCerAjax(cerNum) {
+            console.log("testtest");
+            $.ajax({
+                type: 'POST',
+                url: '/signUp_emailCert',
+                dataType: 'json',
+                data: {
+                    CEA: cerNum
+                }
+            });
+        }
+
+    </script>
     </body>
   </section>
   </body>

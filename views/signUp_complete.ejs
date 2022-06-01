@@ -1,7 +1,8 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Mechurial</title>
 
@@ -9,8 +10,10 @@
     <meta name="description" content="Mechurial-website" />
     <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
     user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
     <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
@@ -40,60 +43,53 @@
 
     <!-- 구글 폰트 -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- CSS reset -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
-        integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
-        crossorigin="anonymous" />
-    <link rel="stylesheet" href="/public/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+      integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="signUp_complete.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="body__container">
-        <!-- HEADER -->
-        <header class="section">
-            <div class="inner clearfix">
-                <div class="logo float--left">
-                    <a href="#">mechurial</a>
-                </div>
-                <div class="menu-group float--right">
-                    <ul class="main-menu toggle">
-                        <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
-                        <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
-                        <li><a href="#" onclick="location.href='signUp_terms.html'">회원가입</a></li>
-                        <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        <!-- VISUAL -->
-        <section class="section section--visual">
-            <div class="inner">
-                <div class="summary">
-                    <h2 class="summary__title">메추리알을 소개합니다!</h2>
-                    <p class="summary__description">메추리알이란...</p>
-                </div>
-                <div class="center-group">
-                    <form id="main-form" method="POST" action="">
-                        <ul>
-                            <li>
-                                <button type="enroll" class="btn">
-                                    관심페이지 등록하기
-                                </button>
-                                <button type="service-info" class="btn">
-                                    서비스 이용 안내
-                                </button>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-        </section>
-
-    </div>
-</body>
-
+      <!-- HEADER -->
+      <header class="section">
+        <div class="inner clearfix">
+          <div class="logo float--left">
+            <a href="#">mechurial</a>
+          </div>
+          <div class="menu-group float--right">
+            <ul class="main-menu toggle">
+              <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
+              <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
+              <li><a href="#" onclick="location.href='signUp_terms.html'">회원가입</a></li>
+              <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+    <!--페이지 내용 넣기-->
+    <section class="signUpComplete">
+      <h2 class="h2">회원가입 완료</h2>
+      <ul>
+          <div class="h2">회원가입이 완료되었습니다.<br>
+            로그인 후, 등록 버튼을 눌러 서비스를 이용해보세요!
+          </div>
+          <div class="btn_complete">
+            <button id="btnComplete" onclick="location.href='logIn_main.html'">
+                로그인하고 관심페이지 등록하기 >
+            </button >
+      </ul>
+  </body>
 </html>

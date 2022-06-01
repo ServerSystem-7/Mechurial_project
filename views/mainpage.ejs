@@ -1,0 +1,76 @@
+<!--views/mainpage.ejs-->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mechurial</title>
+
+    <meta name="author" content="team7" />
+    <meta name="description" content="Mechurial-website" />
+    <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
+    user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
+    <!-- CSS reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+      integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/mainpage.css" />
+
+    <script defer src="main.js"></script>
+    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
+  </head>
+
+  <body>
+    <div class="body__container">
+      <!-- HEADER -->
+      <header class="section">
+        <div class="inner clearfix">
+          <div class="logo float--left">
+            <a href="#" onclick="location.href='index.html'">mechurial</a>
+          </div>
+          <div class="menu-group float--right">
+            <ul class="main-menu toggle">
+              <li>
+                <a href="/enroll">등록</a>
+              </li>
+              <li>
+                <a href="#" onclick="location.href='/enrollmanage'"
+                  >등록 관리</a
+                >
+              </li>
+              <li><a>마이페이지</a></li>
+              <li><a href="/signUp_terms">회원가입</a></li>
+              <li><a href="#">로그인</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="service_body">
+        <button
+          class="service_btn1"
+          href="#"
+          onclick="location.href='enroll.html'"
+        >
+          관심페이지 등록하기
+        </button>
+        <button
+          class="service_btn2"
+          href="#"
+          onclick="location.href='tmp.html'"
+        >
+          서비스 이용 안내
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
