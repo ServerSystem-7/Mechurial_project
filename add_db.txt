@@ -1,0 +1,23 @@
+INSERT INTO pageTBL VALUES ("https://ipsi.sungshin.ac.kr/guide/dataroom.htm?bbsid=notice&ctg_cd=all");
+INSERT INTO pageTBL VALUES ("https://career.navercorp.com/naver/job/list/developer");
+INSERT INTO pageTBL VALUES ("https://careers.kakao.com/jobs?part=TECHNOLOGY");
+
+INSERT INTO userTBL VALUES ("minjin", "password11", "minjin@email.com");
+INSERT INTO userTBL VALUES ("sohee", "password22", "sohee@email.com");
+
+// true
+INSERT INTO registerTBL VALUES (1001, "외국인", "안녕", "잘가", "or", "성신입학", '2022-05-30', '11:00:00', "minjin", "https://ipsi.sungshin.ac.kr/guide/dataroom.htm?bbsid=notice&ctg_cd=all");
+// false
+INSERT INTO registerTBL VALUES (1002, "외국인", "안녕", "잘가", "and", "성신입학", '2022-05-30', '11:00:00', "sohee", "https://ipsi.sungshin.ac.kr/guide/dataroom.htm?bbsid=notice&ctg_cd=all");
+// false
+INSERT INTO registerTBL VALUES (1003, "외국인", "안녕", "잘가", "and", "성신입학", '2022-05-30', '11:00:00', "minjin", "https://ipsi.sungshin.ac.kr/guide/dataroom.htm?bbsid=notice&ctg_cd=all");
+// true
+INSERT INTO registerTBL VALUES (1004, "데이터", "분석", "파이낸셜", "and", "네이버개발채용", '2022-05-30', '11:00:00', "minjin", "https://career.navercorp.com/naver/job/list/developer");
+// false
+INSERT INTO registerTBL VALUES (1005, "가가가가", "나나나나", "다다다다", "or", "카카오테크채용", '2022-05-30', '11:00:00', "sohee", "https://careers.kakao.com/jobs?part=TECHNOLOGY");
+// false
+INSERT INTO registerTBL VALUES (1006, "가가가가", "나나나나", "다다다다", "or", "카카오테크채용", '2022-05-30', '11:00:00', "sohee", "https://careers.kakao.com/jobs?part=TECHNOLOGY");
+
+"https://ipsi.sungshin.ac.kr/guide/dataroom.htm?bbsid=notice&ctg_cd=all", "https://career.navercorp.com/naver/job/list/developer", "https://careers.kakao.com/jobs?part=TECHNOLOGY"
+
+// UPDATE registerTBL SET userID = 'minjin'
