@@ -1,52 +1,85 @@
-module.exports = (sequelize, Sequelize) => {
-    const register = sequelize.define("registerTBL", {
-        regNumber: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            allowNull: false
-        },
-        key1: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        key2: {
-            type: Sequelize.STRING
-        },
-        key3: {
-            type: Sequelize.STRING
-        },
-        notifyLogic: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        siteName: {
-            type: Sequelize.STRING
-        },
-        dueDate: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        dueTime: {
-            type: Sequelize.STRING,  // type 수정 필요!
-            allowNull: false
-        },
-        // userID: {
-        //     type: Sequelize.STRING,
-        //     references: {
-        //         model: User,  // not defined?
-        //         key: "id"
-        //     }
-        // },
-        // pageUrl: {
-        //     type: Sequelize.STRING,
-        //     references: {
-        //         model: Page,  // not defined?
-        //         key: "url"
-        //     }
-        // },
-    }, {
-        timestamps: false,
-        freezeTableName: true
-    });
-    return register;
-}
+const {Sequelize, DataTypes, Model} = require('sequelize');
+const config = require(__dirname + '/../config/config.js')["development"];
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password, {
+    host: config.host,
+    dialect: config.dialect
+  }
+);
+
+// import user, page
+const Page = require("./page.js")(sequelize, Sequelize);  // init도??
+
+class Register extends Model {}
+
+Register.init({
+    regNumber: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+    },
+    key1: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    key2: {
+        type: DataTypes.STRING
+    },
+    key3: {
+        type: DataTypes.STRING
+    },
+    notifyLogic: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    siteName: {
+        type: DataTypes.STRING
+    },
+    dueDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
+    dueTime: {
+        type: DataTypes.STRING,  // TODO: type 수정해야함!
+        allowNull: false
+    },
+    // userId: {  // TODO: foreign key
+    //     type: DataTypes.STRING,
+    //     references: {
+    //         model: User,
+    //         key: 'id'
+    //     }
+    // },
+    // pageUrl: {
+    //     type: DataTypes.STRING,
+    //     references: {
+    //         model: Page,
+    //         key: 'url'
+    //     }
+    // }
+},{
+    sequelize,
+    modelName: 'registerTBL',  // db
+    freezeTableName: true,
+    timestamps: false,
+})
+
+// async function createInstance() {
+//     await Register.sync({alter:true});
+//     const reg1 = await Register.create({
+//         // url: "www.example.com"
+//         key1: "외국인",
+//         key2: "안녕",
+//         key3: "잘가",
+//         notifyLogic: "or",
+//         siteName: "성신입학",
+//         dueDate: '2022-05-30',
+//         dueTime: '11:00:00'
+//     })
+//     console.log(reg1.key1)
+// }
+
+// createInstance();
