@@ -9,44 +9,52 @@ const sequelize = new Sequelize(
   }
 );
 
-class User extends Model {}
+module.exports = (sequelize, Sequelize) => {
 
-User.init({
-    id: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        set(value) {
-            this.setDataValue('password', hash(value));
+    class User extends Sequelize.Model {}
+
+    User.init({
+        id: {
+            type: Sequelize.STRING,
+            primaryKey: true,
+            allowNull: false
         },
-        // TODO: validation
-        validate: {
-            is: /^[0-9a-f]{64}$/i
-          }
-    },
-    email: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
-},{
-    sequelize,
-    modelName: 'userTBL',
-    freezeTableName: true,
-    timestamps: false,
-})
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            // TODO: hash password using bcrypt
+            // set(value) {
+            //     this.setDataValue('password', hash(value));
+            // },
+            // TODO: proper regex
+            validate: {
+                is: /^[0-9a-f]{64}$/i // "i": case-insenitive match
+            }
+        },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {isEmail: true}
+        }
+    },{
+        sequelize,
+        modelName: 'userTBL',
+        freezeTableName: true,
+        timestamps: false,
+    });
 
-// async function createInstance() {
-//     await User.sync({force: true});
-//     const user1 = await User.create({
-//         id: "mjkim",
-//         password: "mypassword",
-//         email: "hello@gmail.com"
+    return User;
+}
+
+// async function evokeValidationError(){
+//     await User.sync({alter:true});
+//     const wrong_password = "123abc";
+//     await User.create({
+//         id: "mjmj",
+//         password: wrong_password,
+//         email: "haha@gmail.com"
 //     })
-//     console.log(user1.password)
 // }
 
-// createInstance();
+// evokeValidationError();  // sequelizeError.ValidationError
