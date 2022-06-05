@@ -80,8 +80,4 @@ exports.showMypage = (req, res) => {
 // //   login: (req, res) => {
 // //     console.log(req);
 // //   },
-<<<<<<< HEAD
 // // };
-=======
-// // };
->>>>>>> feat/login

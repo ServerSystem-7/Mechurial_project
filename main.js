@@ -10,6 +10,7 @@ const express = require("express"),
   methodOverride = require("method-override"),
   // cookieParser = require("cookie-parser"),
   user = require("./models/user");
+  const { sequelize } = require('./models/index');
 
 app.set("port", process.env.PORT || 80);
 app.set("view engine", "ejs");
@@ -31,6 +32,16 @@ router.use(express.json());
 
 // app.use(cookieParser());
 
+/**/
+sequelize.sync({ alter: false })
+  .then(() => {
+	  console.log('데이터베이스 연결 성공.');
+  })
+  .catch((error) => {
+      console.error(error);
+});
+
+
 router.get("/", homeController.homePage);
 router.get("/enroll", enrollController.showEnroll);
 router.get("/enrollManagement", enrollController.manageEnroll);
@@ -38,10 +49,10 @@ router.get("/enrollEdit", enrollController.showEnroll);
 
 router.get("/signUp_terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
- // router.post("/signUp/create", signUpController.signUp_create);
+router.post("/signUp/create", signUpController.createUser);
 router.post("/signUp_emailAuth", signUpController.emailAuth);
 router.post("/signUp_emailCert", signUpController.emailCert);
-router.get("/signUp_complete", signUpController.signUp_complete);
+router.get("/signUp/complete", signUpController.signUp_complete);
 
 // app.get("/signUp_main", homeController.showEnrollManage);
 app.get("/serviceInfo", homeController.showserviceInfo);
@@ -53,5 +64,5 @@ router.use(errorController.internalServerError);
 
 app.use("/", router);
 app.listen(app.get("port"), () => {
-  console.log(`Server running at ${app.get("port")}`);
+  console.log(`Server running at http://localhost:${app.get("port")}`);
 });
