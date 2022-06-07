@@ -41,7 +41,6 @@ sequelize.sync({ alter: false })
       console.error(error);
 });
 
-
 router.get("/", homeController.homePage);
 router.get("/enroll", enrollController.showEnroll);
 router.get("/enrollManagement", enrollController.manageEnroll);
@@ -49,6 +48,7 @@ router.get("/enrollEdit", enrollController.showEnroll);
 
 router.get("/signUp_terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
+router.post("/signUp/idChk", signUpController.idChk);
 router.post("/signUp/create", signUpController.createUser);
 router.post("/signUp_emailAuth", signUpController.emailAuth);
 router.post("/signUp_emailCert", signUpController.emailCert);
