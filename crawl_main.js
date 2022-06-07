@@ -1,14 +1,16 @@
 const puppeteer = require("puppeteer"),
     fs = require("fs"),
-    path = require("path"),
     cheerio = require("cheerio"),
-    db = require("./models/index"),
-    nodeCron = require("node-cron");
+    db = require("./models/index");
+    // nodeCron = require("node-cron");
 
 
-db.sequelize.sync({alter: true});
+db.sequelize.sync({alter: false});
 const Page = db.page;
 const Register = db.register;
+
+const save_dir = "./crawling_results/";
+let final_array = []
 
 // crawl & save it as an html file
 async function save_html(url, file_name) {
@@ -27,30 +29,36 @@ async function save_html(url, file_name) {
     await browser.close();  // close browser (to prevent memory leak)
 }
 
-const save_dir = "./public/crawl_results/";
+if (!fs.existsSync(save_dir)){
+    console.log("Created a new directory to save crawling results.")
+    fs.mkdirSync(save_dir);
+}
+
 async function crawl_and_check(url) {
     console.log("============= crawl_and_check() =============")
-    file_name = save_dir + "file3.html"  // TODO: increment & path join?
+    // file_name = save_dir + "file3.html"  // TODO: increment & path join?
+    file_name = save_dir + url.slice(-3) + ".html"  // temp
     await save_html(url, file_name);
     console.log(`saved ${file_name}`);
 
-    result_arr = await check_register(url, file_name);
-    return `Done: ${url}`, result_arr
+    let result_array = await check_register(url, file_name);
+    // return `Done: ${url}`, final_array
+    return result_array
 }
 
 async function check_register(url_link, url_file) {  // TODO: simplify
     console.log("============= check_register() =============")
     // all register instances of the url_link
     let registrations = await Register.findAll({
-        where: {pageUrl: url_link},
+        where: {url: url_link},
         raw: true
     }) // list of objects(=instances)
 
     let satisfied = registrations.map(
         a => ({regNumber: a.regNumber, satisfied: false})
     );
-    console.log("initialized satisfied array as:")
-    console.log(satisfied)
+    // console.log("initialized satisfied array as:")
+    // console.log(satisfied)
 
     const $ = cheerio.load(fs.readFileSync(url_file));
     const whole_text = $.text();
@@ -89,8 +97,9 @@ async function run_all_urls() {
 
 function run_loop() {
     for (let idx = 0; idx < url_array.length; idx++) {
-        crawl_and_check(url_array[idx]).then((message) => {
-            console.log(message);
+        crawl_and_check(url_array[idx]).then((partial_array) => {
+            final_array = final_array.concat(partial_array)
+            if (final_array.length >= 6) {console.log(final_array)}  // 등록이 총 6개라서 최종 배열만 출력하도록 임시로 처리
         }).catch((err) => {
             failed_url_array.push(url_array[idx]);
             console.log(err);
@@ -98,19 +107,25 @@ function run_loop() {
     }
 }
 
-// every 30 seconds
-const job = nodeCron.schedule("*/30 * * * * *", function () {
-    let date_ob = new Date();
-    let hours = date_ob.getHours();
-    let minutes = date_ob.getMinutes();
-    let seconds = date_ob.getSeconds();
-    console.log(`${hours}:${minutes}:${seconds}`);
-    run_all_urls()
-    console.log("nodeCron is super cool!");
-}, {
-    scheduled: false,
-});
-job.start();
+run_all_urls();
+
+
+
+
+
+// // *:*:0, *:*30 (30초마다 실행됨)
+// const job = nodeCron.schedule("*/30 * * * * *", function () {
+//     let date_ob = new Date();
+//     let hours = date_ob.getHours();
+//     let minutes = date_ob.getMinutes();
+//     let seconds = date_ob.getSeconds();
+//     console.log(`${hours}:${minutes}:${seconds}`);
+//     run_all_urls()
+//     console.log("nodeCron is super cool!");
+// }, {
+//     scheduled: false,
+// });
+// job.start();
 
 // =====================================================================================================================
 // function for checking url validity at register page.

@@ -1,14 +1,3 @@
-const {Sequelize, DataTypes, Model} = require('sequelize');
-const config = require(__dirname + '/../config/config.js')["development"];
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password, {
-    host: config.host,
-    dialect: config.dialect
-  }
-);
-
 module.exports = (sequelize, Sequelize) => {
 
     class User extends Sequelize.Model {}
@@ -27,9 +16,9 @@ module.exports = (sequelize, Sequelize) => {
             //     this.setDataValue('password', hash(value));
             // },
             // TODO: proper regex
-            validate: {
-                is: /^[0-9a-f]{64}$/i // "i": case-insenitive match
-            }
+            // validate: {
+            //     is: /^[0-9a-f]{64}$/i // "i": case-insenitive match
+            // }
         },
         email: {
             type: Sequelize.STRING,

@@ -1,5 +1,4 @@
 module.exports = (sequelize, Sequelize) => {
-    const Page = require("./page.js")(sequelize, Sequelize)
     const User = require("./user.js")(sequelize, Sequelize)
 
     class Register extends Sequelize.Model {}
@@ -10,6 +9,11 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
+        },
+        url: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validation: {isUrl: true}
         },
         key1: {
             type: Sequelize.STRING,
@@ -53,13 +57,6 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             }
         },
-        pageUrl: {
-            type: Sequelize.STRING,
-            references: {
-                model: Page,
-                key: 'url'
-            }
-        }
     },{
         sequelize,
         modelName: 'registerTBL',
