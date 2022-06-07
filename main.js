@@ -1,42 +1,63 @@
 const express = require("express"),
   app = express(),
   router = express.Router(),
-  //homeController = require("./controllers/homeController"),
   errorController = require("./controllers/errorController"),
-  enrollController = require("./controllers/enrollController"), //등록 컨트롤러
-  layouts = require("express-ejs-layouts");
-  methodOverride = require("method-override");
-  
-app.set("view engine", "ejs");
+  homeController=require("./controllers/homeController"),
+  signUpController=require("./controllers/signUpController"),
+  enrollController = require("./controllers/enrollController"),
+  // subscriberController = require("./controllers.subscribersController"),
+  layouts = require("express-ejs-layouts"),
+  methodOverride = require("method-override"),
+  // cookieParser = require("cookie-parser"),
+  user = require("./models/user");
+
 app.set("port", process.env.PORT || 80);
-app.use(
-    express.urlencoded({
-      extended: false
-    })
-  );
-app.use(express.json());
-app.use(layouts);
-app.use(express.static("public"));
-  
-app.get("/", (req, res) => {      //기본 메인페이지 이동
-  res.render("index");
-});
-// 생성해야 할 controllers : 회원가입 / 등록 / 회원정보설정 / 
-
-router.get("/enroll", enrollController.showEnroll);   // 등록 받아오기
-router.get("/enrollManagement", enrollController.manageEnroll);   // 등록 받아오기
-router.get("/enrollEdit", enrollController.showEnroll);   // 등록 받아오기
-
-app.use(errorController.pageNotFoundError);
-app.use(errorController.internalServerError);
-
-app.listen(app.get("port"), () => {
-  console.log(`Server running at http://localhost:${app.get("port")}`);
-});
+app.set("view engine", "ejs");
+app.use("/public", express.static(__dirname + "/public"));
 
 router.use(
   methodOverride("_method", {
     methods: ["POST", "GET"]
   })
 );
+router.use (
+  express.urlencoded({
+    extended : false
+  })
+);
+router.use(layouts);
+router.use(express.static("public"));
+router.use(express.json());
 
+// app.use(cookieParser());
+
+router.get("/", homeController.homePage);
+router.get("/enroll/new", enrollController.new);
+router.post("/enroll/create", enrollController.create, enrollController.redirectView);
+
+router.get("/enrollManagement", enrollController.manage, enrollController.manageView);
+router.post("/enrollManagement/:regNumber/delete", enrollController.delete, enrollController.redirectView);
+
+router.get("/enroll/:id/edit", enrollController.edit);
+router.post("/enroll/:id/update", enrollController.update, enrollController.redirectView);
+// router.get("/enrollEdit", enrollController.showEnroll);
+
+router.get("/signUp_terms", signUpController.signUp_terms);
+router.get("/signUp", signUpController.signUp_main);
+ // router.post("/signUp/create", signUpController.signUp_create);
+router.post("/signUp_emailAuth", signUpController.emailAuth);
+router.post("/signUp_emailCert", signUpController.emailCert);
+router.get("/signUp_complete", signUpController.signUp_complete);
+
+// app.get("/signUp_main", homeController.showEnrollManage);
+app.get("/serviceInfo", homeController.showserviceInfo);
+app.get("/logIn_main", homeController.showLogin);
+app.get("/mypage_main", homeController.showMypage);
+
+router.use(errorController.pageNotFoundError);
+router.use(errorController.internalServerError);
+
+app.use("/", router);
+app.listen(app.get("port"), () => {
+  console.log(`Server running at ${app.get("port")}`);
+});

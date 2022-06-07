@@ -2,31 +2,31 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>Mechurial</title>
-      
-        <meta name="author" content="team7" />
-        <meta name="description" content="Mechurial-website" />
-        <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
-          user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
-        <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
-        <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      
-        <!-- 구글 폰트 -->
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-      
-        <!-- CSS reset -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
-          integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
-          crossorigin="anonymous" />
-        <link rel="stylesheet" href="/public/css/info.css" />
-      
-        <script defer src="main.js"></script>
-        <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
-      </head>
+      <meta charset="UTF-8" />
+      <title>Mechurial</title>
+    
+      <meta name="author" content="team7" />
+      <meta name="description" content="Mechurial-website" />
+      <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
+        user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
+      <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
+      <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+      <!-- 구글 폰트 -->
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    
+      <!-- CSS reset -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+        integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+        crossorigin="anonymous" />
+      <link rel="stylesheet" href="/public/css/info.css" />
+    
+      <script defer src="main.js"></script>
+      <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
+    </head>
 
   <body>
     <div class="body__container">
@@ -38,12 +38,8 @@
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
-              <li>
-                <a href="#" onclick="location.href='enroll.html'">등록</a>
-              </li>
-              <li>
-                <a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a>
-              </li>
+              <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
+              <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
               <li><a href="#">회원가입</a></li>
               <li><a href="#">로그아웃</a></li>
             </ul>
@@ -55,12 +51,8 @@
         <div class="inner clearfix">
           <div class="menu-group">
             <ul class="tablemenu toggle">
-              <li>
-                <a href="#" onclick="location.href='enroll.html'">조회</a>
-              </li>
-              <li>
-                <a href="#" onclick="location.href='enroll.html'">추가</a>
-              </li>
+              <li><a href="#" onclick="location.href='enroll.html'">조회</a></li>
+              <li><a href="#" onclick="location.href='enroll.html'">추가</a></li>
               <li><a href="#">삭제</a></li>
             </ul>
             <form id="search-form" method="post" action="">
@@ -81,46 +73,56 @@
         </div>
       </context>
       <!-- HEADER -->
+      <h2 class="center"> 등록 테이블</h2>
 
-      <div class="tablelist">
-          <table>
-              <div>
-                  <tr class ="tablebar">
-                      <td> </td>
-                      <td>사이트명</td>
-                      <td>URL</td>
-                      <td>마감기한</td>
-                      <td>키워드</td>
-                      <td>  </td>
-                  </tr>
-              </div>
-              <div class="listindex">
-                  <tr>
-                      <td><input type="checkbox" name="check" value="checked" /></td>
-                      <td>AAA1</td>
-                      <td>https;//www.figma.com</td>
-                      <td>2022.04.29</td>
-                      <td>미니언즈 킨더 만두</td>
-                      <td><button class ="edit_btn" href="#" onclick="location.href='enrollEdit.html'"> 수정하기 </button></td>
-                    </tr>
-                  <tr>
-                      <td><input type="checkbox" name="check" value="checked" /></td>
-                      <td>AAA2</td>
-                      <td>https;//www.figma.com</td>
-                      <td>2022.04.29</td>
-                      <td>빅파이 치즈샌드</td>
-                      <td><button class ="edit_btn" href="#" onclick="location.href='enrollEdit.html'"> 수정하기 </button></td>
-                  </tr>
-                  <tr>
-                      <td><input type="checkbox" name="check"" value="checked" /></td>
-                      <td>AAA3</td>
-                      <td>https;//www.figma.com</td>
-                      <td>2022.04.29</td>
-                      <td>컵 종이 핸드폰</td>
-                      <td><button class ="edit_btn" href="#" onclick="location.href='enrollEdit.html'"> 수정하기 </button></td>
-                  </tr>
-              </div>
-            </table>
-      </div>
+      <table class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>key1</th>
+                <th>key2</th>
+                <th>key3</th>
+                <th>deadline</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% enrollments.forEach(enrollment => { %>
+                <tr>
+                    <td>
+                      <%= enrollment.regNumber %>
+                    </td>
+                    <td>
+                      <%= enrollment.key1 %>
+                    </td>
+                    <td>
+                      <%= enrollment.key2 %>
+                    </td>
+                    <td>
+                      <%= enrollment.key3 %>
+                    </td>
+                    <td>
+                      <%= enrollment.dueDate %>
+                    </td>
+                    <td>
+                      <%= enrollment.dueTime %>
+                    </td>
+                    <td>
+                        <a href="<%= `/enroll/${enrollment.regNumber}/edit`%>">
+                            Edit 
+                        </a>
+                    </td>
+                    <td>
+                      <form action="<%= `/enrollManagement/${enrollment.regNumber}/delete`%>" method="post">
+                        <input type="hidden" name="id" value="<%= enrollment.regNumber %>">
+                        <input type="submit" name="Delete" value="Delete" onClick="alert('Are you sure you want to delete this record?')">
+                      </form>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

@@ -1,3 +1,7 @@
+<!--views/mainpage.ejs-->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,16 +40,14 @@
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
               <li>
-                <a href="#" onclick="location.href='enroll.html'">등록</a>
+                <a href="/enroll">등록</a>
               </li>
               <li>
-                <a href="#" onclick="location.href='enrollmanage.html'"
-                  >등록 관리</a
-                >
+                <a href="/enrollManagement">등록 관리</a>
               </li>
-              <li><a>마이페이지</a></li>
-              <li><a href="#">회원가입</a></li>
-              <li><a href="#">로그인</a></li>
+              <li><a href="/mypage_main">마이페이지</a></li>
+              <li><a href="/signUp">회원가입</a></li>
+              <li><a href="/logIn_main">로그인</a></li>
             </ul>
           </div>
         </div>

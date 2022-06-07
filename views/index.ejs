@@ -1,8 +1,48 @@
-<div class="container">
-  <div class="col-sm-6">
-    <img src="" alt="">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <div class="container">
+    <div class="col-sm-6">
+      <img src="" alt="">
+    </div>
+    <div>
+      <h1>This will be main page</h1>
+      <input type="button" value="버튼" id="logBtn" onclick='getGender()'>
+    </div>
   </div>
-  <div>
-    <h1>This will be main page</h1>
-  </div>
-</div>
+  <input type='radio' name='conditon' value='female' />여성
+  <input type='radio' name='conditon' value='male' />남성
+  <button onclick='getGender()'>확인</button>
+
+  <li>
+    <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
+    <input type="date" id="deadline" />
+    <input type="submit" value="등록하기" onclick="input()">
+  </li>
+
+  <div id='result'></div>
+  
+  <script>
+    function input(){
+      const dday = document.querySelector("#deadline").value;
+      console.log(dday);
+    }
+
+    function mylog(){
+      console.log("======버튼 성공=======");
+    }
+
+    function getGender() {
+      const genderNodeList
+      = document.getElementsByName('conditon');
+      
+      genderNodeList.forEach((node) => {
+        if(node.checked)  {
+          document.getElementById('result').innerText
+            = node.value;
+    }
+  }) 
+}
+  </script>
+</body>
