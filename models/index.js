@@ -8,7 +8,7 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//db.enroll = require("./enroll.js")(sequelize, Sequelize);
+db.enroll = require("./enroll.js")(sequelize, Sequelize);
 db.usertbl = require("./user.js")(sequelize, Sequelize);
 
 

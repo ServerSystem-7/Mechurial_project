@@ -87,14 +87,14 @@
             <label for="id">이메일</label>
         </h3>
         <span class="box int_id">
-            <input type="text" id="id" class="int" maxlength="20">
+            <input type="text" id="EA" class="int" maxlength="20">
         </span>
         <span class="error_next_box"></span>
       </div>
 
       <!-- 인증번호 전송 BTN-->
       <div class="btn_area_email1">
-          <button type="button" id="btnMAilCheck">
+          <button type="button" id="btnMAilCheck" onclick="emailSend('EA')">
               <span>인증번호 전송</span>
           </button>
       </div>
@@ -115,4 +115,27 @@
     </div>
 
   </body>
+  <script>
+    //이메일 추출
+    function emailSend(email) {
+		var EA = document.getElementsById(email).value;
+		emailSendAjax(EA);
+	}
+
+  // 이메일 전송 기능
+  function emailSendAjax(email) {
+         console.log("입력된 이메일은 "+email+" 입니다.");
+        $.ajax({
+            type: 'POST',
+            url: '/user/search_id',
+            dataType: 'json',
+            data: {
+                EA: email
+            }
+        });
+        }
+
+
+
+  </script>
 </html>
