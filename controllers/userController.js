@@ -1,8 +1,15 @@
 const db = require("../models/index"),
-passport = require("passport"),
-cookieParser = require("cookie-parser"),
+//cookieParser = require("cookie-parser"),
+passport = require("passport");
 
-  User = db.usertbl,
+
+const generateRandom = function(min, max) {
+  const randomNumber = Math.floor(Math.random() * (max-min+1)) + min;
+  return randomNumber;
+}
+const number = generateRandom(111111, 999999)
+    
+  User = db.userTBL,
   getUserParams = (body) => {
     return {
       id: body.id,
@@ -162,9 +169,11 @@ module.exports = {
         next(err);
     };
     },
+
     searchid_auth: async (req, res, next) =>{
       try{
         const reademailaddress = req.body.EA;
+
         // [START compute_send]
         // This sample is based off of:
         // https://github.com/sendgrid/sendgrid-nodejs/tree/master/packages/mail
@@ -179,20 +188,43 @@ module.exports = {
                 from: 'ssc22.team.07@gmail.com',
                 subject: 'Sendgrid test email from Node.js on Google Cloud Platform',
                 text: '인증번호는 '+ number+ '입니다.',
-                });
-            } catch(err) {
-               console.log(err);
-            };
-        };
+            });
+        } catch(err) {
+            console.log(err);
+        };};
+
         await sendgridExample();
         console.log("실행됨");
-        res.send({result:'success'});
-        
 
+        res.send({result:'success'});    
     } catch(err){
         res.send({ result : 'fail' });
         console.error(err);
         next(err);
-};
+    };
     },
+
+    emailCert : async (req,res,next)=>{
+      try{
+          const CEA = req.body.CEA;
+          console.log(number);
+
+          if(CEA==number){
+              console.log("인증 성공");
+              var isAuthedEA=req.body.isAuthedEA;
+              isAuthedEA=true;
+              res.send(isAuthedEA);
+               
+          }
+          else{
+              console.log("인증 실패");
+              res.end();
+              
+          }
+      } catch(err){
+          console.error(err);
+          next(err);
+          res.send({ result : 'fail' });
+      };
+  },
   }

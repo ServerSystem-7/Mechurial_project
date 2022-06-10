@@ -1,26 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
-    const usertbl = sequelize.define("usertbl", {
+
+    class userTBL extends Sequelize.Model {}
+
+    userTBL.init({
         id: {
-        type: Sequelize.STRING,
-        primaryKey : true,
-        allowNull:false
+            type: Sequelize.STRING,
+            primaryKey: true,
+            allowNull: false
         },
         password: {
-            type:Sequelize.STRING,
-            allowNull:false,
-                        
+            type: Sequelize.STRING,
+            allowNull: false,
+            // TODO: hash password with passport
         },
-        email:{
-            type:Sequelize.STRING,
-            allowNull:false
+        email: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {isEmail: true}
         }
+    },{
+        sequelize,
+        modelName: 'userTBL',
+        freezeTableName: true,
+        timestamps: false,
+    });
 
-        }, {
-            sequelize,
-            modelName: 'usertbl',
-            freezeTableName: true,
-            timestamps: false,
-        });
-
-        return usertbl;
+    return userTBL;
 }
