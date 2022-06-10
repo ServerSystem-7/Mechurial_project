@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="/public/css/info.css" />
   
     <script defer src="main.js"></script>
-    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
   </head>
 
 <body>
@@ -40,10 +39,10 @@
         <div class="menu-group float--right">
           <ul class="main-menu toggle">
             <li>
-              <a href="/enroll">등록</a>
+              <a href="#" onclick="location.href='register.ejs'">등록</a>
             </li>
             <li>
-              <a href="#" onclick="location.href='enrollmanagement.ejs'">등록 관리</a>
+              <a href="#" onclick="location.href='registerManagement.html'">등록 관리</a>
             </li>
             <li><a href="#">회원가입</a></li>
             <li><a href="#">로그아웃</a></li>
@@ -54,7 +53,7 @@
     <!-- 등록 창 -->
     <div class="body-form">
       <div class="body-l">
-        <form id="enroll-form" action="/enrollManagement" method="post"> <!--수정-->
+        <form id="enroll-form" method="post" action="">
           <ul>
             <div class="form-p">
               <li>
@@ -69,11 +68,11 @@
                 Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)
               </h2>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
 
-              <input class="input--text" type="text" /><br /><br />
+              <input class="input--text" type="text"/><br/><br/>
             </li>
 
 
@@ -83,48 +82,35 @@
 
                 <label>
                   <input type="radio" name="condition" value="Or" />합집합
-                  <input type="radio" name="condition" value="And" />교집합
-                </label>
-                
+                  <input type="radio" name="condition" value="And" />교집합</label>
               </li>
             </div>
-            <div class="form-p">
-              <li>
-                <h2 class="step-info">Step 4. 사이트 이름을 설정하세요.</h2>
-
-                <input class="input--text" type="text" />
-              </li>
-            </div>
-
-            <div class="form-p">
-              <li>
-                <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
-
-                <input type="date" name="startday" />
-              
-                <input type="date" name="deadline" />
-              </li>
-            </div>
-          </ul>
-          <button class="enroll_btn" type="submit" value="등록하기" onclick="location.href = './enrollManagement'">등록하기</button> <!--추가-->
-          <button class="enroll_btn" onclick="f()">등록하기</button>
-        </form>
       </div>
-    </div>
-    <script>
-      function f(){
-        var condition = document.getElementsByName("condition");
-        console.log(condition);
-      }
+      <div class="form-p">
+        <li>
+          <h2 class="step-info">Step 4. 사이트 이름을 설정하세요.</h2>
 
-      function movepage(){
-        // window.location.href = '/enrollManagement';
-        location.href = "/enrollManagement"
-      }   
-      function returnOne(){
-        return 1;
-      }   
+          <input class="input--text" type="text" />
+        </li>
+      </div>
 
-    </script>
+      <div class="form-p">
+        <li>
+          <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
+
+          <input type="date" name="startday" />
+          ~
+          <input type="date" name="deadline" />
+        </li>
+      </div>
+      </ul>
+      <br />
+      <br />
+      <button class="enroll_btn" type="submit">
+        수정하기
+      </button> <!--type submit 추가-->
+      </form>
+
 </body>
+
 </html>

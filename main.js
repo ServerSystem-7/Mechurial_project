@@ -4,23 +4,15 @@ const express = require("express"),
   errorController = require("./controllers/errorController"),
   homeController=require("./controllers/homeController"),
   signUpController=require("./controllers/signUpController"),
-  enrollController = require("./controllers/enrollController"),
-  // subscriberController = require("./controllers.subscribersController"),
+  registerController = require("./controllers/registerController"),
   layouts = require("express-ejs-layouts"),
-  methodOverride = require("method-override"),
   // cookieParser = require("cookie-parser"),
-  user = require("./models/user");
-  const { sequelize } = require('./models/index');
+  db = require('./models/index');
 
 app.set("port", process.env.PORT || 80);
 app.set("view engine", "ejs");
 app.use("/public", express.static(__dirname + "/public"));
 
-router.use(
-  methodOverride("_method", {
-    methods: ["POST", "GET"]
-  })
-);
 router.use (
   express.urlencoded({
     extended : false
@@ -33,7 +25,7 @@ router.use(express.json());
 // app.use(cookieParser());
 
 /**/
-sequelize.sync({ alter: false })
+db.sequelize.sync({ alter: true })
   .then(() => {
 	  console.log('데이터베이스 연결 성공.');
   })
@@ -43,9 +35,12 @@ sequelize.sync({ alter: false })
 
 
 router.get("/", homeController.homePage);
-router.get("/enroll", enrollController.showEnroll);
-router.get("/enrollManagement", enrollController.manageEnroll);
-router.get("/enrollEdit", enrollController.showEnroll);
+router.get("/register/new", registerController.new);
+router.post("/register/create", registerController.create, registerController.redirectView);
+router.get("/registerManagement", registerController.manage, registerController.manageView);
+router.post("/registerManagement/:registerId/delete", registerController.delete, registerController.redirectView);
+router.get("/register/:id/edit", registerController.edit);
+router.post("/register/:id/update", registerController.update, registerController.redirectView);
 
 router.get("/signUp_terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
@@ -54,7 +49,6 @@ router.post("/signUp_emailAuth", signUpController.emailAuth);
 router.post("/signUp_emailCert", signUpController.emailCert);
 router.get("/signUp/complete", signUpController.signUp_complete);
 
-// app.get("/signUp_main", homeController.showEnrollManage);
 app.get("/serviceInfo", homeController.showserviceInfo);
 app.get("/logIn_main", homeController.showLogin);
 app.get("/mypage_main", homeController.showMypage);
