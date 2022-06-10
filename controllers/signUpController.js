@@ -1,10 +1,4 @@
-//const {sequelize} = require('../models/user');
-const db = require('../models');
-//const usertbl = require("../models/user");
-
-//"use strict";
-
-
+const db = require('../models/index');
 
 //인증번호 생성
 const generateRandom = function(min, max) {
@@ -24,7 +18,7 @@ module.exports = {
     /*
     idChk : (req, res) => {
         const id = req.body.id;
-        const userId= await usertbl.findOne(id);
+        const userId= await userTBL.findOne(id);
 
         if(userId.length === 0){
             console.log('아이디 사용 가능')
@@ -44,7 +38,7 @@ module.exports = {
         console.log("비밀번호는 "+pw +"\n");
         console.log("이메일은 "+em +"\n");
 
-        db.usertbl.create({
+        db.userTBL.create({
             id:id,
             password:pw,
             email:em
