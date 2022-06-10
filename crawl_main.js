@@ -5,8 +5,8 @@ const puppeteer = require("puppeteer"),
     nodeCron = require("node-cron");
 
 db.sequelize.sync({alter: false});
-const Page = db.page;
-const Register = db.register;
+const Page = db.pageTBL;
+const Register = db.registerTBL;
 
 const save_dir = "./crawling_results/";
 let final_array = []
@@ -49,12 +49,12 @@ async function check_register(url_link, url_file) {  // TODO: simplify
     console.log("============= check_register() =============")
     // all register instances of the url_link
     let registrations = await Register.findAll({
-        where: {url: url_link},
+        where: {pageUrl: url_link},
         raw: true
     }) // list of objects(=instances)
 
     let satisfied = registrations.map(
-        a => ({regNumber: a.regNumber, satisfied: false})
+        a => ({registerId: a.registerId, satisfied: false})
     );
     // console.log("initialized satisfied array as:")
     // console.log(satisfied)  // array of objects
@@ -98,7 +98,7 @@ function run_loop() {
     for (let idx = 0; idx < url_array.length; idx++) {
         crawl_and_check(url_array[idx]).then((partial_array) => {
             final_array = final_array.concat(partial_array)
-            if (final_array.length >= 6) {console.log(final_array)}  // 등록이 총 6개라서 최종 배열만 출력하도록 임시로 처리 [{"regNumber": 1, satisfied:true},.. ]
+            if (final_array.length >= 5) {console.log(final_array)}  // 등록이 총 6개라서 최종 배열만 출력하도록 임시로 처리 [{"regNumber": 1, satisfied:true},.. ]
         }).catch((err) => {
             failed_url_array.push(url_array[idx]);
             console.log(err);
@@ -116,6 +116,8 @@ const job = nodeCron.schedule("*/30 * * * * *", function () {
     let minutes = date_ob.getMinutes();
     let seconds = date_ob.getSeconds();
     console.log(`${hours}:${minutes}:${seconds}`);
+    failed_url_array = [];
+    final_array = [];
     run_all_urls()
     console.log("nodeCron is super cool!");
 }, {
