@@ -73,7 +73,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             isDate: true,
             // validate: {isAfter: Register.getDateFromToday(-1)}  // yesterday
-        }, 
+        },
         userId: {
             type: Sequelize.STRING,
             references: {
@@ -84,7 +84,7 @@ module.exports = (sequelize, Sequelize) => {
         pageUrl: {
             type: Sequelize.STRING,
             allowNull: false,
-            validate: {isUrl: true},
+            //validate: {isUrl: true},
             references: {
                 model: Page,
                 key: 'url'

@@ -1,6 +1,7 @@
 "use strict";
 const db = require("../models/index"),
-    Register = db.registerTBL;
+    Register = db.registerTBL,
+    Page = db.pageTBL;
 
 function getRegisterParams(body) {
     return {
@@ -10,8 +11,8 @@ function getRegisterParams(body) {
         key3: body.key3,
         notifyLogic: body.condition,
         siteName: body.siteName,
-        dueDate: "2022-06-15",  // temporary
-        userId: "minjin11"  // temporary
+        dueDate: body.deadline, // temporary로 두셨던 부분
+        userId: "yujinSong"  // temporary
     };
 };
 
@@ -33,10 +34,14 @@ module.exports = {
         res.render("registerNew");
     },
     create: async(req, res, next) =>{
+        let pageUrl = req.params.url;
+        console.log("==pageUrl:", pageUrl);
         let registerParams = getRegisterParams(req.body);
         try{
+            let page = await Page.create({url: pageUrl});
             let register = await Register.create(registerParams);  // TODO: create Page first?
             res.locals.redirect = "/registerManagement";
+            res.locals.page = page; 
             res.locals.register = register;
             next();
         }catch(error){
@@ -57,9 +62,10 @@ module.exports = {
     
     show: async(req, res, next) => {
         try{
-            let registerId = req.params.id; // 수정
+            let registerId = req.params.id; // 수정 id?
             let register = await Register.findByPk(registerId);
-            res.locals.register;
+            // res.locals.register;
+            res.locals.register = register; 
             next()
         } catch(error){
             console.log(`Error fetching register: ${error.message}`);
@@ -67,15 +73,16 @@ module.exports = {
         };
     },
     showView: async(req,res) =>{
-        let registerId = req.params.id;
-        let register = await Register.findByPk(registerId)
-        res.render("registerNew", {register: register});
+        // let registerId = req.params.id;
+        // let register = await Register.findByPk(registerId)
+        // res.render("registerNew", {register: register});
+        res.render("registerNew");
     },
     edit: async (req, res, next) =>{
         try{
             let registerId = req.params.registerId;
             let register = await Register.findByPk(registerId);
-            res.render("registerNew",{
+            res.render("registerEdit",{
                 register: register
             });
         } catch(error){
@@ -89,8 +96,9 @@ module.exports = {
         console.log(registerParams);
         try{
             let register = await Register.findByPkAndUpdate(registerId, registerParams);
-            res.locals.redirect = `/registerEdit/${registerId}`;
+            // res.locals.redirect = `/registerEdit/${registerId}`;
             res.locals.register = register;
+            res.locals.redirect = "/registerManagement";
             next();
         }catch(error){
             console.log(`Error updating register by ID: ${error.message}`);

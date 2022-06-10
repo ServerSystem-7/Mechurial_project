@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             primaryKey: true,
             allowNull: false,
-            validation: {isUrl: true}
+            //validation: {isUrl: true} // 오류로 인한 주석처리
         },
     },{
         // TODO: hook?? (to create only if new url)
