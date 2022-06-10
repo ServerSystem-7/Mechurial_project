@@ -9,7 +9,7 @@ const express = require("express"),
   // cookieParser = require("cookie-parser"),
   db = require('./models/index');
 
-app.set("port", process.env.PORT || 80);
+app.set("port", process.env.PORT || 80); // 
 app.set("view engine", "ejs");
 app.use("/public", express.static(__dirname + "/public"));
 
