@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
   
     Page.init({
         url: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(768),
             primaryKey: true,
             allowNull: false,
             //validation: {isUrl: true} // 오류로 인한 주석처리

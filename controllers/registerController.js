@@ -12,12 +12,12 @@ function getRegisterParams(body) {
         notifyLogic: body.condition,
         siteName: body.siteName,
         dueDate: body.deadline, // temporary로 두셨던 부분
-        userId: "yujinSong"  // temporary
+        userId: "minjin11"  // temporary
     };
 };
 
 module.exports = {
-    manage: async (req, res, next) => {  // 
+    manage: async (req, res, next) => {
         try{
             let registrations = await Register.findAll();
             res.locals.registrations = registrations;
@@ -27,19 +27,17 @@ module.exports = {
             next(error);
         };
     },
-    manageView: (req, res) => {  //
+    manageView: (req, res) => {
         res.render("registerManagement");
     },
-    new: (req, res) => {  // 
+    new: (req, res) => {
         res.render("registerNew");
     },
     create: async(req, res, next) =>{
-        let pageUrl = req.params.url;
-        console.log("==pageUrl:", pageUrl);
         let registerParams = getRegisterParams(req.body);
         try{
-            let page = await Page.create({url: pageUrl});
-            let register = await Register.create(registerParams);  // TODO: create Page first?
+            let page = await Page.create({url: registerParams["pageUrl"]});
+            let register = await Register.create(registerParams);
             res.locals.redirect = "/registerManagement";
             res.locals.page = page; 
             res.locals.register = register;

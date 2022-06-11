@@ -63,7 +63,7 @@ module.exports = (sequelize, Sequelize) => {
         notifyLogic: {
             type: Sequelize.STRING,
             allowNull: false,
-            validate: {isIn: [['and', 'or']]}
+            // validate: {isIn: [['and', 'or']]}
         },
         siteName: {
             type: Sequelize.STRING
