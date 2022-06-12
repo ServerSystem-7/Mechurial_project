@@ -96,7 +96,7 @@
                             <label for="id">아이디</label>
                         </h3>
                         <span class="box int_id">
-                            <div> <%=users.id> </div>
+                            <div> <%= user.id %> </div>
                         </span>
                         </flaot:left>
                 </div>
@@ -105,7 +105,7 @@
                 <div>
                     <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
                     <span class="box int_pass">
-                        <div><%=user.password><div>
+                        <div><%= user.password %><div>
                 </div>
 
                 <!-- PW 변경 BTN-->
@@ -121,7 +121,7 @@
                         <label for="id">이메일</label>
                     </h3>
                     <span class="box int_email">
-                        <div><%=user.email></div>
+                        <div><%= user.email %></div>
                     </span>
                 </div>
 
@@ -139,19 +139,18 @@
                 </div>
 
                 <!-- DELETE BTN-->
-                <div class="btn_area_delete">
-                    <button type="button" id="btnDelete" onclick="location.href='mypage_delete.html'">
-                        <span>탈퇴하기</span>
-                    </button>
-                </div>
 
-                
+                <form action ="/mypage_main" class="btn_area_delete" method="POST">
+                  <button id="btnDelete" type="submit" 
+                  onClick="alert('Are you sure you want to leave?')" value="탈퇴하기">탈퇴하기</button>
+                </form>
             </div> 
             <!-- content-->
 
         </div> 
         <!-- wrapper -->
-    <script src="main.js"></script>
+    <script>
+    </script>
     </body>
   </section>
   </body>

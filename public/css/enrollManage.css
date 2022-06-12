@@ -140,9 +140,19 @@ header .main-menu li a {
   padding: 20px;
   margin-left: 50px;
 }
-table {
+.table th{
+  text-align: left;
+  column-width: 140px;
+  padding: 10px;
+}
+
+.table {
+  column-width: 140px;
+  padding: 10px;
+  margin: 0 auto;
   border-collapse: separate;
   border-spacing: 0 12px;
+  text-align: left;
 }
 
 input[name="check"] {

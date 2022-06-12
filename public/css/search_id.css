@@ -121,11 +121,11 @@ input {
     font-family: Dotum,'돋움',Helvetica,sans-serif;    
 }
 
-.box.int_id {
+.box .int_id {
     width: 60%;
 }
 
-.box.int_pass {
+.box .int_pass {
     width: 60%;
     padding-right: 40px;
 }
@@ -135,7 +135,7 @@ input {
     padding-right: 40px;
 }
 
-.box.int_email {
+.box .int_email {
     width: 60%;
     padding-right: 40px;
 }

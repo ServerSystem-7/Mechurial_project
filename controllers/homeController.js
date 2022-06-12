@@ -1,4 +1,7 @@
+
 exports.homePage = (req, res) => {
+  is_logined = req.session.is_logined;
+  userid =  req.session.userId;
   res.render("mainpage"); // 메인페이지
 };
 
@@ -7,7 +10,7 @@ exports.showSignUp = (req, res) => {
 };
 
 exports.showEnrollManage = (req, res) => {
-  res.render("enrollManage"); //등록 관리 페이지
+  res.render("enrollManagement"); //등록 관리 페이지
 };
 
 exports.showserviceInfo = (req, res) => {
@@ -80,8 +83,4 @@ exports.showMypage = (req, res) => {
 // //   login: (req, res) => {
 // //     console.log(req);
 // //   },
-<<<<<<< HEAD
 // // };
-=======
-// // };
->>>>>>> feat/login

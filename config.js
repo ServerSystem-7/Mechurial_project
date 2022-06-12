@@ -1,11 +1,11 @@
-const mysql = require("mysql");
+require('dotenv').config();
 
-const db = mysql.createConnection({
-  host: "34.64.119.28",
-  user: "root",
-  password: "password!",
-  port: 80,
-  database: "dbs",
-});
-db.connect();
-module.exports = db;
+module.exports ={
+  development: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: "mysql"
+  },
+}
