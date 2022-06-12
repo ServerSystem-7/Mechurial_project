@@ -75,6 +75,7 @@ router.get("/search_id", userController.searchid);
 router.post("/search_id/sendmail", userController.sendMail);
 router.post("/search_id/emailcert", userController.emailCert);
 router.post("/id_search_1", userController.authenticate);
+
 // 2. 비밀번호 찾기 관련 라우터
 router.get("/search_pw", userController.searchPw);
 router.post("/search_pw/sendmail", userController.sendMail);

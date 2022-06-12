@@ -33,6 +33,34 @@ module.exports = {
       res.render("search_pw");
     },
       
+    authenticate: async (req, res, next) => {
+      try{
+          let user =  await User.findOne({ where: {id: req.body.id}});
+          if(user){
+              let passwordMatch = await user.passwordComparison(req.body.password, user.password);
+              if(passwordMatch){
+                  console.log("일치");
+                  req.session.is_logined = true;
+                  req.session.userId = req.body.id;
+                  res.locals.user = user;
+                  res.redirect("/");
+                  //next();
+              }
+              else{
+                console.log("불일치");
+                  res.redirect("/login_main");
+                  next();
+              }
+          } else{
+              res.redirect("/login_main");
+              next();
+          }
+      }catch(err){
+          console.log('error!나요');
+          next(err);
+      };
+      },
+      
     // 유진님 코드 들어가는 부분
 
     sendMail: async (req, res, next) =>{
