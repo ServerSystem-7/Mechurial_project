@@ -1,17 +1,17 @@
-const { registerTBL } = require("./index.js");
+const { Register } = require("./index.js");
 const db = require(".");
 
 module.exports = (sequelize, Sequelize) => {
 
-    const pageTBL = require("./page.js")(sequelize, Sequelize)
-    const userTBL = require("./user.js")(sequelize, Sequelize)
+    const Page = require("./page.js")(sequelize, Sequelize)
+    const User = require("./user.js")(sequelize, Sequelize)
 
-    class registerTBL extends Sequelize.Model{
+    class Register extends Sequelize.Model{
         static async findByPkAndUpdate(id, params){
             try{
-                let register = await registerTBL.findByPk(id);
+                let register = await Register.findByPk(id);
                 if(register){
-                    register = await registerTBL.update(params, {
+                    register = await Register.update(params, {
                         where: {registerId: id}
                     });
                 }
@@ -46,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     };
 
-    registerTBL.init({
+    Register.init({
         registerId: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -96,5 +96,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false,
     });
     
-    return registerTBL;
+    return Register;
 };

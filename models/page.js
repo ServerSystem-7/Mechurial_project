@@ -1,8 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
 
-    class pageTBL extends Sequelize.Model {
+    class Page extends Sequelize.Model {
         static associate(db){
-            db.pageTBL.hasMany(db.pageTBL,{
+            db.Page.hasMany(db.Page,{
                 foreignKey:'pageUrl',
                 targetKey:'url',
                 onDelete:'cascade'
@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     }
   
-    pageTBL.init({
+    Page.init({
         url: {
             type: Sequelize.STRING,
             primaryKey: true,
@@ -25,5 +25,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false,
     });
     
-    return pageTBL;
+    return Page;
   }

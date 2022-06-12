@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 
-    class userTBL extends Sequelize.Model {
+    class User extends Sequelize.Model {
       
       static async findByPkAndUpdate(id, params) {
         try {
@@ -42,7 +42,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     };
 
-    userTBL.init({
+    User.init({
         id: {
             type: Sequelize.STRING,
             primaryKey: true,
@@ -66,5 +66,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false,
     });
 
-    return userTBL;
+    return User;
 }
