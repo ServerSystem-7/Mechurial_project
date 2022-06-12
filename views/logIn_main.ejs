@@ -57,25 +57,26 @@
     <header class="section">
       <div class="inner clearfix">
         <div class="logo float--left">
-          <a href="#" onclick="location.href='/'">mechurial</a>
+          <a href="#">mechurial</a>
         </div>
         <div class="menu-group float--right">
           <ul class="main-menu toggle">
-            <li><a href="#" onclick="location.href='/register/new'">등록</a></li>
-            <li><a href="#" onclick="location.href='/registerManagement'">등록 관리</a></li>
-            <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
-            <li><a href="#" onclick="location.href='/logIn_main'">로그인</a></li>
+            <li><a href="/enroll">등록</a></li>
+            <li><a href="/enrollManage">등록 관리</a></li>
+            <li><a href="/signUp_main'">회원가입</a></li>
+            <li><a href="/logIn_main">로그인</a></li>
           </ul>
         </div>
       </div>
     </header>
+
     <!--페이지 내용 넣기-->
-    <form class="login" method="">
+    <form action ="/logIn_main" class="login" method="POST">
       <h2>로그인</h2>
       <ul>
-          <li><input type="text" placeholder="아이디" title="아이디입력" required></li>
-          <li><input type="password" placeholder="비밀번호" title="비밀번호입력" required></li>
-          <li><input class="button" type="submit" value="submit"></li>
+          <li><input type="text" name="id" placeholder="아이디" title="아이디입력" required></li>
+          <li><input type="password" name="password" placeholder="비밀번호" title="비밀번호입력" required></li>
+          <li><input class="button" type="submit" value="login" id="login"></li>
       </ul>
       <div> <!--같이 움지기기 때문에 따로 요소 값 줄 필요 X-->
           <ul>
@@ -85,6 +86,19 @@
           </ul>
       </div>
     </form>
+    <script>
+      $(login).click(function(){
+        $.ajax({
+          url: 'logIn_main',
+          async: true,
+          type: 'POST',
+          data: {
+            userid: $("#id").val(),
+            userpwd: $("#password").val()
+          }
+        })
+      })
+    </script>
 </body>
 
 </html>

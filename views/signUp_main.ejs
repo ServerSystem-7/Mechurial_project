@@ -84,8 +84,6 @@
         <div id="header">
             <a href="https://nid.naver.com/user2/V2Join.nhn?m=agree#agreeBottom" target="_blank" title="네이버 회원가입 페이지 보러가기"></a>
         </div>
-
-
         <!-- wrapper -->
         <div class ="wrapper">
             <h2 class="h2">회원정보 입력</h2>
@@ -108,7 +106,7 @@
 
                     <!-- 아이디 중복 확인 BTN-->
                     <div class="btn_area_idCheck">
-                        <button type="button" id="idChk" onClick="idChk()">
+                        <button type="button" id="idChk" onclick="idCheck()">
                             <span>중복 확인</span>
                         </button>
                     </div>
@@ -118,9 +116,9 @@
                 <div>
                     <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
                     <span class="box int_pass">
-                        <input type="text" id="pswd1" name="pw1" class="int" maxlength="20">
+                        <input type="password" id="pswd1" name="pw1" class="int" maxlength="20">
                         <span id="alertTxt">사용불가</span>
-                        <img src="m_icon_pass.png" id="pswd1_img1" class="pswdImg">
+                        
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -129,8 +127,8 @@
                 <div>
                     <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
                     <span class="box int_pass_check">
-                        <input type="text" id="pswd2" name="pw2" class="int" maxlength="20" onchange="check_pw()" >
-                        <img src="public/images/m_icon_check_disable.png" id="pswd2_img1" name="pswd2_img1" class="pswdImg">
+                        <input type="password" id="pswd2" name="pw2" class="int" maxlength="20" onchange="check_pw()" >
+                        <img src="../public/images/m_icon_check_disable.png" id="pswd2_img1" name="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -185,8 +183,7 @@
         </div> 
         <!-- wrapper -->
     <script>
-
-    var isCoincidePw = false;
+    var isAccordPw = false;
     var isAuthedEA = false;
 
     function check_pw() {
@@ -194,52 +191,52 @@
         var pw2 = document.getElementsByName('pw2')[0].value;
             
         if(pw1===pw2){       
-            //document.getElementById('pswd2_img1').src="public/images/m_icon_check_able.png";
-            isCoincidePw=true;
-            console.log(isCoincidePw);
+            document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
+            isAccordPw=true;
         }
     }
-
-    function idChk() {
+    function idCheck() {
         var id = document.getElementsByName('id')[0].value;
-
+        console.log("작동중");
         $.ajax({
             type: 'POST',
-            url: '/signUp_emailAuth',
+            url: '/signUp/idChk',
             dataType: 'json',
             data: {
                 id: id
+            },
+            success : function(data){
+                console.log(data);
+                if(data)
+                    alert("사용 가능한 아이디입니다.");
+                else{
+                    alert("사용 불가능한 아이디 입니다. 다시 입력해주세요.");
+                    document.getElementsByName('id')[0].value="";
+                }
             }
         });
-        
     }
-
+  
     document.querySelector('.ajaxsend').addEventListener('click', function() {
         var id = document.getElementsByName('id')[0].value;
         var pw = document.getElementsByName('pw1')[0].value; 
         var EA = document.getElementsByName('EA')[0].value;
         
-        sendIdPw(id, pw, EA);
-
-        
-        if ((isCoincidePw==true) && (isAuthedEA==true) ){
+        if ((isAccordPw==true) && (isAuthedEA==true) ){
             sendIdPw(id, pw, EA);
-        }else if ((isCoincidePw==true) && (isAuthedEA ==false) ){
+        }else if ((isAccordPw==true) && (isAuthedEA ==false) ){
             alert("이메일 인증을 다시 확인해주세요.");
-        }else if((isCoincidePw==false) && (isAuthedEA==true)){
-            alter("비밀번호를 다시 확인해주세요.");
+        }else if((isAccordPw==false) && (isAuthedEA==true)){
+            alert("비밀번호를 다시 확인해주세요.");
         }else {
             alert("입력한 내용을 다시 확인해주세요.");
         }
         
-
     })
-
     function sendIdPw(userId, userPw, email) {
         console.log("입력된 아이디는 "+userId+" 입니다.");
         console.log("입력된 비밀번호는 "+userPw+" 입니다.");
         console.log("입력된 이메일은 "+email+" 입니다.");
-
         $.ajax({
             type: 'POST',
             url: '/signUp/create',
@@ -251,54 +248,58 @@
             }
         });
         location.href="/signUp/complete";
-
     }
-
-
     //이메일 추출
     function emailSend(email) {
 		var EA = document.getElementsByName(email)[0].value;
 		emailSendAjax(EA);
 	}
-
 	// 인증번호 ajax전송
 	function emailCer(cerNum) {
 		var CEA = document.getElementsByName(cerNum)[0].value;
 		emailCerAjax(CEA);
 	}
-
-
     // 이메일 전송 기능
     function emailSendAjax(email) {
          console.log("입력된 이메일은 "+email+" 입니다.");
         $.ajax({
             type: 'POST',
-            url: '/signUp_emailAuth',
+            url: '/signUp/emailAuth',
             dataType: 'json',
             data: {
                 EA: email
-            }
+            }, success: function(){
+                alert("인증번호를 메일로 전송했습니다.");
+          }
         });
         }
-
-
         // 이메일 인증 기능
         function emailCerAjax(cerNum) {
-            console.log("testtest");
             $.ajax({
                 type: 'POST',
-                url: '/signUp_emailCert',
+                url: '/signUp/emailcert',
                 dataType: 'json',
                 data: {
                     CEA: cerNum,
                     isAuthedEA : isAuthedEA
+                }, success: function(data){
+                    if(data){
+                        alert('이메일 인증에 성공했습니다.');
+                        isAuthedEA=data;
+                        console.log(isAuthedEA);
+
+                    }
+                    else{
+                        alert('인증번호가 일치하지 않습니다.');
+                        document.getElementById('CEA').value='';
+                    }
                 }
+                
             });
         }
-
+    </script>
     </script>
     </body>
   </section>
   </body>
 </html>
-

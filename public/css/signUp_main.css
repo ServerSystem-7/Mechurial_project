@@ -112,7 +112,8 @@ body {
 
 .wrapper{
     margin: 0 auto;
-    width: 80%;
+    width: 60%;
+    
 }
 .h2 {
     padding: 20px 0 20px;
@@ -262,9 +263,9 @@ select {
     margin: 10px 0 10px;
 }
 
-#btnId {
+#idChk {
     float: right;
-    width: 250px;
+    width: 200px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;
@@ -284,8 +285,8 @@ select {
 .btn_area_email1 {
     margin: 20px 0 ;
 }
-#btnMAilCheck {
-    width: 250px;
+#emailSendBtn {
+    width: 200px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;
@@ -305,8 +306,8 @@ select {
     margin: 20px 0 ;
 }
 
-#btnMAilNext {
-    width: 250px;
+#emailCertBtn {
+    width: 200px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;

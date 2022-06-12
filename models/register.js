@@ -1,3 +1,6 @@
+const { Register } = require("./index.js");
+const db = require(".");
+
 module.exports = (sequelize, Sequelize) => {
 
     const Page = require("./page.js")(sequelize, Sequelize)
@@ -76,20 +79,15 @@ module.exports = (sequelize, Sequelize) => {
         }, 
         userId: {
             type: Sequelize.STRING,
-            references: {
-                model: User,
-                key: 'id'
-            }
-        },
-        pageUrl: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            validate: {isUrl: true},
-            references: {
-                model: Page,
-                key: 'url'
-            }
-        }
+            references: db.userTBL,
+            referencesKey: 'id'
+       },
+       
+       pageUrl:{
+           type: Sequelize.STRING,
+           references: db.pageTBL,
+           referencesKey: 'url'
+       }
 
     },{
         sequelize,

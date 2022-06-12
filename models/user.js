@@ -1,6 +1,46 @@
 module.exports = (sequelize, Sequelize) => {
 
-    class User extends Sequelize.Model {}
+    class User extends Sequelize.Model {
+      
+      static async findByPkAndUpdate(id, params) {
+        try {
+          let user = await User.findByPk(id);
+          if (user) {
+            user = await User.update(params, {
+              where: {
+                id: id,
+              },
+            });
+          }
+          return user;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+  
+      static async findByPkAndRemove(id) {
+          let user = await User.findByPk(id);
+          if (user) {
+            user = await User.destroy({
+              where: {
+                id: id,
+              }
+            });
+          }
+          return user;
+        } 
+  
+        passwordComparison = (inputPassword, correctPassword) =>{
+          let user = this;
+          console.log(correctPassword);
+          if(inputPassword === correctPassword){
+            console.log("입력한 pw "+inputPassword);
+            console.log("db의pw "+correctPassword);
+        
+            return 1;
+          }else return 0;
+        }
+    };
 
     User.init({
         id: {

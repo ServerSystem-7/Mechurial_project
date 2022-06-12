@@ -1,6 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
 
-    class Page extends Sequelize.Model {}
+    class Page extends Sequelize.Model {
+        static associate(db){
+            db.Page.hasMany(db.Page,{
+                foreignKey:'pageUrl',
+                targetKey:'url',
+                onDelete:'cascade'
+            });
+        }
+    }
   
     Page.init({
         url: {

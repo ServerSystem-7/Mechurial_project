@@ -10,37 +10,16 @@
 a {
   text-decoration: none;
 }
-
-/* 버튼 */
-.btn {
-  height: 60px;
-  background: #eee linear-gradient(to bottom, #fcfcfc, #eee); /* 색을 위 아래 섞어줌 */
-  border: 0;
-  outline: 0;
-  border-radius: 4px;
-  display: flex;
-  /* 가운데 수직 정렬 */
-  align-items: center;
-  padding: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.5;
-  cursor: pointer;
+.section {
+  position: relative;
+}
+.section .inner {
+  max-width: 980px;
+  margin: 0 auto;
   box-sizing: border-box;
   position: relative;
-  color: #333;
-}
-.btn:hover::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.07);
 }
 
-/* FLOAT CLERFIX */
 .clearfix::after {
   content: "";
   clear: both;
@@ -51,17 +30,6 @@ a {
 }
 .float--right {
   float: right;
-}
-
-/* SECTION & INNER */
-.section {
-  position: relative;
-}
-.section .inner {
-  max-width: 980px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  position: relative;
 }
 
 /* HEADER */
@@ -103,54 +71,19 @@ header .main-menu li a {
   color: #3c4146;
 }
 
-#toggle-btn {
-  display: none;
-  background: url("../img/toggle-btn.svg");
-  width: 18px;
-  height: 24px;
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  cursor: pointer;
-  text-indent: -9999px;
-  border-radius: 30px;
+.signUpComplete{
+  text-align:center;
 }
 
-/* VISUAL */
-.service_body {
-  background-image: url("../img/main.jpg");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 500px;
-  margin: 50px;
-}
-
-.service_btn1 {
-  background: #ffe600;
-  width: 20%;
-  height: 50px;
-  padding: 30 25px;
-  font-size: 18px;
-  border-radius: 30px;
-  margin-top: 15px;
-  position: relative;
-  top: 60%;
-  left: 38%;
-  align-items: center;
-}
-
-.service_btn2 {
+#btnComplete {
   background: #2e43ff;
   color: #fff;
-  width: 20%;
-  height: 50px;
-  padding: 30 25px;
-  font-size: 18px;
-  border-radius: 30px;
-  margin-top: 15px;
+  width: 60%;
+  height: 70px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 60px;
+  margin-top: 20px;
   position: relative;
-  top: 45%;
-  left: 18%;
   align-self: center;
 }
