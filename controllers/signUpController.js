@@ -20,7 +20,7 @@ module.exports = {
             let flag=false;
         
             let result= await db.userTBL.findOne({
-            where:{id}
+            where:{id : id}
             })
 
             if(result==undefined){

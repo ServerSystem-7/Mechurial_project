@@ -1,7 +1,5 @@
 "use strict";
 
-const { registerTBL } = require("../models/index");
-
 const db = require("../models/index"),
     Register = db.registerTBL;
 
