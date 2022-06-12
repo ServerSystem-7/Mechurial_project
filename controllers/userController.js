@@ -2,9 +2,8 @@ const db = require("../models/index"),
 //cookieParser = require("cookie-parser"),
 passport = require("passport");
 sendEmail = require("../sendEmail");
-randomNumber = require("../createRandomNumber");
-  
-  User = db.User,
+randomNumber = require("../createRandomNumber"),
+User = db.userTBL,
   getUserParams = (body) => {
     return {
       id: body.id,
@@ -60,7 +59,7 @@ module.exports = {
           next(err);
       };
       },
-      
+
     // 유진님 코드 들어가는 부분
 
     sendMail: async (req, res, next) =>{
@@ -114,7 +113,7 @@ module.exports = {
         if (id==undefined)
           res.end();
     
-        const userEmail = await db.User.findAll({
+        const userEmail = await db.userTBL.findAll({
           attributes: ['email'],
           where: {id : id},
           raw:true
@@ -151,7 +150,7 @@ module.exports = {
         const inputPw = req.body.password;
         console.log(inputPw);
 
-        const user = await db.User.findOne({
+        const user = await db.userTBL.findOne({
           where: {id: req.session.userId}
         })
 
@@ -181,7 +180,7 @@ module.exports = {
     applyNewPw : async function(req,res,next) {
       try{
         const newPw=req.body.password;
-        let user = await db.User.findOne({
+        let user = await db.userTBL.findOne({
           where: {id : req.session.userId}
         })
 
@@ -190,7 +189,7 @@ module.exports = {
           email : user.email,
           password : newPw }
 
-        await db.User.findByPkAndUpdate(req.session.userId, params);
+        await db.userTBL.findByPkAndUpdate(req.session.userId, params);
 
         res.send({result:"ok"});
 

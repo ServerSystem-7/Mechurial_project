@@ -19,7 +19,7 @@ module.exports = {
             const id = req.body.id;
             let flag=false;
         
-            let result= await db.User.findOne({
+            let result= await db.userTBL.findOne({
             where:{id : id}
             })
 
@@ -45,7 +45,7 @@ module.exports = {
         const pw = req.body.pw;
         const em = req.body.em;
 
-        db.User.create({
+        db.userTBL.create({
             id:id,
             password:pw,
             email:em
@@ -73,7 +73,7 @@ module.exports = {
     emailCert : async (req,res,next)=>{
         try{
             const CEA = req.body.CEA;
-            
+
             if(CEA==number){
                 console.log("인증 성공");
                 var isAuthedEA=req.body.isAuthedEA;

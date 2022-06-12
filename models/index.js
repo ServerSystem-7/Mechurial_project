@@ -9,27 +9,27 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Register = require("./register.js")(sequelize, Sequelize);
-db.User = require("./user.js")(sequelize, Sequelize);
-db.Page = require("./page.js")(sequelize, Sequelize);
+db.registerTBL = require("./register.js")(sequelize, Sequelize);
+db.userTBL = require("./user.js")(sequelize, Sequelize);
+db.pageTBL = require("./page.js")(sequelize, Sequelize);
 
-db.User.hasMany(db.Register, {
+db.userTBL.hasMany(db.registerTBL, {
     foreignKey : 'userId',
     allowNull:false,
     constraints : true,
     onDelete:'cascade'
 });
-db.Page.hasMany(db.Register, {
+db.pageTBL.hasMany(db.registerTBL, {
     foreignKey : 'pageUrl',
     allowNull:false,
     constraints : true,
     onDelete: 'cascade'
 });
 
-db.Register.belongsTo(db.Page, {
+db.registerTBL.belongsTo(db.pageTBL, {
     foreignKey:'pageUrl'
 });
-db.Register.belongsTo(db.User, {
+db.registerTBL.belongsTo(db.userTBL, {
     foreignKey:'userId'
 });
 
