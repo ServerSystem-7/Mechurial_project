@@ -119,6 +119,7 @@
     <script>
 
     var isAuthedEA = false;
+    var number = undefined;
 
       //이메일 추출
       function emailSend(email) {
@@ -129,15 +130,16 @@
     // 이메일 전송 기능
     function emailSendAjax(email) {
            console.log("입력된 이메일은 "+email+" 입니다.");
+           alert("인증번호를 메일로 전송했습니다.");
           $.ajax({
               type: 'POST',
-              url: '/search_id',
+              url: '/search_id/sendmail',
               dataType: 'json',
               data: {
                   EA: email
-              }, success: function(){
-                alert("인증번호를 메일로 전송했습니다.");
-          }
+              }, success : function(CEA){
+                number=CEA;
+              }
           });
           }
 
@@ -151,11 +153,12 @@
    function emailCerAjax(cerNum) {
             $.ajax({
                 type: 'POST',
-                url: '/search_id_emailCert',
+                url: '/search_id/emailcert',
                 dataType: 'json',
                 data: {
-                    CEA: cerNum,
-                    isAuthedEA : isAuthedEA
+                  number:number,
+                  CEA: cerNum,
+                  isAuthedEA : isAuthedEA
                 }, success: function(data){
                     if(data){
                         alert('이메일 인증에 성공했습니다.');

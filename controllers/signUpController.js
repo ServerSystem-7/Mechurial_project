@@ -1,10 +1,9 @@
-const db = require('../models');
+const db = require('../models'),
+sendEmail = require("../sendEmail");
+randomNumber = require("../createRandomNumber");
+  
 
-const generateRandom = function(min, max) {
-    const randomNumber = Math.floor(Math.random() * (max-min+1)) + min;
-    return randomNumber;
-}
-const number = generateRandom(111111, 999999)
+let number;
         
 module.exports = {
     signUp_main : (req, res) => {
@@ -55,7 +54,7 @@ module.exports = {
             )
     },
 
-    emailAuth : async (req, res, next) => {
+    sendMail : async (req, res, next) => {
         try{
             const reademailaddress = req.body.EA;
             

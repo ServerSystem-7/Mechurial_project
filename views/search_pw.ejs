@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,7 +55,7 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="search_pw.css" />
+    <link rel="stylesheet" href="../public/css/search_pw.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
@@ -95,17 +97,17 @@
       <!-- 이메일 -->
       <div>
         <h3 class="join_title">
-            <label for="id">이메일</label>
+            <label for="EA">이메일</label>
         </h3>
         <span class="box int_id">
-            <input type="text" id="id" class="int" maxlength="20">
+            <input type="text" id="EA" class="int" maxlength="20">
         </span>
         <span class="error_next_box"></span>
       </div>
 
       <!-- 인증번호 전송 BTN-->
       <div class="btn_area_email1">
-          <button type="button" id="btnMAilCheck">
+          <button type="button" id="btnMAilCheck" onclick="emailSend('EA')">
               <span>인증번호 전송</span>
           </button>
       </div>
@@ -114,16 +116,78 @@
       <div>
           <h3 class="join_title"><label for="email">이메일 인증번호<span class="optional"></span></label></h3>
           <span class="box int_email">
-              <input type="text" id="email" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
+              <input type="text" id="CEA" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
           </span>
       </div>
 
       <div class="btn_area_join">
-        <button type="button" id="btnJoin" onclick="location.href='search_pw2.html'">
+        <button type="button" id="next" onclick="checkIdEmail()">
             <span>다음</span>
         </button>
       </div>
     </div>
 
+    <script>
+
+    var isAuthedEA = false;
+    var isValidId = false;
+
+      //이메일 추출
+      function emailSend(email) {
+      var EA = document.getElementById(email).value;
+      emailSendAjax(EA);
+    }
+  
+    // 이메일 전송 기능
+    function emailSendAjax(email) {
+          console.log("입력된 이메일은 "+email+" 입니다.");
+          alert("인증번호를 메일로 전송했습니다.");
+          $.ajax({
+              type: 'POST',
+              url: '/search_pw/sendmail',
+              dataType: 'json',
+              data: {
+                  EA: email
+              }
+          });
+          }
+
+
+        function checkIdEmail() {
+          var id = document.getElementById('id').value;
+          var EA = document.getElementById('EA').value;
+          var CEA = document.getElementById('CEA').value;
+          $.ajax({
+                type: 'POST',
+                url: '/search_pw',
+                dataType: 'json',
+                data: {
+                    id : id, 
+                    EA : EA,
+                    CEA: CEA,
+                    isAuthedEA : isAuthedEA,
+                    isValidId : isValidId 
+                } , success : function(data){
+                  console.log("isAuth "+data.isAuthedEA);
+                  console.log("isValid "+data.isValidId);
+                  isValidId=data.isValidId;
+                  isAuthedEA=data.isAuthedEA;
+                  if( (isValidId==true) && (isAuthedEA==true) )
+                  location.href="/mypage_pw";
+                  else if( (isValidId==true) && (isAuthedEA==false)) {
+                    alert("인증번호를 확인해주세요.");
+                    document.getElementById('CEA').value="";
+                  } else if ( (isValidId==false) && (isAuthedEA==true) ) {
+                    alert("입력하신 아이디와 이메일을 확인해주세요.");
+                    document.getElementById('id').value="";
+                  } else
+                    alert("입력한 내용을 다시 확인해주세요.");
+                }
+                
+            });
+        }
+  
+
+    </script>
   </body>
 </html>

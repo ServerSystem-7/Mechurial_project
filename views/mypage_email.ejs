@@ -139,5 +139,76 @@
     <script src="main.js"></script>
     </body>
   </section>
+  
+  <script>
+    var isCorrectCurPw=false;
+    var isOkNewPw=false;
+    var isAccordPw = false;
+
+    function check_pw() {
+      var pw1 = document.getElementById('pswd1').value;
+      var pw2 = document.getElementById('pswd2').value;
+          
+      if(pw1===pw2){       
+          document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
+          isAccordPw=true;
+          console.log(isAccordPw);
+      }
+  }
+
+    function checkCurPw(currentPw){
+      var beforePw= document.getElementById(currentPw).value;
+
+      $.ajax({
+            type: 'POST',
+            url: '/mypage_pw/checkpw',
+            dataType: 'json',
+            data: {
+                password : beforePw
+            }, success : function(data){
+              console.log("일치여부 : "+data.result);
+              if(data.result=="ok"){
+                alert("비밀번호가 일치합니다.\n새로운 비밀번호를 입력해주세요.");
+                document.getElementById('pswd0').disabled = true;
+                document.getElementById('btnCheckCurPw').disabled = true;
+                isCorrectCurPw=true;
+              }
+              else{
+                alert("비밀번호가 일치하지 않습니다.");
+                document.getElementById(currentPw).value="";
+              }
+            }
+        });
+    }
+
+    function changePw() {
+      if((isCorrectCurPw==true) && (isAccordPw==true)){
+        alert("비밀번호 변경이 완료되었습니다.");
+
+        const newPw = document.getElementById('pswd1').value;
+        $.ajax({
+            type: 'POST',
+            url: '/mypage_pw/changepw',
+            dataType: 'json',
+            data: {
+                password : newPw
+            }, success : function(data){
+              if(data.result=="ok") location.href="/mypage_main";
+              else {
+                alert("오류가 발생했습니다. 다시 시도해주세요.");
+                location.href="/mypage_main";
+              }
+            } 
+        });
+      }
+      
+    }
+    
+
+    
+
+  </script>
+
+
   </body>
 </html>

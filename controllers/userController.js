@@ -1,14 +1,10 @@
+const { render } = require("ejs");
 const db = require("../models/index"),
 //cookieParser = require("cookie-parser"),
 passport = require("passport");
-
-
-const generateRandom = function(min, max) {
-  const randomNumber = Math.floor(Math.random() * (max-min+1)) + min;
-  return randomNumber;
-}
-const number = generateRandom(111111, 999999)
-    
+sendEmail = require("../sendEmail");
+randomNumber = require("../createRandomNumber");
+  
   User = db.userTBL,
   getUserParams = (body) => {
     return {
@@ -17,25 +13,27 @@ const number = generateRandom(111111, 999999)
       password: body.password
     };
   };
+
+  let number;
+
 module.exports = {
-    login: (req, res, next)=>{
-      res.render("logIn_main")
+    login: (req, res)=>{
+      res.render("logIn_main");
     },
-    searchid: (req, res, next)=>{
-      res.render("search_id")
-    },
-    logout: (req, res, next) => {
+  logout: (req, res) => {
         req.session.distroy;
         res.clearCookie("sid");
         res.redirect('logIn_main');
     },
-    // authenticate: passport.authenticate("local", {
-    //   failureRedirect: '/login_main',
-    //   //failureFlash : "failed to login",
-    //   successRedirect: '/',
-    //   //successFlash:"loggin!"
-    //   }),
+    searchid: (req, res, next) => {
+      res.render("search_id");
 
+    },
+    
+    searchPw:(req, res) => {
+      res.render("search_pw");
+    },
+      
   index: async (req, res, next) => {
     try {
       let users = await User.findAll();
@@ -55,11 +53,12 @@ module.exports = {
   create: async (req, res, next) => {
     if(req.skip) next();
     let userParams = getUserParams(req.body);
+    console.log(1);
     try{
         let user = new User(userParams);
         User.register(user, req.body.password, (error,user) => {
             if(user){
-                req.flash("success", "create sucessfully");
+                //req.flash("success", "create sucessfully");
                 res.locals.redirect = "mypage";
                 res.locals.user = user;
                 next();
@@ -139,28 +138,25 @@ module.exports = {
       next(error);
     }
   },
-   authenticate: async (req, res, next) => {
+  authenticate: async (req, res, next) => {
     try{
-        let user = await User.findOne({ where: {id: req.body.id}})
-        console.log(user);
+        let user =  await User.findOne({ where: {id: req.body.id}});
         if(user){
             let passwordMatch = await user.passwordComparison(req.body.password, user.password);
             if(passwordMatch){
                 console.log("일치");
-                req.session.id = req.body.id;
                 req.session.is_logined = true;
-                //res.locals.user = user;
+                req.session.userId = req.body.id;
+                res.locals.user = user;
                 res.redirect("/");
                 //next();
             }
             else{
               console.log("불일치");
-                //req.flash("error","Incorrect Password");
                 res.redirect("/login_main");
                 next();
             }
         } else{
-            //req.flash("error","User account not found");
             res.redirect("/login_main");
             next();
         }
@@ -170,61 +166,154 @@ module.exports = {
     };
     },
 
-    searchid_auth: async (req, res, next) =>{
+
+    sendMail: async (req, res, next) =>{
       try{
         const reademailaddress = req.body.EA;
+        number = randomNumber(111111, 999999);
+        
+        await sendEmail(reademailaddress, number);
+          console.log("인증메일 전송");
+          res.send({
+            number:number
+          });    
 
-        // [START compute_send]
-        // This sample is based off of:
-        // https://github.com/sendgrid/sendgrid-nodejs/tree/master/packages/mail
-        require('dotenv').config();
-        const sendgrid = require('@sendgrid/mail');
-        sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
-
-        async function sendgridExample() {
-            try{
-                await sendgrid.send({
-                to: reademailaddress,
-                from: 'ssc22.team.07@gmail.com',
-                subject: 'Sendgrid test email from Node.js on Google Cloud Platform',
-                text: '인증번호는 '+ number+ '입니다.',
-            });
-        } catch(err) {
-            console.log(err);
-        };};
-
-        await sendgridExample();
-        console.log("실행됨");
-
-        res.send({result:'success'});    
-    } catch(err){
-        res.send({ result : 'fail' });
+      }catch(err){
+        res.end();
         console.error(err);
         next(err);
-    };
+      };
     },
+        
 
     emailCert : async (req,res,next)=>{
       try{
-          const CEA = req.body.CEA;
-          console.log(number);
+        let isAuthedEA=req.body.isAuthedEA;
+        const CEA = req.body.CEA;
 
-          if(CEA==number){
-              console.log("인증 성공");
-              var isAuthedEA=req.body.isAuthedEA;
-              isAuthedEA=true;
-              res.send(isAuthedEA);
-               
-          }
-          else{
-              console.log("인증 실패");
-              res.end();
-              
-          }
+        if(CEA==number){
+          console.log("인증 성공");
+          isAuthedEA=true;
+        }
+        else
+          console.log("인증 실패");
+             
+        res.send(isAuthedEA);
+
       } catch(err){
           console.error(err);
           next(err);
-          res.send({ result : 'fail' });
+          res.end();
       };
   },
+
+    checkIdEmail :  async (req,res,next) =>{
+      try{
+        const email = req.body.EA;
+        const cerNum = req.body.CEA;
+        const id = req.body.id;
+        let isAuthedEA = req.body.isAuthedEA;
+        let isValidId = req.body.isValidId;
+        
+        if (id==undefined)
+          res.end();
+    
+        const userEmail = await db.userTBL.findAll({
+          attributes: ['email'],
+          where: {id : id},
+          raw:true
+        });    
+        if (userEmail)
+          if (userEmail[0].email == email)
+            isValidId=true;
+          
+        if(number==cerNum)
+          isAuthedEA=true;
+
+        res.send({
+            isAuthedEA:isAuthedEA,
+            isValidId:isValidId
+        }) 
+        
+        
+        
+      }catch(err){
+        console.error(err);
+        next(err);
+        res.end();
+      }
+    },
+
+    
+    changePW: (req,res) => {
+      res.render("mypage_pw");
+    },
+
+    checkPw: async (req,res, next) => {
+      console.log("로그인된 아이디는 "+req.session.userId);
+      try{
+        const inputPw = req.body.password;
+        console.log(inputPw);
+
+        const user = await db.userTBL.findOne({
+          where: {id: req.session.userId}
+        })
+
+        if(user){
+            let passwordMatch = await user.passwordComparison(inputPw, user.password);
+            console.log(passwordMatch);
+
+            if(passwordMatch){
+              console.log("ok실행");
+              res.send({
+                result:"ok"
+              })
+            } else{
+              console.log("fail실행");
+            res.send({
+              result:"fail"
+            })
+          }
+      }
+
+    } catch(err){ console.error(err);
+      next(err);
+      res.end();
+    }   
+    },
+
+    applyNewPw : async function(req,res,next) {
+      try{
+        const newPw=req.body.password;
+        let user = await db.userTBL.findOne({
+          where: {id : req.session.userId}
+        })
+
+        const params = {
+          id : user.id,
+          email : user.email,
+          password : newPw }
+
+        await db.userTBL.findByPkAndUpdate(req.session.userId, params);
+
+        res.send({result:"ok"});
+
+      }catch(err){
+        console.error(err);
+        next(err);
+        res.end();
+      }
+    },
+
+    
+    changeEmail : (req,res) =>{
+      res.render("mypage_email");
+    },
+
+    checkEmail : (req,res) =>{
+      
+    }
+
+
+
   }
