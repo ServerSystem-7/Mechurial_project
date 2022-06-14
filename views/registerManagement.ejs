@@ -1,32 +1,65 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <title>Mechurial</title>
-    
-      <meta name="author" content="team7" />
-      <meta name="description" content="Mechurial-website" />
-      <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
-        user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
-      <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
-      <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    
-      <!-- 구글 폰트 -->
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-    
-      <!-- CSS reset -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
-        integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
-        crossorigin="anonymous" />
-      <link rel="stylesheet" href="/public/css/info.css" />
-    
-      <script defer src="main.js"></script>
-      <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mechurial</title>
+
+    <meta name="author" content="team7" />
+    <meta name="description" content="Mechurial-website" />
+    <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
+    user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
+    <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- og: Open graph의 약자, 일종의 정보를 의미하고 이것을 통해 외부에 제공하는 정보를 정의할 수 있다, og는 페이스북에서 주로 활용-->
+    <!-- http://ogp.me/  참고 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mechurial" />
+    <meta property="og:title" content="make your alarm first" />
+    <meta property="og:description" content="mechurial" />
+    <meta property="og:image" content="img/logo__github.png" />
+    <meta property="og:url" content="https://mechurial.com" />
+    <!-- Twitter Card: og와 동일한 개념, 이것은 트위터에서 주로 활용, 카카오톡이나 기타 등등 서비스에서 og를 사용하기도 하고 트위터 카드를 사용하기도 하니 2개를 다 정의 해놓는 것이 좋다. -->
+    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html  참고 -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="Mechurial" />
+    <meta property="twitter:title" content="make your alarm first" />
+    <meta property="twitter:description" content="mechurial" />
+    <meta property="twitter:image" content="img/logo__github.png" />
+    <meta property="twitter:url" content="https://mechurial.com" />
+
+    <!-- 아래는 인터넷 익스플로러에서 아이콘을 사용할 때 쓰는 코드인데 루트에 ico파일이 있다면 생략해도 된다.
+    왜냐하면 코드가 명시 되지 않으면 익스플로러에서는 루트에 ico 파일이 있으면 아이콘 파일이 있다는 것을 감지하기 때문이다.-->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+    <link rel="icon" href="favicon.png" />
+    <!-- 스마트폰에 보이려면 아래와 같이 쓰면 되고 안드로이드에서도 보인다.-->
+    <link rel="apple-touch-icon" href="favicon.png" />
+
+    <!-- 구글 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+      integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/registerManagement.css" />
+
+    <script defer src="main.js"></script>
+    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
+  </head>
 
   <body>
     <div class="body__container">
@@ -38,17 +71,17 @@
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
-              <li><a href="#" onclick="location.href='/register/new'">등록</a></li>
-              <li><a href="#" onclick="location.href='/registerManagement'">등록 관리</a></li>
-              <li><a href="#">회원가입</a></li>
-              <li><a href="#">로그아웃</a></li>
+                <li><a href="#" onclick="location.href='/register/new'">등록</a></li>
+                <li><a href="#" onclick="location.href='/registerManagement'">등록 관리</a></li>
+                <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
+                <li><a href="#" onclick="location.href='/logIn_main'">로그인</a></li>
             </ul>
           </div>
         </div>
       </header>
       <!-- 등록관리 창 -->
-      <context class="section">
-        <div class="inner clearfix">
+      <!-- <context class="section">
+        <div class="tablelist">
           <div class="menu-group">
             <ul class="tablemenu toggle">
               <li><a href="#" onclick="location.href='enroll.html'">조회</a></li>
@@ -71,27 +104,30 @@
             </form>
           </div>
         </div>
-      </context>
+      </context> -->
       <!-- HEADER -->
-      <h2 class="center"> 등록 테이블</h2>
-
-      <table class="table">
+      <h2 class="h2"> 등록 관리 </h2>
+      <table class="type08">
         <thead>
             <tr>
-                <th>No</th>
-                <th>key1</th>
-                <th>key2</th>
-                <th>key3</th>
-                <th>deadline</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th scope="cols">No</th>
+                <th scope="cols">siteName</th>
+                <th scope="cols">key1</th>
+                <th scope="cols">key2</th>
+                <th scope="cols">key3</th>
+                <th scope="cols">dueDate</th>
+                <th scope="cols"> </th>
+                <th scope="cols"> </th>
             </tr>
         </thead>
         <tbody>
             <% registrations.forEach(registration => { %>
                 <tr>
                     <td>
-                      <%= registration.regNumber %>
+                      <%= registration.registerId %>
+                    </td>
+                    <td>
+                      <%= registration.siteName %>
                     </td>
                     <td>
                       <%= registration.key1 %>
@@ -105,24 +141,38 @@
                     <td>
                       <%= registration.dueDate %>
                     </td>
+          
                     <td>
-                      <%= registration.dueTime %>
-                    </td>
-                    <td>
-                        <a href="<%= `/register/${registration.registerId}/edit`%>">
-                            Edit 
-                        </a>
+                      <a href="<%=`/registerManagement/${registration.registerId}/edit`%>">
+                        Edit
+                      </a>
                     </td>
                     <td>
                       <form action="<%= `/registerManagement/${registration.registerId}/delete`%>" method="post">
                         <input type="hidden" name="id" value="<%= registration.registerId %>">
-                        <input type="submit" name="Delete" value="Delete" onClick="alert('Are you sure you want to delete this record?')">
+                        <input type="hidden" name="url" value="<%= registration.pageUrl %>">
+                        <input class="delete_btn" type="submit" name="Delete" value="Delete" onClick="alert('Are you sure you want to delete this record?')">
                       </form>
                     </td>
                 </tr>
                 <% }); %>
         </tbody>
       </table>
-    </div>
   </body>
 </html>
+
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    border-left: 1px solid #444444;
+    padding: 10px;
+  }
+  th:first-child, td:first-child {
+    border-left: none;
+  }
+</style>

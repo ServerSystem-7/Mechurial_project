@@ -1,7 +1,8 @@
 "use strict";
 
 const db = require("../models/index"),
-    Register = db.registerTBL;
+    Register = db.registerTBL,
+    Page = db.pageTBL;
 
 function getRegisterParams(body) {
     return {
@@ -11,13 +12,13 @@ function getRegisterParams(body) {
         key3: body.key3,
         notifyLogic: body.condition,
         siteName: body.siteName,
-        dueDate: "2022-06-15",  // temporary
+        dueDate: body.dueDate, 
         userId: "minjin11"  // temporary
     };
 };
 
 module.exports = {
-    manage: async (req, res, next) => {  // 
+    manage: async (req, res, next) => {  
         try{
             let registrations = await Register.findAll();
             res.locals.registrations = registrations;
@@ -27,25 +28,39 @@ module.exports = {
             next(error);
         };
     },
-    manageView: (req, res) => {  //
+    manageView: (req, res) => { 
         res.render("registerManagement");
     },
-    new: (req, res) => {  // 
+    new: (req, res) => {  
         res.render("registerNew");
     },
     create: async(req, res, next) =>{
-        let registerParams = getRegisterParams(req.body);
         try{
-            let register = await Register.create(registerParams);  // TODO: create Page first?
-            res.locals.redirect = "/registerManagement";
-            res.locals.register = register;
-            next();
-        }catch(error){
-            console.log(`Error fetching register: ${error.message}`);
-            next(error);
-        };
+            let registerParams = getRegisterParams(req.body);
+            const url = registerParams["pageUrl"];
+            let result= await Page.findOne({
+            where:{url}
+            })
+            if(result==undefined){
+                console.log('pageTBL에 해당 url 존재X');
+                let page = await Page.create({url: registerParams["pageUrl"]});
+                let register = await Register.create(registerParams);
+                res.locals.page = page; 
+                res.locals.register = register;
+                res.locals.redirect = "/registerManagement";
+                next();
+            }else {
+                console.log('pageTBL에 해당 url 존재O');
+                let register = await Register.create(registerParams);
+                res.locals.register = register;
+                res.locals.redirect = "/registerManagement";
+                next();
+            }
+        } catch(err){
+            console.error(err);
+            next(err);
+        }
     },
-
     redirectView: (reg, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath !== undefined){
@@ -55,12 +70,11 @@ module.exports = {
             next();
         }
     },
-    
     show: async(req, res, next) => {
         try{
-            let registerId = req.params.id; // 수정
+            let registerId = req.params.id;
             let register = await Register.findByPk(registerId);
-            res.locals.register;
+            res.locals.register = register;
             next()
         } catch(error){
             console.log(`Error fetching register: ${error.message}`);
@@ -68,8 +82,8 @@ module.exports = {
         };
     },
     showView: async(req,res) =>{
-        let registerId = req.params.id;
-        let register = await Register.findByPk(registerId)
+        // let registerId = req.params.id;
+        // let register = await Register.findByPk(registerId)
         res.render("registerNew", {register: register});
     },
     edit: async (req, res, next) =>{
@@ -90,8 +104,9 @@ module.exports = {
         console.log(registerParams);
         try{
             let register = await Register.findByPkAndUpdate(registerId, registerParams);
-            res.locals.redirect = `/registerEdit/${registerId}`;
+            // res.locals.redirect = `/registerEdit/${registerId}`;
             res.locals.register = register;
+            res.locals.redirect = "/registerManagement";
             next();
         }catch(error){
             console.log(`Error updating register by ID: ${error.message}`);
@@ -99,12 +114,29 @@ module.exports = {
         };
     },
     delete: async(req, res, next) => {
-        let registerId = req.params.registerId;
         try{
+            let registerParams = getRegisterParams(req.body);
+            let registerId = req.params.registerId;
+            const url = registerParams["pageUrl"];
+
             let register = await Register.findByPkAndRemove(registerId);
-            res.locals.redirect = "/registerManagement"; // 확인
             res.locals.register = register;
-            next();
+
+            let result= await Register.findOne({
+            where:{pageUrl:url}
+            })
+
+            if(result==undefined){
+                console.log('url 혼자 사용 중');
+                let page = await Page.findByPkAndRemove(registerParams["pageUrl"]);
+                res.locals.page = page;
+                res.locals.redirect = "/registerManagement";
+                next();
+            }else {
+                console.log('url 중복 사용 중');
+                res.locals.redirect = "/registerManagement";
+                next();
+            }
         }catch(error){
             console.log(`Error deleting register by ID: ${error.message}`);
             next(error);

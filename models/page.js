@@ -8,6 +8,32 @@ module.exports = (sequelize, Sequelize) => {
                 onDelete:'cascade'
             });
         }
+        static async findByPkAndUpdate(url, params){
+            try{
+                let page = await page.findByPk(url);
+                if(page){
+                    page = await Page.update(params, {
+                        where: {url: url}
+                    });
+                }
+                return page;
+            }catch(err){
+                console.log(err);
+            }
+        }
+        static async findByPkAndRemove(url){
+            try{
+                let page = await Page.findByPk(url);
+                if(page){
+                    page = await Page.destroy({
+                        where:{url: url}
+                    });
+                }
+                return page; 
+            }catch(err){
+                console.log(err);
+            }
+        }
     }
   
     Page.init({
@@ -15,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             primaryKey: true,
             allowNull: false,
-            validation: {isUrl: true}
+            // validation: {isUrl: true}
         },
     },{
         // TODO: hook?? (to create only if new url)

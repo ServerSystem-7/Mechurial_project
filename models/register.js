@@ -66,7 +66,7 @@ module.exports = (sequelize, Sequelize) => {
         notifyLogic: {
             type: Sequelize.STRING,
             allowNull: false,
-            validate: {isIn: [['and', 'or']]}
+            // validate: {isIn: [['and', 'or']]}
         },
         siteName: {
             type: Sequelize.STRING
@@ -85,6 +85,8 @@ module.exports = (sequelize, Sequelize) => {
        
        pageUrl:{
            type: Sequelize.STRING,
+           allowNull: false,
+           onDelete: "cascade",
            references: db.pageTBL,
            referencesKey: 'url'
        }

@@ -1,31 +1,64 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <title>Mechurial</title>
-  
+
     <meta name="author" content="team7" />
     <meta name="description" content="Mechurial-website" />
     <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
-      user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
+    user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
     <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  
+
+    <!-- og: Open graph의 약자, 일종의 정보를 의미하고 이것을 통해 외부에 제공하는 정보를 정의할 수 있다, og는 페이스북에서 주로 활용-->
+    <!-- http://ogp.me/  참고 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mechurial" />
+    <meta property="og:title" content="make your alarm first" />
+    <meta property="og:description" content="mechurial" />
+    <meta property="og:image" content="img/logo__github.png" />
+    <meta property="og:url" content="https://mechurial.com" />
+    <!-- Twitter Card: og와 동일한 개념, 이것은 트위터에서 주로 활용, 카카오톡이나 기타 등등 서비스에서 og를 사용하기도 하고 트위터 카드를 사용하기도 하니 2개를 다 정의 해놓는 것이 좋다. -->
+    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html  참고 -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="Mechurial" />
+    <meta property="twitter:title" content="make your alarm first" />
+    <meta property="twitter:description" content="mechurial" />
+    <meta property="twitter:image" content="img/logo__github.png" />
+    <meta property="twitter:url" content="https://mechurial.com" />
+
+    <!-- 아래는 인터넷 익스플로러에서 아이콘을 사용할 때 쓰는 코드인데 루트에 ico파일이 있다면 생략해도 된다.
+    왜냐하면 코드가 명시 되지 않으면 익스플로러에서는 루트에 ico 파일이 있으면 아이콘 파일이 있다는 것을 감지하기 때문이다.-->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+    <link rel="icon" href="favicon.png" />
+    <!-- 스마트폰에 보이려면 아래와 같이 쓰면 되고 안드로이드에서도 보인다.-->
+    <link rel="apple-touch-icon" href="favicon.png" />
+
     <!-- 구글 폰트 -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-  
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- CSS reset -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
-      crossorigin="anonymous" />
-    <link rel="stylesheet" href="/public/css/info.css" />
-  
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/enrollment.css" />
+
     <script defer src="main.js"></script>
+    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
   </head>
 
 <body>
@@ -38,79 +71,50 @@
         </div>
         <div class="menu-group float--right">
           <ul class="main-menu toggle">
-            <li>
-              <a href="#" onclick="location.href='/register/new'">등록</a>
-            </li>
-            <li>
-              <a href="#" onclick="location.href='/registerManagement'">등록 관리</a>
-            </li>
-            <li><a href="#">회원가입</a></li>
-            <li><a href="#">로그아웃</a></li>
+              <li><a href="#" onclick="location.href='/register/new'">등록</a></li>
+              <li><a href="#" onclick="location.href='/registerManagement'">등록 관리</a></li>
+              <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
+              <li><a href="#" onclick="location.href='/logIn_main'">로그인</a></li>
           </ul>
         </div>
       </div>
     </header>
-    <!-- 등록 창 -->
+    <!-- 등록 수정 창 -->
     <div class="body-form">
       <div class="body-l">
-        <form id="enroll-form" method="post" action="">
-          <ul>
-            <div class="form-p">
-              <li>
-                <h2 class="step-info">Step 1. URL을 입력해주세요.</h2>
-                <input class="input--text" type="text" placeholder="url을 입력해주세요." />
-                <button class="btn--primary">확인</button>
-              </li>
-            </div>
-
-            <li>
-              <h2 class="step-info">
-                Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)
-              </h2>
-
-              <input class="input--text" type="text"/><br/><br/>
-
-              <input class="input--text" type="text"/><br/><br/>
-
-              <input class="input--text" type="text"/><br/><br/>
-            </li>
-
-
-            <div class="form-p">
-              <li>
-                <h2 class="step-info">Step 3. 알림 조건을 선택하세요.</h2>
-
-                <label>
-                  <input type="radio" name="condition" value="Or" />합집합
-                  <input type="radio" name="condition" value="And" />교집합</label>
-              </li>
-            </div>
-      </div>
-      <div class="form-p">
-        <li>
+        <h2 class="h2">등록 수정</h2>
+         <form id="enroll-form" name="enroll-form" action="<%=`/registerManagement/${register.registerId}/update`%>" method="post">
+          <h2 class="step-info">Step 1. URL을 입력해주세요.</h2>
+          <!-- <input type="url" name="url" id="url" placeholder="url을 입력해주세요." required> -->
+          <input type="url" name="url" id="url" placeholder="url을 입력해주세요." value="<%= register.url %>" required>
+          
+          <h2 class="step-info">Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)</h2>
+          <input name="key1" type="text" id="key1" value="<%= register.key1 %>" required><br/><br/>
+          <input name="key2" type="text" id="key2" value="<%= register.key2 %>" /><br/><br/>
+          <input name="key3" type="text" id="key3" value="<%= register.key3 %>" ><br/><br/>
+          
+          <h2 class="step-info">Step 3. 알림 조건을 선택하세요.</h2>
+          <!-- <label>
+            <input type="radio" name="condition" id="or" value="or" />합집합
+            <input type="radio" name="condition" id="and" value="and" />교집합
+          </label> -->
+          <!-- <input name="condition" type="text" id="condition" value="<%= register.condition %>" ><br/><br/> -->
+          <label>
+            <input type="radio" name="condition" id="or" value="or" />합집합
+            <input type="radio" name="condition" id="and" value="and" />교집합
+          </label>
+          
           <h2 class="step-info">Step 4. 사이트 이름을 설정하세요.</h2>
-
-          <input class="input--text" type="text" />
-        </li>
-      </div>
-
-      <div class="form-p">
-        <li>
+          <input name="siteName" type="text" id="siteName" value="<%= register.siteName %>"required/><br/>
+          
           <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
+          <!-- <input type="date" name="deadline"/> -->
+          <input type="date" value="<%= register.dueDate %>" name="deadline"/>
 
-          <input type="date" name="startday" />
-          ~
-          <input type="date" name="deadline" />
-        </li>
+          <button class="enroll_btn" type="submit">수정하기</button>
+        </form>
       </div>
-      </ul>
-      <br />
-      <br />
-      <button class="enroll_btn" type="submit">
-        수정하기
-      </button> <!--type submit 추가-->
-      </form>
-
+    </div>
+  <div id='result'></div>
 </body>
-
 </html>
