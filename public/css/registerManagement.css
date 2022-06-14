@@ -1,0 +1,209 @@
+/* // 상단바 부분 // */
+/* 공통 */
+.body__container {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  /* 노말 */
+  font-weight: 400;
+  /* 어두운 회색 */
+  color: #333;
+}
+a {
+  text-decoration: none;
+}
+.section {
+  position: relative;
+}
+.section .inner {
+  max-width: 980px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.float--left {
+  float: left;
+}
+.float--right {
+  float: right;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.075);
+  background: #fff;
+}
+header .inner {
+  height: 78px;
+}
+header .menu-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 10px;
+}
+header .logo a {
+  background: url("../img/logo.svg");
+  width: 32px;
+  height: 32px;
+  display: block;
+  text-indent: -9999px;
+}
+header .logo a:hover {
+  background: url("../img/logo_on.svg");
+}
+header .main-menu {
+  display: flex;
+}
+header .main-menu li a {
+  display: block;
+  padding: 30px;
+  color: #3c4146;
+}
+
+.wrapper{
+  margin: 0 auto;
+  width: 60%;
+  
+}
+.h2 {
+  padding: 20px 0 20px;
+  font-size: 32px;
+  color:#111;
+  line-height: 1;
+}
+
+/* 입력폼? */
+
+.input--text {
+  height: 34px;
+  padding: 0 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); /* .75 아니고 .075 주의 */
+}
+.input--text:focus {
+  border-color: #51a7e8 !important; /* header #search 선택자를 덮어쓰기 위해서 사용 */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075),
+    0 0 5px rgba(81, 167, 232, 0.5);
+}
+.input--text::-webkit-input-placeholder {
+  color: #cacaca;
+}
+.input--text:-ms-input-placeholder {
+  color: #cacaca;
+}
+.input--text::-moz-placeholder {
+  color: #cacaca;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.075);
+  background: #fff;
+}
+header .inner {
+  height: 78px;
+}
+header .menu-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+header .logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 10px;
+}
+header .logo a {
+  background: url("../img/logo.svg");
+  width: 32px;
+  height: 32px;
+  display: block;
+  text-indent: -9999px;
+}
+header .logo a:hover {
+  background: url("../img/logo_on.svg");
+}
+header .main-menu {
+  display: flex;
+}
+header .main-menu li a {
+  display: block;
+  padding: 30px;
+  color: #3c4146;
+}
+
+.tablemenu li a {
+  float: left;
+  margin-right: 15px;
+  display: inline;
+  padding-right: 40px;
+  margin-top: 30px;
+  color: #3c4146;
+}
+
+#search-form {
+  margin-left: 75%;
+}
+#search {
+  margin-top: 20px;
+  width: 160px;
+  font-size: 14px;
+}
+#search + [type="submit"] {
+  display: none;
+}
+.tablelist {
+  display: flex;
+  margin: 0 auto;
+  color: #3c4146;
+  line-height: 20px;
+}
+.tablelist table {
+  display: flex;
+  margin: 0 auto;
+  color: #3c4146;
+}
+
+.tablebar {
+  text-align: left;
+  height: 50px;
+  margin: 0 auto;
+  background-color: rgba(211, 211, 211, 0.5);
+}
+
+.tablebar td {
+  text-align: left;
+  column-width: 140px;
+  padding: 20px;
+  margin-left: 50px;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+input[name="check"] {
+  margin-left: 50px;
+}
+
+.edit_btn {
+  width: 70px;
+}
