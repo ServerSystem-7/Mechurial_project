@@ -53,7 +53,7 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/public/css/mypage_main.css" />
+    <link rel="stylesheet" href="../public/css/mypage_main.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
@@ -61,22 +61,27 @@
 
   <body>
     <div class="body__container">
-      <!-- HEADER -->
-      <header class="section">
-        <div class="inner clearfix">
-          <div class="logo float--left">
-            <a href="#">mechurial</a>
-          </div>
-          <div class="menu-group float--right">
-            <ul class="main-menu toggle">
-              <li><a href="#" onclick="location.href='enroll.html'">등록</a></li>
-              <li><a href="#" onclick="location.href='enrollmanage.html'">등록 관리</a></li>
-              <li><a href="#" onclick="location.href='signUp_terms.html'">회원가입</a></li>
-              <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
-            </ul>
-          </div>
-        </div>
-      </header>
+           <!-- HEADER -->
+           <header class="section">
+            <div class="inner clearfix">
+              <div class="logo float--left">
+                <a href="#" onclick="location.href='/'">mechurial</a>
+              </div>
+              <div class="menu-group float--right">
+                <ul class="main-menu toggle">
+                  <li>
+                    <a href="/register/new">등록</a>
+                  </li>
+                  <li>
+                    <a href="/registerManagement">등록 관리</a>
+                  </li>
+                  <li><a href="/mypage/check">마이페이지</a></li>
+                  <li><a href="/signUp">회원가입</a></li>
+                  <li><a href="/logIn_main">로그인</a></li>
+                </ul>
+              </div>
+            </div>
+          </header>
       <body>
         <!-- header -->
         <div id="header">
@@ -96,7 +101,7 @@
                             <label for="id">아이디</label>
                         </h3>
                         <span class="box int_id">
-                            <div> <%=users.id%> </div>
+                            <div> <%=user.id%> </div>
                         </span>
                         </flaot:left>
                 </div>
@@ -108,7 +113,7 @@
                 </div>
                 <!-- PW 변경 BTN-->
                 <div class="btn_area_pw">
-                    <button type="button" id="btnPw" onclick="location.href='mypage_pw.html'">
+                    <button type="button" id="btnPw" onclick="location.href='/mypage_pw'">
                         <span>비밀번호 변경</span>
                     </button>
                 </div>
@@ -123,7 +128,7 @@
                 </div>
                 <!-- 이메일 인증 BTN-->
                 <div class="btn_area_email">
-                    <button type="button" id="btnMail" onclick="location.href='mypage_email.html'">
+                    <button type="button" id="btnMail" onclick="location.href='/mypage_email'">
                         <span>이메일 변경</span>
                     </button>
                 </div>

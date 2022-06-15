@@ -51,6 +51,7 @@ module.exports = {
                   next();
               }
           } else{
+            //alert("비밀번호가 일치하지 않습니다.");
               res.redirect("/login_main");
               next();
           }
@@ -62,12 +63,18 @@ module.exports = {
 
     // 유진님 코드 들어가는 부분
 
-    sendMail: async (req, res, next) =>{
+    sendMail_cerNum: async (req, res, next) =>{
       try{
         const reademailaddress = req.body.EA;
         number = randomNumber(111111, 999999);
+
+        let str = 
+        `메추리알 서비스를 이용해주셔서 감사합니다.
+        인증번호는 ${number} 입니다.`
+        let title=
+        `[메추리알] 인증번호는 ${number} 입니다.`
         
-        await sendEmail(reademailaddress, number);
+        await sendEmail(reademailaddress, str, title);
           console.log("인증메일 전송");
           res.send({
             number:number
@@ -79,21 +86,44 @@ module.exports = {
         next(err);
       };
     },
+
+    sendMail_id : async(req,res,next) =>{
+      let isAuthedEA=req.body.isAuthedEA;
+      const EA = req.body.EA;
+
+      isAuthedEA=true;
+          
+      let userId =  await db.userTBL.findOne({
+        attributes: ['id'],
+        where: {email : EA},
+        raw:true
+      });
+
+      console.log(userId);
+      let str=
+        `메추리알 서비스를 이용해주셔서 감사합니다.
+        인증하신 이메일로 가입한 아이디는 ${userId.id} 입니다.`
+
+      let title=
+        `[메추리알] 분실 아이디를 알려드립니다.`
+
+      await sendEmail(EA, str, title);
+      res.send({result:'success'});
+    },
         
 
-    emailCert : async (req,res,next)=>{
+    checkCerNum : async (req,res,next)=>{
       try{
-        let isAuthedEA=req.body.isAuthedEA;
         const CEA = req.body.CEA;
 
         if(CEA==number){
           console.log("인증 성공");
-          isAuthedEA=true;
-        }
-        else
+          next();
+;        }
+        else{
           console.log("인증 실패");
-             
-        res.send(isAuthedEA);
+          res.send({result:'fail'});
+        }
 
       } catch(err){
           console.error(err);
@@ -101,6 +131,7 @@ module.exports = {
           res.end();
       };
   },
+
 
     checkIdEmail :  async (req,res,next) =>{
       try{
@@ -144,40 +175,8 @@ module.exports = {
       res.render("mypage_pw");
     },
 
-    checkPw: async (req,res, next) => {
-      console.log("로그인된 아이디는 "+req.session.userId);
-      try{
-        const inputPw = req.body.password;
-        console.log(inputPw);
 
-        const user = await db.userTBL.findOne({
-          where: {id: req.session.userId}
-        })
-
-        if(user){
-            let passwordMatch = await user.passwordComparison(inputPw, user.password);
-            console.log(passwordMatch);
-
-            if(passwordMatch){
-              console.log("ok실행");
-              res.send({
-                result:"ok"
-              })
-            } else{
-              console.log("fail실행");
-            res.send({
-              result:"fail"
-            })
-          }
-      }
-
-    } catch(err){ console.error(err);
-      next(err);
-      res.end();
-    }   
-    },
-
-    applyNewPw : async function(req,res,next) {
+    applyNewPw : async (req,res,next) =>{
       try{
         const newPw=req.body.password;
         let user = await db.userTBL.findOne({
@@ -196,18 +195,80 @@ module.exports = {
       }catch(err){
         console.error(err);
         next(err);
-        res.end();
+        res.send({result:'fail'});
       }
     },
 
-    
-    changeEmail : (req,res) =>{
+
+    showChangeEmail : (req,res) =>{
       res.render("mypage_email");
     },
 
-    checkEmail : (req,res) =>{
+    checkNewEmail : async (req,res) =>{
+      try{
+        const newEmail = req.body.email;
+
+        let user = await db.userTBL.findOne({
+          where: {email:newEmail}
+        });
+
+        if(user){
+          console.log("이메일 중복");
+          res.send({result:'fail'});
+        }
+        else{
+          number = randomNumber(111111, 999999);
+
+          let str = 
+          `메추리알 서비스를 이용해주셔서 감사합니다.
+          인증번호는 ${number} 입니다.`
+          let title=
+          `[메추리알] 인증번호는 ${number} 입니다.`
+          
+          await sendEmail(newEmail, str, title);
+          res.send({result:"ok"});
+        }
+
+    }catch(err){
+      console.error(err);
+        next(err);
+        res.send({result:'fail'});
+      }
+    },
+
+    cerNumOk: (req,res)=>{
+      res.send({result:"ok"});
+    },
+    
+    applyNewEmail: async (req,res)=>{
+      try{
+        const newEmail = req.body.email;
+
+        let user = await db.userTBL.findOne({
+          where: {id : req.session.userId}
+        })
+        console.log(user);
+        console.log('----------------------');
+
+        const params = {
+          id : user.id,
+          email : newEmail,
+          password : user.password }
+
+        await db.userTBL.findByPkAndUpdate(req.session.userId, params);
+        console.log(user);
+        req.send({result:'ok'});
+
+    }catch(err){
+      console.error(err);
+      next(err);
+      res.send({result:'fail'});
+    }
 
     }
+
+
+    
 
 
 

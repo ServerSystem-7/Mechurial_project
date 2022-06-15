@@ -151,23 +151,25 @@
   
    // 이메일 인증 기능
    function emailCerAjax(cerNum) {
+    var EA = document.getElementById('EA').value;
+
             $.ajax({
                 type: 'POST',
                 url: '/search_id/emailcert',
                 dataType: 'json',
                 data: {
                   number:number,
+                  EA : EA,
                   CEA: cerNum,
                   isAuthedEA : isAuthedEA
                 }, success: function(data){
-                    if(data){
-                        alert('이메일 인증에 성공했습니다.');
-                        isAuthedEA=data;
-                        console.log(isAuthedEA);
-                        location.href="/search_id2";
+                    if(data.result=='success'){
+                        alert('입력하신 이메일로 아이디 정보를 전송했습니다.');
+                        location.href="/login_main";
+
                     }
                     else{
-                        alert('인증번호가 일치하지 않습니다.');
+                        alert('입력하신 정보를 다시 확인해주세요.');
                         document.getElementById('CEA').value='';
                     }
                 }

@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -95,14 +97,14 @@
                         <label for="id">새 이메일</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="id" class="int" maxlength="20">
+                        <input type="text" id="EA" class="int" maxlength="20">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
 
                 <!-- 이메일 인증 BTN-->
                 <div class="btn_area_email1">
-                    <button type="button" id="btnMAilCheck">
+                    <button type="button" id="btnMAilCheck" onclick="checkNewEmail('EA')">
                         <span>이메일 인증</span>
                     </button>
                 </div>
@@ -111,21 +113,21 @@
                 <div>
                     <h3 class="join_title"><label for="email">이메일 인증번호<span class="optional"></span></label></h3>
                     <span class="box int_email">
-                        <input type="text" id="email" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
+                        <input type="text" id="CEA" class="int" maxlength="100" placeholder="이메일 인증번호 입력">
                     </span>
                     <span class="error_next_box">인증번호를 다시 확인해주세요.</span>    
                 </div>
 
                 <!-- 이메일 인증 확인 BTN-->
                 <div class="btn_area_email2">
-                    <button type="button" id="btnMAilNext">
+                    <button type="button" id="btnCheckCerNum" onclick="checkCerNum()">
                         <span>인증 확인</span>
                     </button>
                 </div>
 
                 <!-- JOIN BTN-->
                 <div class="btn_area_join">
-                    <button type="button" id="btnJoin" onclick="location.href='mypage_main.html'">
+                    <button type="button" id="btnChangeEmail" onclick="applyNewEmail()">
                         <span>변경하기</span>
                     </button>
                 </div>
@@ -141,68 +143,82 @@
   </section>
   
   <script>
-    var isCorrectCurPw=false;
-    var isOkNewPw=false;
-    var isAccordPw = false;
+    var isOkNewEmail=false;
 
-    function check_pw() {
-      var pw1 = document.getElementById('pswd1').value;
-      var pw2 = document.getElementById('pswd2').value;
-          
-      if(pw1===pw2){       
-          document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
-          isAccordPw=true;
-          console.log(isAccordPw);
-      }
-  }
 
-    function checkCurPw(currentPw){
-      var beforePw= document.getElementById(currentPw).value;
+    function checkNewEmail(email){
+      var newEmail = document.getElementById(email).value;
 
       $.ajax({
             type: 'POST',
-            url: '/mypage_pw/checkpw',
+            url: '/mypage/checkemail',
             dataType: 'json',
             data: {
-                password : beforePw
+                email  : newEmail
             }, success : function(data){
-              console.log("일치여부 : "+data.result);
+              console.log("일치여부 : "+ data.result);
               if(data.result=="ok"){
-                alert("비밀번호가 일치합니다.\n새로운 비밀번호를 입력해주세요.");
-                document.getElementById('pswd0').disabled = true;
-                document.getElementById('btnCheckCurPw').disabled = true;
-                isCorrectCurPw=true;
+                alert("입력하신 이메일로 인증번호를 전송했습니다.");
               }
               else{
-                alert("비밀번호가 일치하지 않습니다.");
-                document.getElementById(currentPw).value="";
+                alert("사용할 수 없는 이메일입니다.\n다른 이메일 주소를 이용해주세요.");
+                document.getElementById(email).value="";
               }
             }
         });
     }
 
-    function changePw() {
-      if((isCorrectCurPw==true) && (isAccordPw==true)){
-        alert("비밀번호 변경이 완료되었습니다.");
-
-        const newPw = document.getElementById('pswd1').value;
+    function checkCerNum() {
+        const cerNum = document.getElementById('CEA').value;
         $.ajax({
             type: 'POST',
-            url: '/mypage_pw/changepw',
+            url: '/mypage/emailcert',
             dataType: 'json',
             data: {
-                password : newPw
+                CEA:cerNum
             }, success : function(data){
-              if(data.result=="ok") location.href="/mypage_main";
+              if(data.result=="ok") {
+                alert("인증되었습니다.");
+                isOkNewEmail=true;
+                document.getElementById('EA').disabled=true;
+                document.getElementById('btnMAilCheck').disabled=true;
+                document.getElementById('CEA').disabled=true;
+                document.getElementById('btnCheckCerNum').disabled=true;
+              }
               else {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
-                location.href="/mypage_main";
+                location.href="/";
               }
             } 
         });
       }
+
+      function applyNewEmail() {
+        if(isOkNewEmail){
+          var newEmail = document.getElementById('EA').value;
+
+          $.ajax({
+              type: 'POST',
+              url: '/mypage/changepw',
+              dataType: 'json',
+              data: {
+                  email:newEmail
+              } , success : function(data){
+                if(data.result=='ok') {
+                  alert("이메일이 변경되었습니다.");
+                  location.href="/";
+                }
+                else{
+                  alert("오류가 발생했습니다. 다시 시도해주세요.");
+                  location.href="/"
+                }
+              }
+            }
+            );
+        }
+      }
       
-    }
+  
     
 
     

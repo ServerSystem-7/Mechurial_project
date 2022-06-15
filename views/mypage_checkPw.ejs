@@ -55,7 +55,7 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/public/css/mypage_pw.css" />
+    <link rel="stylesheet" href="/public/css/mypage_checkPw.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
@@ -88,12 +88,12 @@
 
         <!-- wrapper -->
         <div class ="wrapper">
-            <h2 class="h2">비밀번호 변경</h2>
+            <h2 class="h2">비밀번호 확인</h2>
             <!-- content-->
             <div id="content">
                 <!-- PW0 -->
                 <div>
-                    <h3 class="join_title"><label for="pswd0">현재 비밀번호</label></h3>
+                    <h3 class="join_title"><label for="pswd0">비밀번호</label></h3>
                     <span class="box int_pass">
                         <input type="password" id="pswd0" class="int" maxlength="20">
                     </span>
@@ -105,34 +105,6 @@
                         <span>일치 확인</span>
                     </button>
                 </div>
-
-                <!-- PW1 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd1">새 비밀번호</label></h3>
-                    <span class="box int_pass">
-                        <input type="password" id="pswd1" class="int" maxlength="20">
-                        <span id="alertTxt">사용불가</span>
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- PW2 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd2">새 비밀번호 재확인</label></h3>
-                    <span class="box int_pass_check">
-                        <input type="password" id="pswd2" class="int" maxlength="20" onchange="check_pw()">
-                        <img src="../public/images/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- JOIN BTN-->
-                <div class="btn_area_delete">
-                    <button type="button" id="btnDelete" onclick="changePw()">
-                        <span>변경하기</span>
-                    </button>
-                </div>
-
                 
             </div> 
             <!-- content-->
@@ -141,66 +113,27 @@
         <!-- wrapper -->
         
     <script>
-      var isCorrectCurPw=false;
-      var isOkNewPw=false;
-      var isAccordPw = false;
 
-      function check_pw() {
-        var pw1 = document.getElementById('pswd1').value;
-        var pw2 = document.getElementById('pswd2').value;
-            
-        if(pw1===pw2){       
-            document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
-            isAccordPw=true;
-        }
-    }
-
-      function checkCurPw(currentPw){
-        var beforePw= document.getElementById(currentPw).value;
+      function checkCurPw(){
+        var password=document.getElementById('pswd0').value;
 
         $.ajax({
               type: 'POST',
               url: '/mypage/checkpw',
               dataType: 'json',
               data: {
-                  password : beforePw
+                  password : password
               }, success : function(data){
+                console.log("일치여부 : "+data.result);
                 if(data.result=="ok"){
-                  alert("비밀번호가 일치합니다.\n새로운 비밀번호를 입력해주세요.");
-                  document.getElementById('pswd0').disabled = true;
-                  document.getElementById('btnCheckCurPw').disabled = true;
-                  isCorrectCurPw=true;
+                    location.href="/mypage";
                 }
                 else{
                   alert("비밀번호가 일치하지 않습니다.");
-                  document.getElementById(currentPw).value="";
+                  document.getElementById('pswd0').value="";
                 }
               }
           });
-      }
-
-      function changePw() {
-        if((isCorrectCurPw==true) && (isAccordPw==true)){
-          alert("비밀번호 변경이 완료되었습니다.");
-
-          const newPw = document.getElementById('pswd1').value;
-          $.ajax({
-              type: 'POST',
-              url: '/mypage/changepw',
-              dataType: 'json',
-              data: {
-                  password : newPw
-              }, success : function(data){
-                if(data.result=="ok") location.href="/logIn_main";
-                
-                else {
-                  alert("오류가 발생했습니다. 다시 시도해주세요.");
-                  location.href="/";
-                }
-              } 
-          });
-        }
-        
       }
       
 
