@@ -226,19 +226,24 @@ module.exports = {
           id=req.session.inputId;
         } else{ 
           //비밀번호 찾기를 통해 비밀번호 변경시
-          id=req.session.userId
+          id=req.session.userId;
         }
         
+        console.log(id);
         let user = await db.userTBL.findOne({
             where: {id : id}
           })
+        console.log(user);
 
+        console.log("----------------------------");
           const params = {
             id : user.id,
             email : user.email,
             password : newPw }
+
+            console.log(params);
         
-          await db.userTBL.findByPkAndUpdate(req.session.userId, params);
+          await db.userTBL.findByPkAndUpdate(user.id, params);
 
           res.send({result:"ok"});
       

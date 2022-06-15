@@ -94,7 +94,7 @@
 
                 <!-- JOIN BTN-->
                 <div class="btn_area_delete">
-                    <button type="button" id="btnDelete" onclick="changePw('pswd1')">
+                    <button type="button" id="btnDelete" onclick="changePw()">
                         <span>변경하기</span>
                     </button>
                 </div>
@@ -119,7 +119,8 @@
             }
           }
 
-          function changePw(newPw) {
+          function changePw() {
+            const newPw = document.getElementById('pswd1').value; 
                 $.ajax({
                     type: 'POST',
                     url: '/mypage/changepw',
