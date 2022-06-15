@@ -7,13 +7,13 @@ const sendgrid = require('@sendgrid/mail');
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-module.exports = async function sendEmail(reademailaddress, str, title) {
+module.exports = async function sendEmail(reademailaddress, number) {
     try{
         await sendgrid.send({
         to: reademailaddress,
         from: 'ssc22.team.07@gmail.com',
-        subject: title,
-        text: str,
+        subject: 'Sendgrid test email from Node.js on Google Cloud Platform',
+        text: '인증번호는 '+ number+ '입니다.',
     });
     } catch(err) {
         console.log(err);

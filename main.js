@@ -62,8 +62,8 @@ router.get("/register/new", registerController.new);
 router.post("/register/create", registerController.create, registerController.redirectView);
 router.get("/registerManagement", registerController.manage, registerController.manageView);
 router.post("/registerManagement/:registerId/delete", registerController.delete, registerController.redirectView);
-router.get("/register/:id/edit", registerController.edit);
-router.post("/register/:id/update", registerController.update, registerController.redirectView);
+router.get("/registerManagement/:registerId/edit", registerController.edit); 
+router.post("/registerManagement/:registerId/update", registerController.update, registerController.redirectView);
 
 router.get("/signUp_terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);

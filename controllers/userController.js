@@ -43,7 +43,6 @@ module.exports = {
                   req.session.userId = req.body.id;
                   res.locals.user = user;
                   res.redirect("/");
-                  //next();
               }
               else{
                 console.log("불일치");
@@ -51,7 +50,6 @@ module.exports = {
                   next();
               }
           } else{
-            //alert("비밀번호가 일치하지 않습니다.");
               res.redirect("/login_main");
               next();
           }
