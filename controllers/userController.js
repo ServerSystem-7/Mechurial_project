@@ -172,7 +172,9 @@ module.exports = {
         let isValidId = req.body.isValidId;
         
         if (id==undefined)
-          res.end();
+          res.send({
+            result:'unmatch'
+          });
     
         req.session.inputId = id;
         console.log("세션으로 임시생성한 id는 "+req.session.inputId);
@@ -192,6 +194,7 @@ module.exports = {
           isAuthedEA=true;
 
         res.send({
+            result:'ok',
             isAuthedEA:isAuthedEA,
             isValidId:isValidId
         }) 
@@ -201,7 +204,7 @@ module.exports = {
       }catch(err){
         console.error(err);
         next(err);
-        res.end();
+        res.send({ result:'fail'});
       }
     },
 
@@ -298,9 +301,7 @@ module.exports = {
 
         let user = await db.userTBL.findOne({
           where: {id : req.session.userId}
-        })
-        console.log(user);
-        console.log('----------------------');
+        });
 
         const params = {
           id : user.id,

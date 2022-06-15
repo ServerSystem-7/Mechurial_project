@@ -151,11 +151,13 @@
                     isAuthedEA : isAuthedEA,
                     isValidId : isValidId 
                 } , success : function(data){
-                  console.log("isAuth "+data.isAuthedEA);
+                  if(data.result=='ok') {
+
+                    console.log("isAuth "+data.isAuthedEA);
                   console.log("isValid "+data.isValidId);
                   isValidId=data.isValidId;
                   isAuthedEA=data.isAuthedEA;
-                  
+
                   if( (isValidId==true) && (isAuthedEA==true) )
                   location.href="/search_pw/new";
                   else if( (isValidId==true) && (isAuthedEA==false)) {
@@ -166,6 +168,16 @@
                     document.getElementById('id').value="";
                   } else
                     alert("입력한 내용을 다시 확인해주세요.");
+
+                  } else if (data.result=="unmatch"){
+                    alert("존재하지 않는 id 입니다.");
+                    document.getElementById('id').value="";
+                  }
+                  else{
+                    alert("에러가 발생했습니다!\n다시 시도해주세요.");
+                    location.href="/logIn_main";
+                  }
+                  
                 }
                 
             });
