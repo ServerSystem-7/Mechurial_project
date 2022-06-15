@@ -155,8 +155,9 @@
                   console.log("isValid "+data.isValidId);
                   isValidId=data.isValidId;
                   isAuthedEA=data.isAuthedEA;
+                  
                   if( (isValidId==true) && (isAuthedEA==true) )
-                  location.href="/mypage_pw"; // /search_pw2
+                  location.href="/search_pw/new";
                   else if( (isValidId==true) && (isAuthedEA==false)) {
                     alert("인증번호를 확인해주세요.");
                     document.getElementById('CEA').value="";

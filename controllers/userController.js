@@ -174,15 +174,20 @@ module.exports = {
         if (id==undefined)
           res.end();
     
+        req.session.inputId = id;
+        console.log("세션으로 임시생성한 id는 "+req.session.inputId);
+
         const userEmail = await db.userTBL.findAll({
           attributes: ['email'],
           where: {id : id},
           raw:true
         });    
-        if (userEmail)
+        if (userEmail){
           if (userEmail[0].email == email)
             isValidId=true;
           
+        }
+
         if(number==cerNum)
           isAuthedEA=true;
 
@@ -211,25 +216,36 @@ module.exports = {
     applyNewPw : async (req,res,next) =>{
       try{
         const newPw=req.body.password;
+        let id;
+        
+        if(req.session.userId==undefined){
+          //mypage에서 비밀번호 변경시
+          id=req.session.inputId;
+        } else{ 
+          //비밀번호 찾기를 통해 비밀번호 변경시
+          id=req.session.userId
+        }
+        
         let user = await db.userTBL.findOne({
-          where: {id : req.session.userId}
-        })
+            where: {id : id}
+          })
 
-        const params = {
-          id : user.id,
-          email : user.email,
-          password : newPw }
+          const params = {
+            id : user.id,
+            email : user.email,
+            password : newPw }
+        
+          await db.userTBL.findByPkAndUpdate(req.session.userId, params);
 
-        await db.userTBL.findByPkAndUpdate(req.session.userId, params);
-
-        res.send({result:"ok"});
-
+          res.send({result:"ok"});
+      
       }catch(err){
         console.error(err);
         next(err);
         res.send({result:'fail'});
       }
     },
+
 
 
     showChangeEmail : (req,res) =>{
@@ -266,6 +282,10 @@ module.exports = {
         next(err);
         res.send({result:'fail'});
       }
+    },
+
+    showInputNewPw: (req,res)=>{
+      res.render("search_pw2");
     },
 
     cerNumOk: (req,res)=>{

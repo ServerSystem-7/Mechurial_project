@@ -70,3 +70,24 @@ header .main-menu li a {
   padding: 30px;
   color: #3c4146;
 }
+
+.signUpComplete{
+  text-align: center;
+  margin:50px;
+
+}
+
+.btnComplete{
+  background: #2e43ff;
+  color: #fff;
+  width: 20%;
+  height: 70px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 60px;
+  border:none;
+  margin-top: 25%;
+  margin-left: 40%;
+  margin-right: 25%;
+}

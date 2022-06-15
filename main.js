@@ -46,9 +46,6 @@ app.use(
 db.sequelize.sync({ alter: false })
   .then(() => {
 	  console.log('데이터베이스 연결 성공.');
-    // create_page();
-    // create_user();
-    // create_register();
   })
   .catch((error) => {
       console.error(error);
@@ -88,6 +85,7 @@ router.post("/id_search_1", userController.authenticate);
 router.get("/search_pw", userController.searchPw);
 router.post("/search_pw/sendmail", userController.sendMail_cerNum);
 router.post("/search_pw", userController.checkIdEmail);
+router.get("/search_pw/new", userController.showInputNewPw)
 
 // 3. 회원정보 조회를 위한 비밀번호 확인
 router.get("/mypage/check", myPageController.showCheckPw);

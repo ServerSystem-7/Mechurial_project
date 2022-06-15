@@ -76,37 +76,54 @@ header .main-menu li a {
 }
 
 .service_body {
-  background-image: url("../images/main.jpg");
   background-size: 100%;
+  position: relative;
+  height: 700px;
+  margin: 50px;
+}
+
+.service_body::before{
+  content:"";
+  position: absolute;
+  background-image: url("../images/main.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  height: 500px;
-  margin: 50px;
+  opacity: 50%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }
 
 .service_body  .service_btn1 {
   background: #2e43ff;
   color: #fff;
   width: 20%;
-  height: 50px;
+  height: 70px;
   padding: 10px;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   border-radius: 60px;
+  border:none;
   margin-top: 25%;
   margin-left: 40%;
   margin-right: 25%;
+  position: relative;
 }
 .service_body  .service_btn2 {
   background: #ffd400;
   color: #fff;
   width: 20%;
-  height: 50px;
+  height: 70px;
   padding: 10px;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   border-radius: 60px;
+  border:none;
   margin-top: 5px;
   margin-left: 40%;
   margin-right: 25%;
+  position: relative;
 }
 
 

@@ -1,5 +1,3 @@
-<!--views/mainpage.ejs-->
-
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 <!DOCTYPE html>
@@ -78,9 +76,8 @@
                 <div>
                     <h3 class="join_title"><label for="pswd1">새 비밀번호</label></h3>
                     <span class="box int_pass">
-                        <input type="text" id="pswd1" class="int" maxlength="20">
+                        <input type="password" id="pswd1" class="int" maxlength="20">
                         <span id="alertTxt">사용불가</span>
-                        <img src="m_icon_pass.png" id="pswd1_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -89,15 +86,15 @@
                 <div>
                     <h3 class="join_title"><label for="pswd2">새 비밀번호 재확인</label></h3>
                     <span class="box int_pass_check">
-                        <input type="text" id="pswd2" class="int" maxlength="20">
-                        <img src="m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
+                        <input type="password" id="pswd2" class="int" maxlength="20" onchange="check_pw()">
+                        <img src="../public/images/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
 
                 <!-- JOIN BTN-->
                 <div class="btn_area_delete">
-                    <button type="button" id="btnDelete" onclick="location.href='search_pw3.html'">
+                    <button type="button" id="btnDelete" onclick="changePw('pswd1')">
                         <span>변경하기</span>
                     </button>
                 </div>
@@ -108,7 +105,42 @@
 
         </div> 
         <!-- wrapper -->
-    <script src="main.js"></script>
+        <script>
+          
+          var isAccordPw = false;
+
+          function check_pw() {
+            var pw1 = document.getElementById('pswd1').value; 
+            var pw2 = document.getElementById('pswd2').value;
+            
+            if(pw1===pw2){
+              document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
+              isAccordPw=true;
+            }
+          }
+
+          function changePw(newPw) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/mypage/changepw',
+                    dataType: 'json',
+                    data: {
+                      password: newPw
+                    },success:function(data) {
+                      if(data.result=='ok'){
+                        alert("비밀번호가 성공적으로 변경되었습니다.");
+                        location.href="/logIn_main";
+                      }
+                      else{
+                        alert("오류가 발생했습니다. 다시 시도해주세요.");
+                        location.href="/logIn_main";
+                      }
+                    }
+                });
+                }
+
+      
+          </script>
     </body>
   </section>
   </body>
