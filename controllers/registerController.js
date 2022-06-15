@@ -51,22 +51,20 @@ module.exports = {
             let result= await Page.findOne({
             where:{url}
             })
+            is_logined = req.session.is_logined;
+            userid =  req.session.userId;
             if(result==undefined){
                 console.log('pageTBL에 해당 url 존재X');
                 let page = await Page.create({url: registerParams["pageUrl"]});
                 let register = await Register.create(registerParams);
                 res.locals.page = page; 
                 res.locals.register = register;
-                is_logined = req.session.is_logined;
-                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }else {
                 console.log('pageTBL에 해당 url 존재O');
                 let register = await Register.create(registerParams);
                 res.locals.register = register;
-                is_logined = req.session.is_logined;
-                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }
