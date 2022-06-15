@@ -1,5 +1,3 @@
-const user = require("./models/user");
-
 const express = require("express"),
   app = express(),
   router = express.Router(),
@@ -9,7 +7,6 @@ const express = require("express"),
   registerController = require("./controllers/registerController"),
   userController=require("./controllers/userController"),
   myPageController=require("./controllers/myPageController"),
-  layouts = require("express-ejs-layouts"),
   session = require("express-session"),
   // crawling = require("./crawl_main"),
   // cookieParser = require("cookie-parser"),
@@ -24,7 +21,7 @@ router.use (
     extended : false
   })
 );
-router.use(layouts);
+
 router.use(express.static("public"));
 router.use(express.json());
 
@@ -33,6 +30,7 @@ app.use(
   session({
     key: 'sid',
     secret: "secret",
+    //is_logined: false,
     cookie: {
       httpOnly: true,
       maxAge: 4000000
@@ -60,7 +58,8 @@ db.sequelize.sync({ alter: false })
 router.get("/", homeController.homePage);
 router.get("/register/new", registerController.new);
 router.post("/register/create", registerController.create, registerController.redirectView);
-router.get("/registerManagement", registerController.manage, registerController.manageView);
+//router.get("/registerManagement", registerController.manage, registerController.manageView);
+router.get("/registerManagement", registerController.show);
 router.post("/registerManagement/:registerId/delete", registerController.delete, registerController.redirectView);
 router.get("/registerManagement/:registerId/edit", registerController.edit); 
 router.post("/registerManagement/:registerId/update", registerController.update, registerController.redirectView);
@@ -104,6 +103,9 @@ router.post("/mypage/checkemail",userController.checkNewEmail);
 router.post("/mypage/emailcert",userController.checkCerNum, userController.cerNumOk);
 router.post("/mypage/changemail",userController.applyNewEmail);
 
+//6. 마이페이지 관련 라우터
+router.get("/mypage_main", userController.mypage);
+//router.post("/mypage_main", userController.delete);
 
 app.get("/serviceInfo", homeController.showserviceInfo);
 app.get("/logIn_main", homeController.showLogin);

@@ -16,19 +16,27 @@ User = db.userTBL,
 
 module.exports = {
     login: (req, res)=>{
+      is_logined = req.session.is_logined;
+      userid =  req.session.userId;
       res.render("logIn_main");
     },
   logout: (req, res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         req.session.distroy;
         res.clearCookie("sid");
         res.redirect('logIn_main');
     },
     searchid: (req, res, next) => {
+      is_logined = req.session.is_logined;
+      userid =  req.session.userId;
       res.render("search_id");
 
     },
     
     searchPw:(req, res) => {
+      is_logined = req.session.is_logined;
+      userid =  req.session.userId;
       res.render("search_pw");
     },
       
@@ -45,21 +53,42 @@ module.exports = {
                   res.redirect("/");
               }
               else{
-                console.log("불일치");
+                  console.log("불일치");
+                  is_logined = req.session.is_logined;
+                  userid =  req.session.userId;
                   res.redirect("/login_main");
                   next();
               }
           } else{
+              is_logined = req.session.is_logined;
+              userid =  req.session.userId;
               res.redirect("/login_main");
               next();
           }
       }catch(err){
-          console.log('error!나요');
+          console.log('error');
           next(err);
       };
       },
-
-    // 유진님 코드 들어가는 부분
+      mypage: (req, res) => {  
+        if(req.session.is_logined){
+            let userId = req.session.userId;
+            is_logined = req.session.is_logined;
+            userid =  req.session.userId;
+            try {
+              User.findByPk(userId).then((user) => {
+                res.render("mypage_main",{user});
+              })
+            }catch (error) {
+              console.log("error!");
+            }
+        }
+        else{
+          is_logined = req.session.is_logined;
+          userid =  req.session.userId;
+          res.render("logIn_main");
+        }
+    },
 
     sendMail_cerNum: async (req, res, next) =>{
       try{
@@ -71,12 +100,14 @@ module.exports = {
         인증번호는 ${number} 입니다.`
         let title=
         `[메추리알] 인증번호는 ${number} 입니다.`
+
         
         await sendEmail(reademailaddress, str, title);
           console.log("인증메일 전송");
           res.send({
             number:number
-          });    
+          });
+          //TODO: 등록되지 않은 이메일일땐, 안증메일 전송이 되지 않아야 합니다.     
 
       }catch(err){
         res.end();
@@ -96,6 +127,7 @@ module.exports = {
         where: {email : EA},
         raw:true
       });
+      
 
       console.log(userId);
       let str=
@@ -170,6 +202,8 @@ module.exports = {
 
     
     changePW: (req,res) => {
+      is_logined = req.session.is_logined;
+      userid =  req.session.userId;
       res.render("mypage_pw");
     },
 

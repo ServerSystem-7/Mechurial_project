@@ -7,10 +7,14 @@ let number;
         
 module.exports = {
     signUp_main : (req, res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         res.render("signUp_main");
     },
 
     signUp_terms : (req,res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         res.render("signUp_terms");
     },
     
@@ -118,6 +122,8 @@ module.exports = {
     },
     
     signUp_complete : (req,res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         res.render("signUp_complete");
     },
 

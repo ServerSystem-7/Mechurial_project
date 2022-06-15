@@ -14,6 +14,9 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
     />
     <!-- CSS reset -->
+    <link rel="icoc" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
@@ -32,7 +35,7 @@
       <header class="section">
         <div class="inner clearfix">
           <div class="logo float--left">
-            <a href="#" onclick="location.href='/'">mechurial</a>
+            <a href="/">mechurial</a>
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
@@ -42,9 +45,17 @@
               <li>
                 <a href="/registerManagement">등록 관리</a>
               </li>
-              <li><a href="/mypage/check">마이페이지</a></li>
-              <li><a href="/signUp">회원가입</a></li>
-              <li><a href="/logIn_main">로그인</a></li>
+              <li><a href="/mypage_main">마이페이지</a></li>
+              <% if(is_logined) {%>
+                <li><a> <%= userid %> wellcome!</a></li>
+                <% } else { %>
+                  <li><a href="/signUp">회원가입</a></li>
+                 <% } %>
+              <% if(is_logined) {%>
+                <li><a href="/logOut_main">로그아웃</a></li>
+                <% } else { %>
+                  <li><a href="/logIn_main">로그인</a></li>
+                  <% } %>
             </ul>
           </div>
         </div>
@@ -53,14 +64,13 @@
       <div class="service_body">
         <button
           class="service_btn1"
-          href="#"
-          onclick="location.href='enroll.html'">
+          onclick="location.href='/register/new'"
+        >
           관심페이지 등록하기
         </button>
         <button
           class="service_btn2"
-          href="#"
-          onclick="location.href='tmp.html'"
+          onclick="location.href='/serviceInfo'"
         >
           서비스 이용 안내
         </button>

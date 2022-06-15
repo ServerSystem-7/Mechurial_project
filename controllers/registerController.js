@@ -17,6 +17,7 @@ function getRegisterParams(body) {
     };
 };
 
+
 module.exports = {
     manage: async (req, res, next) => {  
         try{
@@ -28,11 +29,20 @@ module.exports = {
             next(error);
         };
     },
-    manageView: (req, res) => { 
+    manageView: (req, res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         res.render("registerManagement");
     },
-    new: (req, res) => {  
-        res.render("registerNew");
+    new: (req, res) => {
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId; 
+        if(is_logined){
+            res.render("registerNew");
+        }
+        else{
+            res.render("logIn_main");
+        }
     },
     create: async(req, res, next) =>{
         try{
@@ -47,12 +57,16 @@ module.exports = {
                 let register = await Register.create(registerParams);
                 res.locals.page = page; 
                 res.locals.register = register;
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }else {
                 console.log('pageTBL에 해당 url 존재O');
                 let register = await Register.create(registerParams);
                 res.locals.register = register;
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }
@@ -72,10 +86,22 @@ module.exports = {
     },
     show: async(req, res, next) => {
         try{
-            let registerId = req.params.id;
-            let register = await Register.findByPk(registerId);
-            res.locals.register = register;
-            next()
+            if(req.session.is_logined){
+                let userId = req.session.userId;
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
+                Register.findAll({
+                where: {userId : userId}
+            }).then((registrations) => {
+                    res.render("registerManagement",{registrations});
+                })
+            }
+            else{
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
+                res.render("logIn_main");
+            }
+
         } catch(error){
             console.log(`Error fetching register: ${error.message}`);
             next(error);
@@ -84,12 +110,16 @@ module.exports = {
     showView: async(req,res) =>{
         // let registerId = req.params.id;
         // let register = await Register.findByPk(registerId)
+        is_logined = req.session.is_logined;
+        userid =  req.session.userId;
         res.render("registerNew", {register: register});
     },
     edit: async (req, res, next) =>{
         try{
             let registerId = req.params.registerId;
             let register = await Register.findByPk(registerId);
+            is_logined = req.session.is_logined;
+            userid =  req.session.userId;
             res.render("registerNew",{
                 register: register
             });
@@ -106,6 +136,8 @@ module.exports = {
             let register = await Register.findByPkAndUpdate(registerId, registerParams);
             // res.locals.redirect = `/registerEdit/${registerId}`;
             res.locals.register = register;
+            is_logined = req.session.is_logined;
+            userid =  req.session.userId;
             res.locals.redirect = "/registerManagement";
             next();
         }catch(error){
@@ -130,10 +162,14 @@ module.exports = {
                 console.log('url 혼자 사용 중');
                 let page = await Page.findByPkAndRemove(registerParams["pageUrl"]);
                 res.locals.page = page;
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }else {
                 console.log('url 중복 사용 중');
+                is_logined = req.session.is_logined;
+                userid =  req.session.userId;
                 res.locals.redirect = "/registerManagement";
                 next();
             }

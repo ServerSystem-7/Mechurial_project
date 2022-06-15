@@ -1,61 +1,72 @@
+<!--views/mainpage.ejs-->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mechurial</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Mechurial</title>
-
-  <meta name="author" content="team7" />
-  <meta name="description" content="Mechurial-website" />
-  <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
+    <meta name="author" content="team7" />
+    <meta name="description" content="Mechurial-website" />
+    <!-- width=device-width: 사용하는 디바이스의 가로 너비를 그대로 사용하겠다, initial-scale=1.0: 초기 배율 1배, 
     user-scalable=no: 스마트폰이나 테블릿에서 유저가 확대하는것을 허용 X, maximum-scale=1, minimum-scale=1: 최대 최소 확대 배율 1로 정함 -->
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
-  <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
+    />
+    <!-- CSS reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
+      integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/info.css" />
 
-  <!-- 구글 폰트 -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <script defer src="main.js"></script>
+    <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
+  </head>
 
-  <!-- CSS reset -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css"
-    integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
-    crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/info.css" />
-
-  <script defer src="main.js"></script>
-  <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
-</head>
-
-<body>
-  <div class="body__container">
-    <!-- HEADER -->
-    <header class="section">
-      <div class="inner clearfix">
-        <div class="logo float--left">
-          <a href="#" onclick="location.href='/'">mechurial</a>
+  <body>
+    <div class="body__container">
+      <!-- HEADER -->
+      <header class="section">
+        <div class="inner clearfix">
+          <div class="logo float--left">
+            <a href="/">mechurial</a>
+          </div>
+          <div class="menu-group float--right">
+            <ul class="main-menu toggle">
+              <li>
+                <a href="/register/new">등록</a>
+              </li>
+              <li>
+                <a href="/registerManagement">등록 관리</a>
+              </li>
+              <li><a href="/mypage_main">마이페이지</a></li>
+  
+              <% if(is_logined) {%>
+                <li><a> <%= userid %> wellcome!</a></li>
+                <% } else { %>
+                  <li><a href="/signUp">회원가입</a></li>
+                 <% } %>
+              <% if(is_logined) {%>
+                <li><a href="/logOut_main">로그아웃</a></li>
+                <% } else { %>
+                  <li><a href="/logIn_main">로그인</a></li>
+                  <% } %>
+            </ul>
+          </div>
         </div>
-        <div class="menu-group float--right">
-          <ul class="main-menu toggle">
-            <li>
-              <a href="#" onclick="location.href='/register/new'">등록</a>
-            </li>
-            <li>
-              <a href="#" onclick="location.href='/registerManagement'">등록 관리</a>
-            </li>
-            <li><a href="#">회원가입</a></li>
-            <li><a href="#">로그아웃</a></li>
-          </ul>
-        </div>
-      </div>
-    </header>
+      </header>
     <!-- 등록 창 -->
     <div class="service_info">
-      <img src ="../img/info1.jpg">
-      <img src="../img/info2.jpg">
-      <img src="../img/info3.jpg">
-      <img src="../img/info4.jpg">
+      <img src ="../public/images/info1.jpg">
+      <img src="../public/images/info2.jpg">
+      <img src="../public/images/info3.jpg">
+      <img src="../public/images/info4.jpg">
     </div>
 </body>
 
