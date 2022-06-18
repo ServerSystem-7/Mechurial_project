@@ -85,7 +85,7 @@ async function email_satisfied_register (all_array) {
             let receiver_email = await utils.get_user_email(registerId)
             let email_body = await utils.make_email_body(registerId)  // 1
             let email_title = await utils.make_email_title(registerId)
-            await utils.sendEmail(receiver_email, email_title, email_body)
+            await utils.sendEmail(receiver_email, email_body, email_title)
             await delete_satisfied_register(registerId)
         }
     }

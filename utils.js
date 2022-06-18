@@ -1,9 +1,5 @@
-const puppeteer = require("puppeteer"),
-    fs = require("fs"),
-    cheerio = require("cheerio"),
-    db = require("./models/index"),
-    nodeCron = require("node-cron"),
-    utils = require("./utils");
+const fs = require("fs"),
+    db = require("./models/index");
 
 db.sequelize.sync({alter: false});
 const Page = db.pageTBL;
@@ -15,13 +11,13 @@ const sendgrid = require('@sendgrid/mail');
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 
-exports.sendEmail = async (reademailaddress, str, title) => {
+exports.sendEmail = async (receiver_email, body, title) => {
     try{
         await sendgrid.send({
-        to: reademailaddress,
-        from: 'ssc22.team.07@gmail.com',
+        to: receiver_email,
+        from: process.env.SENDGRID_SENDER_EMAIL,
         subject: title,
-        text: str,
+        text: body,
     });
     } catch(err) {
         console.log(err);
@@ -73,18 +69,4 @@ exports.make_email_body = async (registerId) => {
 
     메추리알을 사용해주셔서 감사합니다.
     `
-}
-
-exports.send_register_email = async (receiver_email, email_title, email_body) => {
-    try{
-        await sendgrid.send({
-            to: receiver_email,
-            from: 'ssc22.team.07@gmail.com',
-            subject: email_title,
-            text: email_body,
-        });
-        console.log("email sent successfully!")
-    } catch(err) {
-        console.log(err);
-    };
 }
