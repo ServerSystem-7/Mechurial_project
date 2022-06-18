@@ -300,3 +300,34 @@ select {
     font-weight: 400;
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
+.btn_area_email2 {
+  margin: 20px 0 ;
+}
+#btnCheckCerNum {
+  width: 250px;
+  padding: 10px 0 10px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #2E43FF;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+
+.btn_area_join {
+  margin: 20px 0 ;
+}
+#btnChangeEmail {
+  width: 250px;
+  padding: 10px 0 10px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #2E43FF;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
