@@ -8,7 +8,7 @@ const express = require("express"),
   userController=require("./controllers/userController"),
   myPageController=require("./controllers/myPageController"),
   session = require("express-session"),
-  // crawling = require("./crawl_main"),
+  //crawling = require("./crawl_main"),
   // cookieParser = require("cookie-parser"),
   db = require('./models/index');
 
@@ -74,7 +74,7 @@ router.post("/logIn_main", userController.authenticate);
 router.get("/logOut_main", userController.logout);
 
 // 회원정보 관련 라우터
-router.get("/mypage",myPageController.showMypage);
+router.get("/mypage_main",myPageController.enterMypage);
 // 1. 아이디 찾기 관련 라우터
 router.get("/search_id", userController.searchid);
 router.post("/search_id/sendmail", userController.sendMail_cerNum);
@@ -101,9 +101,8 @@ router.post("/mypage/checkemail",userController.checkNewEmail);
 router.post("/mypage/emailcert",userController.checkCerNum, userController.cerNumOk);
 router.post("/mypage/changemail",userController.applyNewEmail);
 
-//6. 마이페이지 관련 라우터
-router.get("/mypage_main", userController.mypage);
-//router.post("/mypage_main", userController.delete);
+//6. 회원 탈퇴 라우터
+router.post("/mypage_main", userController.deleteUser);
 
 app.get("/serviceInfo", homeController.showserviceInfo);
 app.get("/logIn_main", homeController.showLogin);

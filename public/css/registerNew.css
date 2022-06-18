@@ -96,7 +96,9 @@ header .main-menu li a {
 }
 h2 {
   padding: 15px;
+  size: 50px;
 }
+
 
 #toggle-btn {
   display: none;
@@ -109,6 +111,11 @@ h2 {
   cursor: pointer;
   text-indent: -9999px;
   border-radius: 30px;
+}
+
+.body-form{
+  margin-left: 30%;
+  margin-right: 25%;
 }
 
 #enroll-form {
@@ -129,9 +136,12 @@ h2 {
 }
 
 .enroll_btn {
-  width: 100px;
+  width: 500px;
   height: 30px;
+  text-align: center;
   border-radius: 20px;
+  background: #2E43FF;
+  color: white;
 }
 .body-form li {
   text-decoration: none;
@@ -141,4 +151,41 @@ h2 {
   font-size: 15px;
   float: left;
   padding: 10px;
+}
+.step-info {
+  width: 500px;
+  text-align: center;
+}
+
+input[type=text] {
+  width: 500px;
+  height: 56px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+input[type=url] {
+  width: 500px;
+  height: 56px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+input[type=date]{
+  width: 500px;
+  text-align: center;
+  align-items: center;
+}
+input[type=radio]{
+  width: 80px;
+  text-align: center;
+  align-items: center;
 }

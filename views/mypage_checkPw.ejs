@@ -67,14 +67,28 @@
       <header class="section">
         <div class="inner clearfix">
           <div class="logo float--left">
-            <a href="#" onclick="location.href='/'">mechurial</a>
+            <a href="/">mechurial</a>
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
-              <li><a href="#" onclick="location.href='/register/new'">등록</a></li>
-              <li><a href="#" onclick="location.href='/registerManagement'">등록 관리</a></li>
-              <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
-              <li><a href="#" onclick="location.href='/logIn_main'">로그인</a></li>
+              <li>
+                <a href="/register/new">등록</a>
+              </li>
+              <li>
+                <a href="/registerManagement">등록 관리</a>
+              </li>
+              <li><a href="/mypage_main">마이페이지</a></li>
+  
+              <% if(is_logined) {%>
+                <li><a> <%= userid %> wellcome!</a></li>
+                <% } else { %>
+                  <li><a href="/signUp">회원가입</a></li>
+                 <% } %>
+              <% if(is_logined) {%>
+                <li><a href="/logOut_main">로그아웃</a></li>
+                <% } else { %>
+                  <li><a href="/logIn_main">로그인</a></li>
+                  <% } %>
             </ul>
           </div>
         </div>
@@ -126,7 +140,7 @@
               }, success : function(data){
                 console.log("일치여부 : "+data.result);
                 if(data.result=="ok"){
-                    location.href="/mypage";
+                    location.href="/mypage_main";
                 }
                 else{
                   alert("비밀번호가 일치하지 않습니다.");

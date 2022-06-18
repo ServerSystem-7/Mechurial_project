@@ -1,7 +1,6 @@
 const db = require("../models/index"),
-//cookieParser = require("cookie-parser"),
-passport = require("passport");
-sendEmail = require("../sendEmail");
+sendEmail = require("../sendEmail"),
+bcrypt = require("bcrypt"),
 randomNumber = require("../createRandomNumber"),
 User = db.userTBL,
   getUserParams = (body) => {
@@ -26,6 +25,21 @@ module.exports = {
         req.session.distroy;
         res.clearCookie("sid");
         res.redirect('logIn_main');
+    },
+    deleteUser: async(req, res, next) => {
+      const userId = req.session.userId;
+      console.log(userId);
+      try{
+        await User.findByPkAndRemove(userId);
+        req.session.distroy;
+        res.clearCookie("sid")
+        is_logined = false;
+        userid = null;
+        res.render("mainpage");
+      }catch(error){
+        console.log(`Error deleting register by ID: ${error.message}`);
+        next(error);
+      }
     },
     searchid: (req, res, next) => {
       is_logined = req.session.is_logined;
@@ -70,25 +84,6 @@ module.exports = {
           next(err);
       };
       },
-      mypage: (req, res) => {  
-        if(req.session.is_logined){
-            let userId = req.session.userId;
-            is_logined = req.session.is_logined;
-            userid =  req.session.userId;
-            try {
-              User.findByPk(userId).then((user) => {
-                res.render("mypage_main",{user});
-              })
-            }catch (error) {
-              console.log("error!");
-            }
-        }
-        else{
-          is_logined = req.session.is_logined;
-          userid =  req.session.userId;
-          res.render("logIn_main");
-        }
-    },
 
     sendMail_cerNum: async (req, res, next) =>{
       try{
@@ -119,7 +114,6 @@ module.exports = {
     sendMail_id : async(req,res,next) =>{
       let isAuthedEA=req.body.isAuthedEA;
       const EA = req.body.EA;
-
       isAuthedEA=true;
           
       let userId =  await db.userTBL.findOne({
@@ -218,7 +212,9 @@ module.exports = {
 
     applyNewPw : async (req,res,next) =>{
       try{
-        const newPw=req.body.password;
+        let newPw = req.body.password;
+        let hash = await bcrypt.hash(newPw, 10);
+        newPw = hash;
         let id;
         
         if(req.session.userId==undefined){
@@ -321,13 +317,6 @@ module.exports = {
       console.error(err);
       next(err);
       res.send({result:'fail'});
+    };
     }
-
-    }
-
-
-    
-
-
-
   }

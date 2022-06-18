@@ -13,7 +13,6 @@ function getRegisterParams(body) {
         notifyLogic: body.condition,
         siteName: body.siteName,
         dueDate: body.dueDate, 
-        userId: "minjin11"  // temporary
     };
 };
 
@@ -53,6 +52,7 @@ module.exports = {
             })
             is_logined = req.session.is_logined;
             userid =  req.session.userId;
+            registerParams["userId"] = userid;
             if(result==undefined){
                 console.log('pageTBL에 해당 url 존재X');
                 let page = await Page.create({url: registerParams["pageUrl"]});

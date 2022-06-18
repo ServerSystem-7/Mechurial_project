@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, Sequelize) => {
 
     class User extends Sequelize.Model {
@@ -29,18 +31,12 @@ module.exports = (sequelize, Sequelize) => {
           }
           return user;
         } 
-  
-        passwordComparison = (inputPassword, correctPassword) =>{
-          let user = this;
-          console.log(correctPassword);
-          if(inputPassword === correctPassword){
-            console.log("입력한 pw "+inputPassword);
-            console.log("db의pw "+correctPassword);
-        
-            return 1;
-          }else return 0;
-        }
-    };
+
+      passwordComparison(inputPassword){
+        let user = this;
+        return bcrypt.compare(inputPassword, user.password);
+      }
+  };
 
     User.init({
         id: {
@@ -60,6 +56,12 @@ module.exports = (sequelize, Sequelize) => {
             validate: {isEmail: true}
         }
     },{
+      hooks:{
+        beforeSave: async(user) => {
+          let hash = await bcrypt.hash(user.password, 10);
+          user.password = hash;
+        }
+      },
         sequelize,
         modelName: 'userTBL',
         freezeTableName: true,

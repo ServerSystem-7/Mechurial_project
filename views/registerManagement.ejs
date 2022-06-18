@@ -72,8 +72,8 @@
                 <th scope="cols">key1</th>
                 <th scope="cols">key2</th>
                 <th scope="cols">key3</th>
+                <th scope="cols">notifyLogic</th>
                 <th scope="cols">dueDate</th>
-                <th scope="cols"> </th>
                 <th scope="cols"> </th>
             </tr>
         </thead>
@@ -96,13 +96,10 @@
                       <%= registration.key3 %>
                     </td>
                     <td>
-                      <%= registration.dueDate %>
+                      <%= registration.notifyLogic %>
                     </td>
-          
                     <td>
-                      <a href="<%=`/registerManagement/${registration.registerId}/edit`%>">
-                        Edit
-                      </a>
+                      <%= registration.dueDate %>
                     </td>
                     <td>
                       <form action="<%= `/registerManagement/${registration.registerId}/delete`%>" method="post">
