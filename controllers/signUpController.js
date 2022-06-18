@@ -1,6 +1,6 @@
 const db = require('../models'),
 sendEmail = require("../sendEmail"),
-randomNumber = require("../createRandomNumber");
+utils = require("../utils");
   
 
 let number;
@@ -77,7 +77,7 @@ module.exports = {
                 })
             }
             else{
-                number = randomNumber(111111, 999999);
+                number = utils.generateRandom(111111, 999999);
 
                 let str = 
                 `메추리알 서비스를 이용해주셔서 감사합니다.

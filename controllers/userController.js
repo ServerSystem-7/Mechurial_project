@@ -1,7 +1,7 @@
 const db = require("../models/index"),
 sendEmail = require("../sendEmail"),
 bcrypt = require("bcrypt"),
-randomNumber = require("../createRandomNumber"),
+utils = require("../utils"),
 User = db.userTBL,
   getUserParams = (body) => {
     return {
@@ -88,7 +88,7 @@ module.exports = {
     sendMail_cerNum: async (req, res, next) =>{
       try{
         const reademailaddress = req.body.EA;
-        number = randomNumber(111111, 999999);
+        number = utils.generateRandom(111111, 999999);
 
         let str = 
         `메추리알 서비스를 이용해주셔서 감사합니다.
@@ -269,7 +269,7 @@ module.exports = {
           res.send({result:'fail'});
         }
         else{
-          number = randomNumber(111111, 999999);
+          number = utils.generateRandom(111111, 999999);
 
           let str = 
           `메추리알 서비스를 이용해주셔서 감사합니다.
