@@ -1,4 +1,5 @@
 # Mechurial_project
+
 ## Description
 메추리알이란, 사용자가 원하는 사이트의 **URL**과 **Keyword**, 그리고 **알림조건**을 입력하게 되면 30초마다 크롤링을 통해 원하는 조건에 맞는 글이 업로드 되면 회원가입시 설정한 **메일로 알림이 가는 서비스** 입니다.
 
@@ -15,6 +16,8 @@ OS:  Ubuntu [20.04LTS]
 Node.js:  v16.15.1
 
 npm: v8.11.0
+
+- 구글 클라우드 플랫폼 GCP를 사용중입니다. 
 
 ## Installation
 
@@ -33,9 +36,15 @@ sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 l
 npm i -S express express-ejs-layouts sequelize mysql2 http-status-codes dotenv ejs @sendgrid/mail puppeteer cheerio node-cron bcrypt
 ```
 
-## Crawling 
+## Runserver
 
-**![](https://lh4.googleusercontent.com/uVOYuS8ykwbFQgoy-SYj6_06NvkGC6-UHkYOITbnQ35R0xXkfXs5G0vdHTE3mRylT5ngVlKmhPUlbnFfISLr4_wTwcavL3erBTaVL9ZpHHOTEsElTlzq7EUCuFdF8_PPPwxLz93kiaISNwe7Mg)**
+```
+sudo node main
+```
+
+## Crawling
+
+**![](https://lh4.googleusercontent.com/uVOYuS8ykwbFQgoy-SYj6_06NvkGC6-UHkYOITbnQ35R0xXkfXs5G0vdHTE3mRylT5ngVlKmhPUlbnFfISLr4_wTwcavL3erBTaVL9ZpHHOTEsElTlzq7EUCuFdF8_PPPwxLz93kiaISNwe7Mg)*
 > 크롤링 과정 소개
 > 
 	
@@ -53,3 +62,4 @@ pageTBL-->> pageTBL: 기존에 갖고 있는 url과 일치하는지 비교한다
 pageTBL--x pageTBL: 일치한다면 저장하지 않는다.
 pageTBL->> pageTBL: 일치하지 않는다면 저장한다. 
 ```
+
