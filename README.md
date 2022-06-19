@@ -40,8 +40,15 @@ npm i -S express express-ejs-layouts sequelize mysql2 http-status-codes dotenv e
 ```
 
 ## How to Run
-- `.env` 파일에 DB_USER, DB_PW, DB_NAME, DB_HOST 를 먼저 채워주세요
-
+- `.env` 파일에 DB_USER, DB_PW, DB_NAME, DB_HOST 를 먼저 채워주세요.
+```
+create DB_NAME명
+```
+이후 권한 오류가 발생한다면, mysql에 아래 명령어를 입력해주세요.
+```
+grant all on DB_NAME명.*to 'DB_USER명'@'%';
+```
+서버를 실행시키기 위해 아래 명령어를 입력해주세요.
 ```
 sudo node main
 ```
