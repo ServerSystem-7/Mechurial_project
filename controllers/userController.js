@@ -263,10 +263,11 @@ module.exports = {
           id=req.session.userId;
         }
         await db.userTBL.update({password:newPw}, {where:{id:id}});
-        
-          
-
-          res.send({result:"ok"});
+        is_logined = false;
+        userid = null;
+        req.session.distroy;
+        res.clearCookie("sid");
+        res.send({result:"ok"});
       
       }catch(err){
         console.error(err);
