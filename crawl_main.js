@@ -18,7 +18,7 @@ if (!fs.existsSync(saveDir)){
 }
 
 // crawl & save as an html file
-async function saveHTML(url, fileName) {
+async function saveHTML(url) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],  // no-sandbox b/c sudo
     });
@@ -27,11 +27,16 @@ async function saveHTML(url, fileName) {
     await page.goto(url, {waitUntil: 'networkidle2'});  // go to the page to parse
     await page.waitFor(3000);
     const html = await page.content();  // extract data from the page
+    
+    let currentTime = new Date()
+    let fileName = String(currentTime.getTime()) + ".html"
+    let savePath = saveDir + await utils.incrementPath(fileName)
 
-    fs.writeFileSync(fileName, html);  // save file
-    console.log("saved html file as " + fileName);
+    fs.writeFileSync(savePath, html);  // save file
+    console.log("saved html file as " + savePath);
     
     await browser.close();  // close browser (to prevent memory leak)
+    return savePath
 }
 
 async function checkRegister(urlLink, urlFile) {
@@ -49,9 +54,7 @@ async function checkRegister(urlLink, urlFile) {
         let curReg = registrations[id]
 
         let keywords = [curReg["key1"], curReg["key2"], curReg["key3"]]
-        let validKeywords = keywords.filter((key) => {
-            key.length > 0
-        })
+        let validKeywords = keywords.filter(key => key.length > 0)
 
         let logic = registrations[id]["notifyLogic"]
         satisfied[id]["satisfied"] = await checkKeywordMatch(urlFile, validKeywords, logic)
@@ -107,11 +110,7 @@ async function deleteSatisfiedRegister(registerId) {
 }
 
 async function crawlAndCheck(url) {
-    let currentTime = new Date()
-    let fileName = String(currentTime.getTime()) + ".html"
-    let savePath = saveDir + utils.incrementPath(fileName)
-    await saveHTML(url, savePath);
-
+    let savePath = await saveHTML(url);
     let resultArray = await checkRegister(url, savePath);
     await emailSatisfiedRegister(resultArray)
 }
@@ -125,7 +124,7 @@ async function runAllUrls() {
             if (err) throw err;
           });
         }
-      });
+    });
 
     let pages = await Page.findAll({raw: true})
     let urlArray = pages.map(a => a.url);
