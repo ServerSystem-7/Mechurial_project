@@ -51,7 +51,7 @@
               <% if(is_logined) {%>
                 <li><a> <%= userid %> wellcome!</a></li>
                 <% } else { %>
-                  <li><a href="/signUp">회원가입</a></li>
+                  <li><a href="/signUp/terms">회원가입</a></li>
                  <% } %>
               <% if(is_logined) {%>
                 <li><a href="/logOut_main">로그아웃</a></li>
@@ -123,7 +123,6 @@
   
     // 이메일 전송 기능
     function emailSendAjax(email) {
-          console.log("입력된 이메일은 "+email+" 입니다.");
           alert("인증번호를 메일로 전송했습니다.");
           $.ajax({
               type: 'POST',
@@ -152,9 +151,6 @@
                     isValidId : isValidId 
                 } , success : function(data){
                   if(data.result=='ok') {
-
-                    console.log("isAuth "+data.isAuthedEA);
-                  console.log("isValid "+data.isValidId);
                   isValidId=data.isValidId;
                   isAuthedEA=data.isAuthedEA;
 

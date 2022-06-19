@@ -72,7 +72,7 @@ module.exports = {
             if (isDuplicateEA){
                 console.log("중복된 이메일입니다.");
                 res.send({
-                    result : 'fail'
+                    result : 'redup'
                 })
             }
             else{
@@ -88,7 +88,7 @@ module.exports = {
                 await utils.sendEmail(EA, str, title);
                 console.log("인증메일 전송");
                 res.send({
-                    result:'success'
+                    result:'ok'
                 });   }
             
             
@@ -109,10 +109,12 @@ module.exports = {
                 var isAuthedEA=req.body.isAuthedEA;
                 isAuthedEA=true;   
             }
-            else console.log("인증 실패");
-            
-            console.log(isAuthedEA);
-            res.send(isAuthedEA);
+            else res.send({result:'notMatch'});
+
+            res.send({
+                result:'ok',
+                isAuthedEA:isAuthedEA});
+
         } catch(err){
             console.error(err);
             next(err);

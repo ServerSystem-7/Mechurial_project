@@ -84,24 +84,33 @@ module.exports = {
       };
       },
 
+      // 메일전송_인증번호
     sendMail_cerNum: async (req, res, next) =>{
       try{
-        const reademailaddress = req.body.EA;
-        number = utils.generateRandom(111111, 999999);
-
-        let str = 
-        `메추리알 서비스를 이용해주셔서 감사합니다.
-        인증번호는 ${number} 입니다.`
-        let title=
-        `[메추리알] 인증번호는 ${number} 입니다.`
-
         
-        await utils.sendEmail(reademailaddress, str, title);
-          console.log("인증메일 전송");
-          res.send({
-            number:number
-          });
-          //TODO: 등록되지 않은 이메일일땐, 안증메일 전송이 되지 않아야 합니다.     
+        const reademailaddress = req.body.EA;
+
+        //이메일에 해당하는 사용자가 있는지 확인.
+        let user =  await User.findOne({ where: {email: reademailaddress}});
+
+        if(user){
+          number = utils.generateRandom(111111, 999999);
+
+          let str = 
+          `메추리알 서비스를 이용해주셔서 감사합니다.
+          인증번호는 ${number} 입니다.`
+          let title=
+          `[메추리알] 인증번호는 ${number} 입니다.`
+
+          
+          await utils.sendEmail(reademailaddress, str, title);
+            console.log("인증메일 전송");
+            res.send({
+              // number:number
+              result:'ok'
+            });    
+        }else{
+          res.send({result:'noUser'})}
 
       }catch(err){
         res.end();
@@ -110,31 +119,39 @@ module.exports = {
       };
     },
 
+
+    // 메일전송_아이디찾기 
     sendMail_id : async(req,res,next) =>{
-      let isAuthedEA=req.body.isAuthedEA;
-      const EA = req.body.EA;
-      isAuthedEA=true;
-          
-      let userId =  await db.userTBL.findOne({
-        attributes: ['id'],
-        where: {email : EA},
-        raw:true
-      });
-      
 
-      console.log(userId);
-      let str=
-        `메추리알 서비스를 이용해주셔서 감사합니다.
-        인증하신 이메일로 가입한 아이디는 ${userId.id} 입니다.`
+      try{
+        let isAuthedEA=req.body.isAuthedEA;
+        const EA = req.body.EA;
+        isAuthedEA=true;
+            
+        let userId =  await db.userTBL.findOne({
+          attributes: ['id'],
+          where: {email : EA},
+          raw:true
+        });
+        
+        let str=
+          `메추리알 서비스를 이용해주셔서 감사합니다.
+          인증하신 이메일로 가입한 아이디는 ${userId.id} 입니다.`
 
-      let title=
-        `[메추리알] 분실 아이디를 알려드립니다.`
+        let title=
+          `[메추리알] 분실 아이디를 알려드립니다.`
 
-      await utils.sendEmail(EA, str, title);
-      res.send({result:'success'});
+        await utils.sendEmail(EA, str, title);
+        res.send({result:'ok'});
+
+    }catch{console.error(err);
+      next(err);
+      res.send({result:'fail'});}
+
     },
         
 
+    //인증번호 확인
     checkCerNum : async (req,res,next)=>{
       try{
         const CEA = req.body.CEA;
@@ -145,17 +162,18 @@ module.exports = {
 ;        }
         else{
           console.log("인증 실패");
-          res.send({result:'fail'});
+          res.send({result:'notMatch'});
         }
 
       } catch(err){
           console.error(err);
           next(err);
-          res.end();
+          res.send({result:'fail'});
       };
   },
 
 
+  // 비밀번호 찾기_아이디-이메일 일치 및 존재 여부 확인
     checkIdEmail :  async (req,res,next) =>{
       try{
         const email = req.body.EA;
@@ -170,7 +188,6 @@ module.exports = {
           });
     
         req.session.inputId = id;
-        console.log("세션으로 임시생성한 id는 "+req.session.inputId);
 
         const userEmail = await db.userTBL.findAll({
           attributes: ['email'],
@@ -180,7 +197,6 @@ module.exports = {
         if (userEmail){
           if (userEmail[0].email == email)
             isValidId=true;
-          
         }
 
         if(number==cerNum)
@@ -191,9 +207,6 @@ module.exports = {
             isAuthedEA:isAuthedEA,
             isValidId:isValidId
         }) 
-        
-        
-        
       }catch(err){
         console.error(err);
         next(err);
@@ -201,14 +214,13 @@ module.exports = {
       }
     },
 
-    
     changePW: (req,res) => {
       is_logined = req.session.is_logined;
       userid =  req.session.userId;
       res.render("mypage_pw");
     },
 
-
+    // 비밀번호 변경
     applyNewPw : async (req,res,next) =>{
       try{
         let newPw = req.body.password;
@@ -224,21 +236,18 @@ module.exports = {
           id=req.session.userId;
         }
         
-        console.log(id);
-        let user = await db.userTBL.findOne({
-            where: {id : id}
-          })
-        console.log(user);
+        // console.log(id);
+        // let user = await db.userTBL.findOne({
+        //     where: {id : id}
+        //   })
+          
+          // const params = {
+          //   id : user.id,
+          //   email : user.email,
+          //   password : newPw }
 
-        console.log("----------------------------");
-          const params = {
-            id : user.id,
-            email : user.email,
-            password : newPw }
-
-            console.log(params);
-        
-          await db.userTBL.findByPkAndUpdate(user.id, params);
+          // await db.userTBL.findByPkAndUpdate(user.id, params);
+          await db.userTBL.update({email: user.email}, {where:{id:req.session.userId}});
 
           res.send({result:"ok"});
       
@@ -249,25 +258,28 @@ module.exports = {
       }
     },
 
-
-
     showChangeEmail : (req,res) =>{
       res.render("mypage_email");
     },
 
-    checkNewEmail : async (req,res) =>{
+    // 이메일 변경_새로 입력한 이메일 중복 확인 및 인증메일 전송
+    checkNewEmail : async (req,res,next) =>{
       try{
-        const newEmail = req.body.email;
+        
+        const EA = req.body.email;
+        console.log(EA);
 
-        let user = await db.userTBL.findOne({
-          where: {email:newEmail}
-        });
-
-        if(user){
-          console.log("이메일 중복");
-          res.send({result:'fail'});
-        }
-        else{
+        // 이메일 중복 검사
+        let isDuplicateEA= await db.userTBL.findOne({
+          where:{email : EA}
+          });
+      
+      if (isDuplicateEA){
+          console.log("중복된 이메일입니다.");
+          res.send({
+              result : 'redup'
+          })
+      }else{
           number = utils.generateRandom(111111, 999999);
 
           let str = 
@@ -276,7 +288,7 @@ module.exports = {
           let title=
           `[메추리알] 인증번호는 ${number} 입니다.`
           
-          await utils.sendEmail(newEmail, str, title);
+          await utils.sendEmail(EA, str, title);
           res.send({result:"ok"});
         }
 
@@ -287,29 +299,20 @@ module.exports = {
       }
     },
 
-    showInputNewPw: (req,res)=>{
-      res.render("search_pw2");
-    },
-
-    cerNumOk: (req,res)=>{
-      res.send({result:"ok"});
-    },
-    
+    // 새 이메일 적용
     applyNewEmail: async (req,res,next)=>{
       try{
         const newEmail = req.body.email;
 
-        let user = await db.userTBL.findOne({
-          where: {id : req.session.userId}
-        });
+        // const params = {
+        //   id : user.id,
+        //   email : newEmail,
+        //   password : user.password }
 
-        const params = {
-          id : user.id,
-          email : newEmail,
-          password : user.password }
+        // await db.userTBL.findByPkAndUpdate(req.session.userId, params);
+        
+        await db.userTBL.update({email:newEmail}, {where:{id:req.session.userId}});
 
-        await db.userTBL.findByPkAndUpdate(req.session.userId, params);
-        console.log(user);
         res.send({result:'ok'});
 
     }catch(err){
@@ -317,5 +320,14 @@ module.exports = {
       next(err);
       res.send({result:'fail'});
     };
+    },
+
+    showInputNewPw: (req,res)=>{
+      res.render("search_pw2");
+    },
+
+    cerNumOk: (req,res)=>{
+      res.send({result:"ok"});
     }
+    
   }

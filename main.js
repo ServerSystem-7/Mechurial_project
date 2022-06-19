@@ -61,7 +61,7 @@ router.post("/registerManagement/:registerId/delete", registerController.delete,
 router.get("/registerManagement/:registerId/edit", registerController.edit); 
 router.post("/registerManagement/:registerId/update", registerController.update, registerController.redirectView);
 
-router.get("/signUp_terms", signUpController.signUp_terms);
+router.get("/signUp/terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
 router.post("/signUp/idChk", signUpController.idChk);
 router.post("/signUp/create", signUpController.createUser);

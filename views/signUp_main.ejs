@@ -51,7 +51,7 @@
               <% if(is_logined) {%>
                 <li><a> <%= userid %> wellcome!</a></li>
                 <% } else { %>
-                  <li><a href="/signUp">회원가입</a></li>
+                  <li><a href="/signUp/terms">회원가입</a></li>
                  <% } %>
               <% if(is_logined) {%>
                 <li><a href="/logOut_main">로그아웃</a></li>
@@ -257,13 +257,16 @@
             data: {
                 EA: email
             }, success : function(data){
-                console.log(data);
-                if(data.result=='success') {
-                    alert("사용 가능한 이메일입니다.");
+                if(data.result=='ok') {
+                    alert("사용 가능한 이메일입니다. \n이메일로 인증번호를 전송했습니다.");
                 }
-                else{
+                else if(data.result=='redup'){
                     alert("사용할 수 없는 이메일입니다.");
                     document.getElementById('EA').value="";
+                }
+                else{
+                    alert('오류가 발생했습니다. 다시 시도해주세요.');
+                    location.reload();
                 }
             }
         });
@@ -279,15 +282,17 @@
                     CEA: cerNum,
                     isAuthedEA : isAuthedEA
                 }, success: function(data){
-                    if(data){
+                    if(data.result=='ok'){
                         alert('이메일 인증에 성공했습니다.');
-                        isAuthedEA=data;
-                        console.log(isAuthedEA);
-
+                        isAuthedEA=data.isAuthedEA;
                     }
-                    else{
+                    else if(data.result=='notMatch'){
                         alert('인증번호가 일치하지 않습니다.');
                         document.getElementById('CEA').value='';
+                    }
+                    else{
+                        alert('오류가 발생했습니다. 다시 시도해주세요.');
+                        location.reload();
                     }
                 }
                 
