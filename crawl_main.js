@@ -9,15 +9,15 @@ const puppeteer = require("puppeteer"),
 db.sequelize.sync({alter: false});
 const Page = db.pageTBL;
 const Register = db.registerTBL;
-const save_dir = "./crawling_results/";
+const saveDir = "./crawlingResults/";
 
-if (!fs.existsSync(save_dir)){
+if (!fs.existsSync(saveDir)){
     console.log("Created a new directory to save crawling results.")
-    fs.mkdirSync(save_dir);
+    fs.mkdirSync(saveDir);
 }
 
 // crawl & save as an html file
-async function save_html(url, file_name) {
+async function saveHTML(url, fileName) {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],  // no-sandbox b/c sudo
     });
@@ -27,16 +27,16 @@ async function save_html(url, file_name) {
     await page.waitFor(3000);
     const html = await page.content();  // extract data from the page
 
-    fs.writeFileSync(file_name, html);  // save file
-    console.log("saved html file as " + file_name);
+    fs.writeFileSync(fileName, html);  // save file
+    console.log("saved html file as " + fileName);
     
     await browser.close();  // close browser (to prevent memory leak)
 }
 
-async function check_register(url_link, url_file) {
-    // all register instances of the url_link
+async function checkRegister(urlLink, urlFile) {
+    // all register instances of the urlLink
     let registrations = await Register.findAll({
-        where: {pageUrl: url_link},
+        where: {pageUrl: urlLink},
         raw: true
     })
 
@@ -45,46 +45,46 @@ async function check_register(url_link, url_file) {
     );
 
     for (id = 0; id < registrations.length; id++) {
-        let cur_reg = registrations[id]
+        let curReg = registrations[id]
 
-        let keywords = [cur_reg["key1"], cur_reg["key2"], cur_reg["key3"]]
+        let keywords = [curReg["key1"], curReg["key2"], curReg["key3"]]
         let validKeywords = keywords.filter((key) => {
             key.length > 0
         })
 
         let logic = registrations[id]["notifyLogic"]
-        satisfied[id]["satisfied"] = await check_keyword_match(url_file, validKeywords, logic)
+        satisfied[id]["satisfied"] = await checkKeywordMatch(urlFile, validKeywords, logic)
     }
     return satisfied
 }
 
-function check_keyword_match(url_file, keywords, logic) {
-    const $ = cheerio.load(fs.readFileSync(url_file));
-    const whole_text = $.text();
+function checkKeywordMatch(urlFile, keywords, logic) {
+    const $ = cheerio.load(fs.readFileSync(urlFile));
+    const wholeText = $.text();
 
     if (logic === "and") {
-        return keywords.every(x => whole_text.includes(x))
+        return keywords.every(x => wholeText.includes(x))
     } else if (logic === "or") {
-        return keywords.some(x => whole_text.includes(x))
+        return keywords.some(x => wholeText.includes(x))
     } else {
         return false
     }
 }
 
-async function email_satisfied_register (all_array) {
-    for (let idx = 0; idx < all_array.length; idx++) {
-        if (all_array[idx]["satisfied"] === true) {
-            let registerId = all_array[idx]["registerId"]
-            let receiver_email = await utils.get_user_email(registerId)
-            let email_body = await utils.make_email_body(registerId)
-            let email_title = await utils.make_email_title(registerId)
-            await utils.sendEmail(receiver_email, email_body, email_title)
-            await delete_satisfied_register(registerId)
+async function emailSatisfiedRegister (allArray) {
+    for (let idx = 0; idx < allArray.length; idx++) {
+        if (allArray[idx]["satisfied"] === true) {
+            let registerId = allArray[idx]["registerId"]
+            let receiverEmail = await utils.getUserEmail(registerId)
+            let emailBody = await utils.makeEmailBody(registerId)
+            let emailTitle = await utils.makeEmailTitle(registerId)
+            await utils.sendEmail(receiverEmail, emailBody, emailTitle)
+            await deleteSatisfiedRegister(registerId)
         }
     }
 }
 
-async function delete_satisfied_register(registerId) {
+async function deleteSatisfiedRegister(registerId) {
     try{
         let register = await Register.findOne({where: {registerId: registerId}});
         const url = register["pageUrl"];
@@ -105,61 +105,61 @@ async function delete_satisfied_register(registerId) {
     };
 }
 
-async function crawl_and_check(url) {
-    let current_time = new Date()
-    let file_name = String(current_time.getTime()) + ".html"
-    let save_path = save_dir + utils.increment_path(file_name)
-    await save_html(url, save_path);
+async function crawlAndCheck(url) {
+    let currentTime = new Date()
+    let fileName = String(currentTime.getTime()) + ".html"
+    let savePath = saveDir + utils.incrementPath(fileName)
+    await saveHTML(url, savePath);
 
-    let result_array = await check_register(url, save_path);
-    await email_satisfied_register(result_array)
+    let resultArray = await checkRegister(url, savePath);
+    await emailSatisfiedRegister(resultArray)
 }
 
-async function run_all_urls() {
+async function runAllUrls() {
     let pages = await Page.findAll({raw: true})
-    let url_array = pages.map(a => a.url);
-    for (let idx = 0; idx < url_array.length; idx++) {
-        crawl_and_check(url_array[idx])
+    let urlArray = pages.map(a => a.url);
+    for (let idx = 0; idx < urlArray.length; idx++) {
+        crawlAndCheck(urlArray[idx])
     }
 }
 
-async function deleteOverdueRegistrations(current_date) {
-    let overdue_registrations = await Register.findAll({
+async function deleteOverdueRegistrations(currentDate) {
+    let overdueRegistrations = await Register.findAll({
         where: {
             dueDate: {
-                [Op.lt]: current_date
+                [Op.lt]: currentDate
             }
         },
         raw: true
     })
-    for (let idx = 0; idx < overdue_registrations.length; idx++) {
-        let registerId = overdue_registrations[idx]["registerId"]
-        let receiver_email = await utils.get_user_email(registerId)
-        let email_title = await utils.make_email_title_overdue(registerId)
-        let email_body = await utils.make_email_body_overdue(registerId)
-        await utils.sendEmail(receiver_email, email_body, email_title)
-        await delete_satisfied_register(registerId)
+    for (let idx = 0; idx < overdueRegistrations.length; idx++) {
+        let registerId = overdueRegistrations[idx]["registerId"]
+        let receiverEmail = await utils.getUserEmail(registerId)
+        let emailTitle = await utils.makeEmailTitleOverdue(registerId)
+        let emailBody = await utils.makeEmailBodyOverdue(registerId)
+        await utils.sendEmail(receiverEmail, emailBody, emailTitle)
+        await deleteSatisfiedRegister(registerId)
     }
 }
 
 // run every minute
 const job = nodeCron.schedule("0 * * * * *", async function () {
-    let date_ob = new Date();
+    let dateOb = new Date();
     let SEOULTIMEZONE = 9 * 60 * 60 * 1000
-    await date_ob.setTime(date_ob.getTime() + SEOULTIMEZONE);  // time zone is set
+    await dateOb.setTime(dateOb.getTime() + SEOULTIMEZONE);  // time zone is set
 
-    let hours = date_ob.getHours();
-    let minutes = date_ob.getMinutes();
-    let seconds = date_ob.getSeconds();
+    let hours = dateOb.getHours();
+    let minutes = dateOb.getMinutes();
+    let seconds = dateOb.getSeconds();
     console.log(`running at: ${hours}:${minutes}:${seconds}`);
 
-    let dd = String(date_ob.getDate()).padStart(2, '0');
-    let mm = String(date_ob.getMonth() + 1).padStart(2, '0');  // January is 0
-    let yyyy = date_ob.getFullYear();
-    let current_date = `${yyyy}-${mm}-${dd}`
+    let dd = String(dateOb.getDate()).padStart(2, '0');
+    let mm = String(dateOb.getMonth() + 1).padStart(2, '0');  // January is 0
+    let yyyy = dateOb.getFullYear();
+    let currentDate = `${yyyy}-${mm}-${dd}`
 
-    await deleteOverdueRegistrations(current_date)
-    run_all_urls()
+    await deleteOverdueRegistrations(currentDate)
+    runAllUrls()
 }, {
     scheduled: false,
 });

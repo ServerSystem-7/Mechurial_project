@@ -10,10 +10,10 @@ const sendgrid = require('@sendgrid/mail');
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = {
-    sendEmail: async (receiver_email, body, title) => {
+    sendEmail: async (receiverEmail, body, title) => {
         try{
             await sendgrid.send({
-            to: receiver_email,
+            to: receiverEmail,
             from: process.env.SENDGRID_SENDER_EMAIL,
             subject: title,
             text: body,
@@ -28,37 +28,38 @@ module.exports = {
         return randomNumber;
     },
 
-    increment_path: (path, overwrite = false) => {
+    incrementPath: (path, overwrite = false) => {
+        const saveDir = "./crawlingResults/";
         if (overwrite){
             return path
         }
         else {
-            file_name = path.split(".").slice(0,-1).join(".")
-            file_ext = path.split(".").pop()
+            fileName = path.split(".").slice(0,-1).join(".")
+            fileExt = path.split(".").pop()
             let i = 0
-            while (fs.existsSync("./crawling_results/" + `${file_name}_${i}.${file_ext}`))
+            while (fs.existsSync(saveDir + `${fileName}_${i}.${fileExt}`))
                 i = i + 1
-            return `${file_name}_${i}.${file_ext}`
+            return `${fileName}_${i}.${fileExt}`
         }
     },
 
-    get_user_email: async (registerId) => {
+    getUserEmail: async (registerId) => {
         let register = await Register.findOne( {where: {registerId: registerId}} )
         let user = await User.findOne( {where: {id: register["userId"]}})
         return user["email"]
     },
 
-    make_email_title: async (registerId) => {
+    makeEmailTitle: async (registerId) => {
         let register = await Register.findOne( {where: {registerId: registerId}})
         return `[메추리알 알림] ${register["siteName"]} 사이트를 확인하세요!`
     },
 
-    make_email_title_overdue: async (registerId) => {
+    makeEmailTitleOverdue: async (registerId) => {
         let register = await Register.findOne( {where: {registerId: registerId}})
         return `[메추리알 알림] ${register["siteName"]} 사이트에 대해 설정하신 알림 마감 날짜가 지났습니다.`
     },
 
-    make_email_body: async (registerId) => {
+    makeEmailBody: async (registerId) => {
         let register = await Register.findOne( {where: {registerId: registerId}})
         return `
         ${register["siteName"]} 사이트를 확인하세요!
@@ -75,7 +76,7 @@ module.exports = {
         `
     },
 
-    make_email_body_overdue: async (registerId) => {
+    makeEmailBodyOverdue: async (registerId) => {
         let register = await Register.findOne( {where: {registerId: registerId}})
         return `
         ${register["siteName"]} 사이트에 원하시는 조건의 업데이트가 이루어지지 않았습니다.
