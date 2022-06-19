@@ -27,10 +27,8 @@ module.exports = {
             })
             
             if(result==undefined){
-                console.log('아이디 사용 가능');
                 flag=true;
             }else {
-                console.log('아이디 사용 불가능');
                 flag=false;
             }
             
@@ -70,7 +68,6 @@ module.exports = {
                 });
             
             if (isDuplicateEA){
-                console.log("중복된 이메일입니다.");
                 res.send({
                     result : 'redup'
                 })
@@ -105,7 +102,6 @@ module.exports = {
             const CEA = req.body.CEA;
 
             if(CEA==number){
-                console.log("인증 성공");
                 var isAuthedEA=req.body.isAuthedEA;
                 isAuthedEA=true;   
             }

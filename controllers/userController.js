@@ -135,9 +135,7 @@ module.exports = {
 
           
           await utils.sendEmail(reademailaddress, str, title);
-            console.log("인증메일 전송");
             res.send({
-              // number:number
               result:'ok'
             });    
         }else{
@@ -188,11 +186,9 @@ module.exports = {
         const CEA = req.body.CEA;
 
         if(CEA==number){
-          console.log("인증 성공");
           next();
 ;        }
         else{
-          console.log("인증 실패");
           res.send({result:'notMatch'});
         }
 
@@ -267,17 +263,6 @@ module.exports = {
           id=req.session.userId;
         }
         
-        // console.log(id);
-        // let user = await db.userTBL.findOne({
-        //     where: {id : id}
-        //   })
-          
-          // const params = {
-          //   id : user.id,
-          //   email : user.email,
-          //   password : newPw }
-
-          // await db.userTBL.findByPkAndUpdate(user.id, params);
           await db.userTBL.update({email: user.email}, {where:{id:req.session.userId}});
 
           res.send({result:"ok"});
@@ -306,7 +291,6 @@ module.exports = {
           });
       
       if (isDuplicateEA){
-          console.log("중복된 이메일입니다.");
           res.send({
               result : 'redup'
           })
@@ -334,14 +318,6 @@ module.exports = {
     applyNewEmail: async (req,res,next)=>{
       try{
         const newEmail = req.body.email;
-
-        // const params = {
-        //   id : user.id,
-        //   email : newEmail,
-        //   password : user.password }
-
-        // await db.userTBL.findByPkAndUpdate(req.session.userId, params);
-        
         await db.userTBL.update({email:newEmail}, {where:{id:req.session.userId}});
 
         res.send({result:'ok'});
