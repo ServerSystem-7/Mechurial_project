@@ -8,7 +8,7 @@ const express = require("express"),
   userController=require("./controllers/userController"),
   myPageController=require("./controllers/myPageController"),
   session = require("express-session"),
-  //crawling = require("./crawl_main"),
+  crawling = require("./crawl_main"),
   // cookieParser = require("cookie-parser"),
   db = require('./models/index');
 
