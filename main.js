@@ -9,7 +9,6 @@ const express = require("express"),
   myPageController=require("./controllers/myPageController"),
   session = require("express-session"),
   crawling = require("./crawl_main"),
-  // cookieParser = require("cookie-parser"),
   db = require('./models/index');
 
 app.set("port", process.env.PORT || 80);
@@ -30,7 +29,6 @@ app.use(
   session({
     key: 'sid',
     secret: "secret",
-    //is_logined: false,
     cookie: {
       httpOnly: true,
       maxAge: 4000000
@@ -41,7 +39,6 @@ app.use(
   })
 ); 
 
-// app.use(cookieParser());
 
 db.sequelize.sync({ alter: false })
   .then(() => {
@@ -53,14 +50,15 @@ db.sequelize.sync({ alter: false })
 
 
 router.get("/", homeController.homePage);
+// 등록 관련 라우터
 router.get("/register/new", registerController.new);
 router.post("/register/create", registerController.create, registerController.redirectView);
-//router.get("/registerManagement", registerController.manage, registerController.manageView);
 router.get("/registerManagement", registerController.show);
 router.post("/registerManagement/:registerId/delete", registerController.delete, registerController.redirectView);
 router.get("/registerManagement/:registerId/edit", registerController.edit); 
 router.post("/registerManagement/:registerId/update", registerController.update, registerController.redirectView);
 
+// 회원가입 관련 라우터
 router.get("/signUp/terms", signUpController.signUp_terms);
 router.get("/signUp", signUpController.signUp_main);
 router.post("/signUp/idChk", signUpController.idChk);
@@ -69,6 +67,7 @@ router.post("/signUp/sendmail", signUpController.sendMail);
 router.post("/signUp/emailcert", signUpController.emailCert);
 router.get("/signUp/complete", signUpController.signUp_complete);
 
+// 로그인 관련 라우터
 router.get("/logIn_main", userController.login);
 router.post("/logIn_main", userController.authenticate);
 router.get("/logOut_main", userController.logout);
@@ -118,4 +117,3 @@ app.listen(app.get("port"), () => {
 // app.listen(app.get("port"), () => {
 //   console.log(`Server running at http://localhost:${app.get("port")}`);
 // });
-

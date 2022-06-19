@@ -106,8 +106,6 @@ module.exports = {
         };
     },
     showView: async(req,res) =>{
-        // let registerId = req.params.id;
-        // let register = await Register.findByPk(registerId)
         is_logined = req.session.is_logined;
         userid =  req.session.userId;
         res.render("registerNew", {register: register});
@@ -132,7 +130,6 @@ module.exports = {
         console.log(registerParams);
         try{
             let register = await Register.findByPkAndUpdate(registerId, registerParams);
-            // res.locals.redirect = `/registerEdit/${registerId}`;
             res.locals.register = register;
             is_logined = req.session.is_logined;
             userid =  req.session.userId;

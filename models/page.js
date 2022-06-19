@@ -41,10 +41,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             primaryKey: true,
             allowNull: false,
-            // validation: {isUrl: true}
         },
     },{
-        // TODO: hook?? (to create only if new url)
         sequelize,
         modelName: 'pageTBL',
         freezeTableName: true,

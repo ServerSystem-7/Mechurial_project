@@ -66,7 +66,6 @@ module.exports = (sequelize, Sequelize) => {
         notifyLogic: {
             type: Sequelize.STRING,
             allowNull: false,
-            // validate: {isIn: [['and', 'or']]}
         },
         siteName: {
             type: Sequelize.STRING
@@ -75,7 +74,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATEONLY,
             allowNull: false,
             isDate: true,
-            // validate: {isAfter: Register.getDateFromToday(-1)}  // yesterday
         }, 
         userId: {
             type: Sequelize.STRING,
