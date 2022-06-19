@@ -36,7 +36,7 @@ sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 l
 npm init
 ```
 ```
-npm i -S express express-ejs-layouts sequelize mysql2 http-status-codes dotenv ejs @sendgrid/mail puppeteer cheerio node-cron bcrypt
+npm i -S express express-ejs-layouts express-session sequelize mysql2 http-status-codes dotenv ejs @sendgrid/mail puppeteer cheerio node-cron bcrypt
 ```
 
 ## How to Run
