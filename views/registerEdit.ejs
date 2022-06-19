@@ -68,7 +68,6 @@
         <h2 class="h2">등록 수정</h2>
          <form id="enroll-form" name="enroll-form" action="<%=`/registerManagement/${register.registerId}/update`%>" method="post">
           <h2 class="step-info">Step 1. URL을 입력해주세요.</h2>
-          <!-- <input type="url" name="url" id="url" placeholder="url을 입력해주세요." required> -->
           <input type="url" name="url" id="url" placeholder="url을 입력해주세요." value="<%= register.url %>" required>
           
           <h2 class="step-info">Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)</h2>
@@ -77,11 +76,6 @@
           <input name="key3" type="text" id="key3" value="<%= register.key3 %>" ><br/><br/>
           
           <h2 class="step-info">Step 3. 알림 조건을 선택하세요.</h2>
-          <!-- <label>
-            <input type="radio" name="condition" id="or" value="or" />합집합
-            <input type="radio" name="condition" id="and" value="and" />교집합
-          </label> -->
-          <!-- <input name="condition" type="text" id="condition" value="<%= register.condition %>" ><br/><br/> -->
           <label>
             <input type="radio" name="condition" id="or" value="or" />합집합
             <input type="radio" name="condition" id="and" value="and" />교집합
@@ -91,7 +85,6 @@
           <input name="siteName" type="text" id="siteName" value="<%= register.siteName %>"required/><br/>
           
           <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
-          <!-- <input type="date" name="deadline"/> -->
           <input type="date" value="<%= register.dueDate %>" name="deadline"/>
 
           <button class="enroll_btn" type="submit">수정하기</button>
