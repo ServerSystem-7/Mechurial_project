@@ -44,6 +44,7 @@ module.exports = {
           next(error);
       }
 
+      if(url_array.count > 0){
       for (let idx = 0; idx < url_array.length; idx++) {
         try{
             let result = await Register.count({
@@ -65,7 +66,16 @@ module.exports = {
         }catch(error){
             console.log(`Error deleting register or page by ID: ${error.message}`);
             next(error);
-        } 
+        }
+      }
+    }
+      else{
+        req.session.distroy;
+        res.clearCookie("sid");
+        is_logined = false;
+        userid = null;
+        res.render("mainpage");
+        
       }
     },
     searchid: (req, res, next) => {
