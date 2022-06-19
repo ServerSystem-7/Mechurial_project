@@ -1,5 +1,4 @@
 const db = require("../models/index"),
-sendEmail = require("../sendEmail"),
 bcrypt = require("bcrypt"),
 utils = require("../utils"),
 User = db.userTBL,
@@ -97,7 +96,7 @@ module.exports = {
         `[메추리알] 인증번호는 ${number} 입니다.`
 
         
-        await sendEmail(reademailaddress, str, title);
+        await utils.sendEmail(reademailaddress, str, title);
           console.log("인증메일 전송");
           res.send({
             number:number
@@ -131,7 +130,7 @@ module.exports = {
       let title=
         `[메추리알] 분실 아이디를 알려드립니다.`
 
-      await sendEmail(EA, str, title);
+      await utils.sendEmail(EA, str, title);
       res.send({result:'success'});
     },
         
@@ -277,7 +276,7 @@ module.exports = {
           let title=
           `[메추리알] 인증번호는 ${number} 입니다.`
           
-          await sendEmail(newEmail, str, title);
+          await utils.sendEmail(newEmail, str, title);
           res.send({result:"ok"});
         }
 
@@ -296,7 +295,7 @@ module.exports = {
       res.send({result:"ok"});
     },
     
-    applyNewEmail: async (req,res)=>{
+    applyNewEmail: async (req,res,next)=>{
       try{
         const newEmail = req.body.email;
 
@@ -311,7 +310,7 @@ module.exports = {
 
         await db.userTBL.findByPkAndUpdate(req.session.userId, params);
         console.log(user);
-        req.send({result:'ok'});
+        res.send({result:'ok'});
 
     }catch(err){
       console.error(err);

@@ -1,5 +1,4 @@
 const db = require('../models'),
-sendEmail = require("../sendEmail"),
 utils = require("../utils");
   
 
@@ -86,7 +85,7 @@ module.exports = {
                 let title=
                 `[메추리알] 인증번호는 ${number} 입니다.`
                 
-                await sendEmail(EA, str, title);
+                await utils.sendEmail(EA, str, title);
                 console.log("인증메일 전송");
                 res.send({
                     result:'success'
