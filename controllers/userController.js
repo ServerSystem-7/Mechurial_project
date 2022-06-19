@@ -262,8 +262,9 @@ module.exports = {
           //비밀번호 찾기를 통해 비밀번호 변경시
           id=req.session.userId;
         }
+        await db.userTBL.update({password:newPw}, {where:{id:id}});
         
-          await db.userTBL.update({email: user.email}, {where:{id:req.session.userId}});
+          
 
           res.send({result:"ok"});
       
