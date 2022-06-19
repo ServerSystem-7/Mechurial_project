@@ -4,7 +4,8 @@ const puppeteer = require("puppeteer"),
     db = require("./models/index"),
     nodeCron = require("node-cron"),
     { Op } = require("sequelize"),
-    utils = require("./utils");
+    utils = require("./utils"),
+    path = require("path");
 
 db.sequelize.sync({alter: false});
 const Page = db.pageTBL;
@@ -116,6 +117,16 @@ async function crawlAndCheck(url) {
 }
 
 async function runAllUrls() {
+    // empty html saved directory
+    fs.readdir(saveDir, (err, files) => {
+        if (err) throw err;
+        for (const file of files) {
+          fs.unlink(path.join(saveDir, file), err => {
+            if (err) throw err;
+          });
+        }
+      });
+
     let pages = await Page.findAll({raw: true})
     let urlArray = pages.map(a => a.url);
     for (let idx = 0; idx < urlArray.length; idx++) {
