@@ -1,16 +1,11 @@
 const db = require("../models/index"),
-bcrypt = require("bcrypt"),
-utils = require("../utils"),
-User = db.userTBL,
-  getUserParams = (body) => {
-    return {
-      id: body.id,
-      email: body.email,
-      password: body.password
-    };
-  };
+  bcrypt = require("bcrypt"),
+  utils = require("../utils"),
+  User = db.userTBL,
+  Register = db.registerTBL,
+  Page = db.pageTBL;
 
-  let number;
+let number;
 
 module.exports = {
     login: (req, res)=>{
@@ -18,26 +13,59 @@ module.exports = {
       userid =  req.session.userId;
       res.render("logIn_main");
     },
-  logout: (req, res) => {
-        is_logined = req.session.is_logined;
-        userid =  req.session.userId;
-        req.session.distroy;
-        res.clearCookie("sid");
-        res.redirect('logIn_main');
+    logout: (req, res) => {
+          is_logined = req.session.is_logined;
+          userid =  req.session.userId;
+          req.session.distroy;
+          res.clearCookie("sid");
+          res.redirect('logIn_main');
     },
     deleteUser: async(req, res, next) => {
       const userId = req.session.userId;
       console.log(userId);
+
+      let urls = await Register.findAll({
+        attributes: ["pageUrl"],
+        where:{userId:userId},
+        raw: true
+      });
+      let url_array = urls.map(a => a.pageUrl);
+      let url_set = new Set(url_array)
+      url_array = Array.from(url_set)
+      console.log(url_array)
+
       try{
-        await User.findByPkAndRemove(userId);
+        let user = await User.findByPkAndRemove(userId);
+        res.locals.user = user;
         req.session.distroy;
-        res.clearCookie("sid")
-        is_logined = false;
-        userid = null;
-        res.render("mainpage");
-      }catch(error){
-        console.log(`Error deleting register by ID: ${error.message}`);
-        next(error);
+        res.clearCookie("sid");
+      } catch (error) {
+          console.log(`Error deleting user by ID: ${error.message}`);
+          next(error);
+      }
+
+      for (let idx = 0; idx < url_array.length; idx++) {
+        try{
+            let result = await Register.count({
+                where: {pageUrl:url_array[idx]}
+            })
+            if(result === 0){
+                console.log('url 혼자 사용 중');
+                let page = await Page.findByPkAndRemove(url_array[idx]);
+                res.locals.page = page;
+                is_logined = false;
+                userid = null;
+                res.render("mainpage");
+            }else {
+                console.log('url 중복 사용 중');
+                is_logined = false;
+                userid = null;
+                res.render("mainpage");
+            }
+        }catch(error){
+            console.log(`Error deleting register or page by ID: ${error.message}`);
+            next(error);
+        } 
       }
     },
     searchid: (req, res, next) => {
