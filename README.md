@@ -10,7 +10,7 @@
 
 
 ## Environment
-> 구글 클라우드 플랫폼 GCP를 사용중입니다. 
+**Google Cloud Platform의 VM Instance를 사용중입니다.**
 
 OS:  Ubuntu [20.04LTS]
 
@@ -48,7 +48,7 @@ sudo node main
 
 ## Crawling
 
-**![](https://lh4.googleusercontent.com/uVOYuS8ykwbFQgoy-SYj6_06NvkGC6-UHkYOITbnQ35R0xXkfXs5G0vdHTE3mRylT5ngVlKmhPUlbnFfISLr4_wTwcavL3erBTaVL9ZpHHOTEsElTlzq7EUCuFdF8_PPPwxLz93kiaISNwe7Mg)*
+*![](https://lh4.googleusercontent.com/uVOYuS8ykwbFQgoy-SYj6_06NvkGC6-UHkYOITbnQ35R0xXkfXs5G0vdHTE3mRylT5ngVlKmhPUlbnFfISLr4_wTwcavL3erBTaVL9ZpHHOTEsElTlzq7EUCuFdF8_PPPwxLz93kiaISNwe7Mg)*
 > 크롤링 과정 소개
 > 
 	
