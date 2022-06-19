@@ -104,12 +104,13 @@ module.exports = {
             if(CEA==number){
                 var isAuthedEA=req.body.isAuthedEA;
                 isAuthedEA=true;   
+                res.send({
+                    result:'ok',
+                    isAuthedEA:isAuthedEA});
             }
             else res.send({result:'notMatch'});
 
-            res.send({
-                result:'ok',
-                isAuthedEA:isAuthedEA});
+            
 
         } catch(err){
             console.error(err);
