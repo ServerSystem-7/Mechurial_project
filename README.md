@@ -35,11 +35,11 @@ npm i -S express express-ejs-layouts sequelize mysql2 http-status-codes dotenv e
 
 ## Crawling 
 
-**![](https://lh4.googleusercontent.com/c66Vt1pX6bvuS73T0Ii0flFpJHVAQdPqmtgpQb5PtU87LXdID-tQMFVZhs_CAEIRjAWVt0eYjEG2ulrPxkR_DahStuajeKQpIHoEx-ozmYhqqsQ7_ZikQdbSNao5k7sv6uV2EQl9m1VwLKnUdQ)**
+**![](https://lh4.googleusercontent.com/uVOYuS8ykwbFQgoy-SYj6_06NvkGC6-UHkYOITbnQ35R0xXkfXs5G0vdHTE3mRylT5ngVlKmhPUlbnFfISLr4_wTwcavL3erBTaVL9ZpHHOTEsElTlzq7EUCuFdF8_PPPwxLz93kiaISNwe7Mg)**
 > 크롤링 과정 소개
 > 
 	
-	크롤링 전체 과정 :  페이지 스크립트를 크롤링해서 저장 + 등록 인스턴스와 비교를 통한 키워드 조건만족 여부 확인
+	크롤링 전체 과정 :  url 크롤링 html 파일로 저장 + 키워드, 조건만족 여부 확인 + 만족시, 사용자에게 메일전송 & DB 삭제
 
 ## 등록추가 UML
 
