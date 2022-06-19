@@ -92,9 +92,27 @@ async function email_satisfied_register (all_array) {
 }
 
 async function delete_satisfied_register(registerId) {
-    await Register.destroy({where: {registerId: registerId}})
-    console.log(`deleted registerId: ${registerId}`)
+    try{
+        let register = await Register.findOne({where: {registerId: registerId}});
+        const url = register["pageUrl"];
+        console.log(url);
+        await Register.destroy({where: {registerId: registerId}});
+        console.log(`deleted registerId: ${registerId}`);
+        let result= await Register.findOne({
+        where:{pageUrl:url}
+        })
+
+        if(result==undefined){
+            console.log('url 혼자 사용 중');
+            let page = await Page.findByPkAndRemove(url);
+        }else {
+            console.log('url 중복 사용 중');
+        }
+    }catch(error){
+        console.log("error!");
+    };
 }
+
 
 async function crawl_and_check(url) {
     // file_name = save_dir + "file3.html"  // TODO: increment & path join?

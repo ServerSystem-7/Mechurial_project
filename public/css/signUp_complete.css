@@ -76,18 +76,20 @@ header .main-menu li a {
   margin:50px;
 
 }
-
-.btnComplete{
-  background: #2e43ff;
-  color: #fff;
-  width: 20%;
-  height: 70px;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 60px;
-  border:none;
-  margin-top: 25%;
-  margin-left: 40%;
-  margin-right: 25%;
+.btn_complete {
+  margin: 20px 0 ;
 }
+
+#btnComplete{
+  width: 300px;
+  padding: 10px 0 10px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #2E43FF;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+

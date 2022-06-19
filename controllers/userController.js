@@ -54,10 +54,12 @@ module.exports = {
     },
       
     authenticate: async (req, res, next) => {
+      let userId = req.body.id;
       try{
-          let user =  await User.findOne({ where: {id: req.body.id}});
+          let user =  await User.findByPk(userId);
+
           if(user){
-              let passwordMatch = await user.passwordComparison(req.body.password, user.password);
+              let passwordMatch = await user.passwordComparison(req.body.password);
               if(passwordMatch){
                   console.log("일치");
                   req.session.is_logined = true;
@@ -70,16 +72,17 @@ module.exports = {
                   is_logined = req.session.is_logined;
                   userid =  req.session.userId;
                   res.redirect("/login_main");
-                  next();
+                  
+                  
               }
           } else{
               is_logined = req.session.is_logined;
               userid =  req.session.userId;
               res.redirect("/login_main");
-              next();
+              
           }
       }catch(err){
-          console.log('error');
+          console.log('error!!!');
           next(err);
       };
       },
