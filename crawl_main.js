@@ -145,7 +145,7 @@ async function deleteOverdueRegistrations(current_date) {
 // run every minute
 const job = nodeCron.schedule("0 * * * * *", async function () {
     let date_ob = new Date();
-    let SEOULTIMEZONE = 9 * 60 * 60
+    let SEOULTIMEZONE = 9 * 60 * 60 * 1000
     await date_ob.setTime(date_ob.getTime() + SEOULTIMEZONE);  // time zone is set
 
     let hours = date_ob.getHours();
