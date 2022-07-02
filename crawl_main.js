@@ -25,7 +25,7 @@ async function saveHTML(url) {
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0);
     await page.goto(url, {waitUntil: 'networkidle2'});  // go to the page to parse
-    await page.waitFor(3000);
+    await page.waitForTimeout(3000);
     const html = await page.content();  // extract data from the page
     
     let currentTime = new Date()
