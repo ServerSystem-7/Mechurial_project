@@ -44,7 +44,7 @@ module.exports = {
           next(error);
       }
 
-      if(url_array.count > 0){
+      if(url_array.length > 0){
       for (let idx = 0; idx < url_array.length; idx++) {
         try{
             let result = await Register.count({
