@@ -20,18 +20,48 @@ npm: v8.11.0
 
 
 ## Installation
+### 1. VM Instance에서 Node.js 설치
+```
+sudo apt-get update 
+```
+```
+sudo apt-get upgrade 
+```
+```
+sudo apt-get install build-essenial
+```
+Node.js 설치
+```
+wget https://nodejs.org/dist/v16.15.1/node-v16.15.1-linux-x64.tar.xz
+```
+압축해제 및 설정
+```
+tar xf node-v16.15.1-linux-x64.tar.xz
+```
+```
+cd node-v16.15.1-linux-x64
+```
+```
+sudo cp -Rvi ./{bin,include,lib,share} /usr/local/
+```
 
-- Ubuntu에서 puppeteer를 실행시키기 위한 패키지들
+### 2. Ubuntu에서 puppeteer를 실행시키기 위한 패키지들 설치
 
 ```
-sudo apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+sudo apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libnss3 lsb-release xdg-utils wget
 ```
 ```
 sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev
 ```
 
-- 서버를 실행시키기 위한 Node 모듈들
+### 3. 서버를 실행시키기 위한 준비 과정
 
+_package.json, package-lock.json가 존재한다면_
+```
+npm install
+```
+
+_package.json, package-lock.json가 존재하지 않는다면_
 ```
 npm init
 ```
