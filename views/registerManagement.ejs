@@ -23,7 +23,7 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/public/css/search_id2.css" />
+    <link rel="stylesheet" href="/public/css/registerManagement.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
@@ -61,18 +61,72 @@
           </div>
         </div>
       </header>
-    <!--페이지 내용 넣기-->
-    <div class ="wrapper">
-      <h2 class="h2">아이디 찾기</h2>
-
-      <div class="t1">입력하신 이메일로 아이디가 전송되었습니다.<br>
-        로그인 후, 등록 버튼을 눌러 서비스를 이용해보세요!
-      </div>
-      <div class="btn_complete">
-        <button id="btnComplete" onclick="location.href='/logIn_main'">
-            로그인하기 >
-        </button >
-    </div>
-
+      
+      <!-- HEADER -->
+      <h2 class="h2"> 등록 관리 </h2>
+      <table class="type08">
+        <thead>
+            <tr>
+                <th scope="cols">No</th>
+                <th scope="cols">siteName</th>
+                <th scope="cols">key1</th>
+                <th scope="cols">key2</th>
+                <th scope="cols">key3</th>
+                <th scope="cols">notifyLogic</th>
+                <th scope="cols">dueDate</th>
+                <th scope="cols"> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% registrations.forEach(registration => { %>
+                <tr>
+                    <td>
+                      <%= registration.registerId %>
+                    </td>
+                    <td>
+                      <%= registration.siteName %>
+                    </td>
+                    <td>
+                      <%= registration.key1 %>
+                    </td>
+                    <td>
+                      <%= registration.key2 %>
+                    </td>
+                    <td>
+                      <%= registration.key3 %>
+                    </td>
+                    <td>
+                      <%= registration.notifyLogic %>
+                    </td>
+                    <td>
+                      <%= registration.dueDate %>
+                    </td>
+                    <td>
+                      <form action="<%= `/registerManagement/${registration.registerId}/delete`%>" method="post">
+                        <input type="hidden" name="id" value="<%= registration.registerId %>">
+                        <input type="hidden" name="url" value="<%= registration.pageUrl %>">
+                        <input class="delete_btn" type="submit" name="Delete" value="Delete" onClick="alert('Are you sure you want to delete this record?')">
+                      </form>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+      </table>
   </body>
 </html>
+
+<style>
+  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+    border-left: 1px solid #444444;
+    padding: 10px;
+  }
+  th:first-child, td:first-child {
+    border-left: none;
+  }
+</style>

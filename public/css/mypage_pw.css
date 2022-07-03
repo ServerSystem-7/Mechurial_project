@@ -54,14 +54,14 @@
     margin-right: 10px;
   }
   header .logo a {
-    background: url("../img/logo.svg");
-    width: 32px;
-    height: 32px;
+    background: url("../images/logo1.png");
+    width: 50px;
+    height: 50px;
     display: block;
     text-indent: -9999px;
   }
   header .logo a:hover {
-    background: url("../img/logo_on.svg");
+    background: url("../images/logo1.png");
   }
   header .main-menu {
     display: flex;
@@ -284,7 +284,7 @@ select {
 .btn_area_email1 {
     margin: 20px 0 ;
 }
-#btnMAilCheck {
+#btnCheckCurPw {
     width: 250px;
     padding: 10px 0 10px;
     border: 0;

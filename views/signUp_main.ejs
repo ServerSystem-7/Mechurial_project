@@ -1,3 +1,5 @@
+<!--views/mainpage.ejs-->
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 <!DOCTYPE html>
@@ -14,40 +16,6 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1"
     />
-    <!-- 사용자가 사용하는 인터넷 브라우저가 인터넷 익스플로러일 때, 8버전이상에서 항상 최신의 항상 최신의 표전모드로 렌더링 되도록 하는 코드-->
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-    <!-- og: Open graph의 약자, 일종의 정보를 의미하고 이것을 통해 외부에 제공하는 정보를 정의할 수 있다, og는 페이스북에서 주로 활용-->
-    <!-- http://ogp.me/  참고 -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Mechurial" />
-    <meta property="og:title" content="make your alarm first" />
-    <meta property="og:description" content="mechurial" />
-    <meta property="og:image" content="img/logo__github.png" />
-    <meta property="og:url" content="https://mechurial.com" />
-    <!-- Twitter Card: og와 동일한 개념, 이것은 트위터에서 주로 활용, 카카오톡이나 기타 등등 서비스에서 og를 사용하기도 하고 트위터 카드를 사용하기도 하니 2개를 다 정의 해놓는 것이 좋다. -->
-    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html  참고 -->
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:site" content="Mechurial" />
-    <meta property="twitter:title" content="make your alarm first" />
-    <meta property="twitter:description" content="mechurial" />
-    <meta property="twitter:image" content="img/logo__github.png" />
-    <meta property="twitter:url" content="https://mechurial.com" />
-
-    <!-- 아래는 인터넷 익스플로러에서 아이콘을 사용할 때 쓰는 코드인데 루트에 ico파일이 있다면 생략해도 된다.
-    왜냐하면 코드가 명시 되지 않으면 익스플로러에서는 루트에 ico 파일이 있으면 아이콘 파일이 있다는 것을 감지하기 때문이다.-->
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
-    <link rel="icon" href="favicon.png" />
-    <!-- 스마트폰에 보이려면 아래와 같이 쓰면 되고 안드로이드에서도 보인다.-->
-    <link rel="apple-touch-icon" href="favicon.png" />
-
-    <!-- 구글 폰트 -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-
     <!-- CSS reset -->
     <link
       rel="stylesheet"
@@ -55,11 +23,12 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../public/css/signUp_main.css" />
+    <link rel="stylesheet" href="/public/css/signUp_main.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
   </head>
+
 
   <body>
     <div class="body__container">
@@ -67,14 +36,28 @@
       <header class="section">
         <div class="inner clearfix">
           <div class="logo float--left">
-            <a href="#">mechurial</a>
+            <a href="/">mechurial</a>
           </div>
           <div class="menu-group float--right">
             <ul class="main-menu toggle">
-              <li><a href="#" onclick="location.href='/enroll'">등록</a></li>
-              <li><a href="#" onclick="location.href='/enrollmanage'">등록 관리</a></li>
-              <li><a href="#" onclick="location.href='/signUp_terms'">회원가입</a></li>
-              <li><a href="#" onclick="location.href='logIn_main.html'">로그인</a></li>
+              <li>
+                <a href="/register/new">등록</a>
+              </li>
+              <li>
+                <a href="/registerManagement">등록 관리</a>
+              </li>
+              <li><a href="/mypage_main">마이페이지</a></li>
+  
+              <% if(is_logined) {%>
+                <li><a> <%= userid %> wellcome!</a></li>
+                <% } else { %>
+                  <li><a href="/signUp/terms">회원가입</a></li>
+                 <% } %>
+              <% if(is_logined) {%>
+                <li><a href="/logOut_main">로그아웃</a></li>
+                <% } else { %>
+                  <li><a href="/logIn_main">로그인</a></li>
+                  <% } %>
             </ul>
           </div>
         </div>
@@ -84,8 +67,6 @@
         <div id="header">
             <a href="https://nid.naver.com/user2/V2Join.nhn?m=agree#agreeBottom" target="_blank" title="네이버 회원가입 페이지 보러가기"></a>
         </div>
-
-
         <!-- wrapper -->
         <div class ="wrapper">
             <h2 class="h2">회원정보 입력</h2>
@@ -108,7 +89,7 @@
 
                     <!-- 아이디 중복 확인 BTN-->
                     <div class="btn_area_idCheck">
-                        <button type="button" id="idChk" onClick="idChk()">
+                        <button type="button" id="idChk" onclick="idCheck()">
                             <span>중복 확인</span>
                         </button>
                     </div>
@@ -118,9 +99,9 @@
                 <div>
                     <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
                     <span class="box int_pass">
-                        <input type="text" id="pswd1" name="pw1" class="int" maxlength="20">
+                        <input type="password" id="pswd1" name="pw1" class="int" maxlength="20">
                         <span id="alertTxt">사용불가</span>
-                        <img src="m_icon_pass.png" id="pswd1_img1" class="pswdImg">
+                        
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -129,8 +110,8 @@
                 <div>
                     <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
                     <span class="box int_pass_check">
-                        <input type="text" id="pswd2" name="pw2" class="int" maxlength="20" onchange="check_pw()" >
-                        <img src="public/images/m_icon_check_disable.png" id="pswd2_img1" name="pswd2_img1" class="pswdImg">
+                        <input type="password" id="pswd2" name="pw2" class="int" maxlength="20" onchange="check_pw()" >
+                        <img src="../public/images/m_icon_check_disable.png" id="pswd2_img1" name="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -185,8 +166,7 @@
         </div> 
         <!-- wrapper -->
     <script>
-
-    var isCoincidePw = false;
+    var isAccordPw = false;
     var isAuthedEA = false;
 
     function check_pw() {
@@ -194,52 +174,47 @@
         var pw2 = document.getElementsByName('pw2')[0].value;
             
         if(pw1===pw2){       
-            //document.getElementById('pswd2_img1').src="public/images/m_icon_check_able.png";
-            isCoincidePw=true;
-            console.log(isCoincidePw);
+            document.getElementById('pswd2_img1').src="../public/images/m_icon_check_able.png"
+            isAccordPw=true;
         }
     }
-
-    function idChk() {
+    function idCheck() {
         var id = document.getElementsByName('id')[0].value;
-
         $.ajax({
             type: 'POST',
-            url: '/signUp_emailAuth',
+            url: '/signUp/idChk',
             dataType: 'json',
             data: {
                 id: id
+            },
+            success : function(data){
+                if(data)
+                    alert("사용 가능한 아이디입니다.");
+                else{
+                    alert("사용 불가능한 아이디 입니다. 다시 입력해주세요.");
+                    document.getElementsByName('id')[0].value="";
+                }
             }
         });
-        
     }
-
+  
     document.querySelector('.ajaxsend').addEventListener('click', function() {
         var id = document.getElementsByName('id')[0].value;
         var pw = document.getElementsByName('pw1')[0].value; 
         var EA = document.getElementsByName('EA')[0].value;
         
-        sendIdPw(id, pw, EA);
-
-        
-        if ((isCoincidePw==true) && (isAuthedEA==true) ){
+        if ((isAccordPw==true) && (isAuthedEA==true) ){
             sendIdPw(id, pw, EA);
-        }else if ((isCoincidePw==true) && (isAuthedEA ==false) ){
+        }else if ((isAccordPw==true) && (isAuthedEA ==false) ){
             alert("이메일 인증을 다시 확인해주세요.");
-        }else if((isCoincidePw==false) && (isAuthedEA==true)){
-            alter("비밀번호를 다시 확인해주세요.");
+        }else if((isAccordPw==false) && (isAuthedEA==true)){
+            alert("비밀번호를 다시 확인해주세요.");
         }else {
             alert("입력한 내용을 다시 확인해주세요.");
         }
         
-
     })
-
     function sendIdPw(userId, userPw, email) {
-        console.log("입력된 아이디는 "+userId+" 입니다.");
-        console.log("입력된 비밀번호는 "+userPw+" 입니다.");
-        console.log("입력된 이메일은 "+email+" 입니다.");
-
         $.ajax({
             type: 'POST',
             url: '/signUp/create',
@@ -248,57 +223,77 @@
                 id : userId,
                 pw : userPw,
                 em: email
+            },
+            success: function(){
+                alert("회원가입이 완료되었습니다.");
+                location.href="/signUp/complete";
             }
         });
-        location.href="/signUp/complete";
-
+        
     }
-
-
     //이메일 추출
     function emailSend(email) {
 		var EA = document.getElementsByName(email)[0].value;
 		emailSendAjax(EA);
 	}
-
 	// 인증번호 ajax전송
 	function emailCer(cerNum) {
 		var CEA = document.getElementsByName(cerNum)[0].value;
 		emailCerAjax(CEA);
 	}
-
-
     // 이메일 전송 기능
     function emailSendAjax(email) {
-         console.log("입력된 이메일은 "+email+" 입니다.");
         $.ajax({
             type: 'POST',
-            url: '/signUp_emailAuth',
+            url: '/signUp/sendmail',
             dataType: 'json',
             data: {
                 EA: email
+            }, success : function(data){
+                if(data.result=='ok') {
+                    alert("사용 가능한 이메일입니다. \n이메일로 인증번호를 전송했습니다.");
+                }
+                else if(data.result=='redup'){
+                    alert("사용할 수 없는 이메일입니다.");
+                    document.getElementById('EA').value="";
+                }
+                else{
+                    alert('오류가 발생했습니다. 다시 시도해주세요.');
+                    location.reload();
+                }
             }
         });
+        
         }
-
-
         // 이메일 인증 기능
         function emailCerAjax(cerNum) {
-            console.log("testtest");
             $.ajax({
                 type: 'POST',
-                url: '/signUp_emailCert',
+                url: '/signUp/emailcert',
                 dataType: 'json',
                 data: {
                     CEA: cerNum,
                     isAuthedEA : isAuthedEA
+                }, success: function(data){
+                    if(data.result=='ok'){
+                        alert('이메일 인증에 성공했습니다.');
+                        isAuthedEA=data.isAuthedEA;
+                    }
+                    else if(data.result=='notMatch'){
+                        alert('인증번호가 일치하지 않습니다.');
+                        document.getElementById('CEA').value='';
+                    }
+                    else{
+                        alert('오류가 발생했습니다. 다시 시도해주세요.');
+                        location.reload();
+                    }
                 }
+                
             });
         }
-
+    </script>
     </script>
     </body>
   </section>
   </body>
 </html>
-

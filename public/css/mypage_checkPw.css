@@ -112,8 +112,7 @@ body {
 
 .wrapper{
     margin: 0 auto;
-    width: 60%;
-    
+    width: 80%;
 }
 .h2 {
     padding: 20px 0 20px;
@@ -263,9 +262,9 @@ select {
     margin: 10px 0 10px;
 }
 
-#idChk {
+#btnId {
     float: right;
-    width: 200px;
+    width: 250px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;
@@ -285,8 +284,8 @@ select {
 .btn_area_email1 {
     margin: 20px 0 ;
 }
-#emailSendBtn {
-    width: 200px;
+#btnCheckCurPw {
+    width: 250px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;
@@ -306,8 +305,8 @@ select {
     margin: 20px 0 ;
 }
 
-#emailCertBtn {
-    width: 200px;
+#btnMailNext {
+    width: 250px;
     padding: 10px 0 10px;
     border: 0;
     cursor: pointer;
@@ -319,11 +318,11 @@ select {
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
 
-.btn_area_join {
+.btn_area_delete {
     margin: 20px 0 20px;
 }
 
-#btnJoin {
+#btnNext {
     float: right;
     width: 30%;
     padding: 10px 0 10px;

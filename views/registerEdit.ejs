@@ -23,11 +23,12 @@
       integrity="sha512-IJEbgDEF7OeKJRa0MY2PApnyJHRIsgzCveek4ec8VWQ+7KG3ZSKVNYa5xP/Gh0hVP0Mwb+gBsk+GwR3JQGhQNg=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/public/css/search_id2.css" />
+    <link rel="stylesheet" href="/public/css/registerNew.css" />
 
     <script defer src="main.js"></script>
     <!-- defer: HTML이 다 로딩 된 다음 자바스크립트 코드를 동작 시키겠다.-->
   </head>
+
 
   <body>
     <div class="body__container">
@@ -61,18 +62,35 @@
           </div>
         </div>
       </header>
-    <!--페이지 내용 넣기-->
-    <div class ="wrapper">
-      <h2 class="h2">아이디 찾기</h2>
+    <!-- 등록 수정 창 -->
+    <div class="body-form">
+      <div class="body-l">
+        <h2 class="h2">등록 수정</h2>
+         <form id="enroll-form" name="enroll-form" action="<%=`/registerManagement/${register.registerId}/update`%>" method="post">
+          <h2 class="step-info">Step 1. URL을 입력해주세요.</h2>
+          <input type="url" name="url" id="url" placeholder="url을 입력해주세요." value="<%= register.url %>" required>
+          
+          <h2 class="step-info">Step 2. 검색할 키워드를 입력하세요.(1개 이상 입력 필수)</h2>
+          <input name="key1" type="text" id="key1" value="<%= register.key1 %>" required><br/><br/>
+          <input name="key2" type="text" id="key2" value="<%= register.key2 %>" /><br/><br/>
+          <input name="key3" type="text" id="key3" value="<%= register.key3 %>" ><br/><br/>
+          
+          <h2 class="step-info">Step 3. 알림 조건을 선택하세요.</h2>
+          <label>
+            <input type="radio" name="condition" id="or" value="or" />합집합
+            <input type="radio" name="condition" id="and" value="and" />교집합
+          </label>
+          
+          <h2 class="step-info">Step 4. 사이트 이름을 설정하세요.</h2>
+          <input name="siteName" type="text" id="siteName" value="<%= register.siteName %>"required/><br/>
+          
+          <h2 class="step-info">Step 5. 마감 기한을 설정하세요.</h2>
+          <input type="date" value="<%= register.dueDate %>" name="deadline"/>
 
-      <div class="t1">입력하신 이메일로 아이디가 전송되었습니다.<br>
-        로그인 후, 등록 버튼을 눌러 서비스를 이용해보세요!
+          <button class="enroll_btn" type="submit">수정하기</button>
+        </form>
       </div>
-      <div class="btn_complete">
-        <button id="btnComplete" onclick="location.href='/logIn_main'">
-            로그인하기 >
-        </button >
     </div>
-
-  </body>
+  <div id='result'></div>
+</body>
 </html>

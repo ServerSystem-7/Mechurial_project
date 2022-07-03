@@ -54,14 +54,14 @@
     margin-right: 10px;
   }
   header .logo a {
-    background: url("../img/logo.svg");
-    width: 32px;
-    height: 32px;
+    background: url("../images/logo1.png");
+    width: 50px;
+    height: 50px;
     display: block;
     text-indent: -9999px;
   }
   header .logo a:hover {
-    background: url("../img/logo_on.svg");
+    background: url("../images/logo1.png");
   }
   header .main-menu {
     display: flex;
@@ -299,4 +299,35 @@ select {
     font-size: 20px;
     font-weight: 400;
     font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+.btn_area_email2 {
+  margin: 20px 0 ;
+}
+#btnCheckCerNum {
+  width: 250px;
+  padding: 10px 0 10px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #2E43FF;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+
+.btn_area_join {
+  margin: 20px 0 ;
+}
+#btnChangeEmail {
+  width: 250px;
+  padding: 10px 0 10px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #2E43FF;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
